@@ -1,3 +1,3 @@
 ﻿
-using var game = new DuckHunterGame.Game1();
+using var game = new DuckHunterGame.src.MainWindow();
 game.Run();
