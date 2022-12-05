@@ -81,38 +81,45 @@ namespace DuckHunterGame.src
                 Exit();
 
             // TODO: Add your update logic here
-            
-            if (!dogController.IsVisable(gameController.GetDog(game)))
+
+            if (gameController.GetIsIntro(game)) 
             {
-
-                dogPosition = new Vector2(game.dog.posX, game.dog.posY);
                 dogController.Move(gameController.GetDog(game), 64*3, delta);
-            } else { 
+                //STOP INTRO
+                if (dogController.GetIsInBackground(gameController.GetDog(game)))
+                {
+                    gameController.DisableIntro(game); 
+                }
+            } else {
             
 
-            
+
+
             if (!gameController.GetCanShoot(game)) {
                 mouseState = Mouse.GetState();
                 if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                 {
-                    mousePos = (mouseState.X, mouseState.Y);
+                    mousePos = (mouseState.X, mouseState.Y); // DELETE LATER
                     gameController.Shoot(game, mouseState.X, mouseState.Y);
                 }
             }
 
-            if ( !(game.ducks[game.currentDuck].isFlyAway ^ game.ducks[game.currentDuck].isHit) )
+            if ( !(gameController.GetCurrentDuck(game).isFlyAway ^ gameController.GetCurrentDuck(game).isHit) )
             {
-                duckController.Fly(game.ducks[game.currentDuck], delta);
+                duckController.Fly(gameController.GetCurrentDuck(game), delta);
             } else
             {
-                duckController.Leave(game.ducks[game.currentDuck], delta);
+                gameController.DuckLeave(game, delta);
             }
 
             prevMouseState = mouseState;
             
-            duckPosition = new Vector2(game.ducks[game.currentDuck].posX, game.ducks[game.currentDuck].posY);
+           
 
             }
+
+            dogPosition = new Vector2(game.dog.posX, game.dog.posY);
+            duckPosition = new Vector2(gameController.GetCurrentDuck(game).posX, gameController.GetCurrentDuck(game).posY);
             base.Update(gameTime);
         }
 

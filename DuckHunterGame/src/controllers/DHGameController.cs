@@ -1,4 +1,5 @@
 ﻿using DuckHunterGame.src.models;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,8 @@ namespace DuckHunterGame.src.controllers
             game.birdHitGoal = 6;
             game.currentDuck = 0;
 
+            game.isIntro = true;
+
             return game;
         }
 
@@ -41,6 +44,7 @@ namespace DuckHunterGame.src.controllers
                 //ChangeCanShoot(game);
                 duckController.ChangeIsHit(duck);
                 RestoreBullets(game);
+                
             
             } else if (GetBullets(game) == 0)
             {
@@ -48,6 +52,46 @@ namespace DuckHunterGame.src.controllers
                 RestoreBullets(game);
             }
             
+        }
+
+        public void DuckLeave(DHGame game, float delta) // MAYBE MOVE TO GAME CONTROLLER // MOVED FROM DUCK CONTROLLER
+        {
+            Duck duck = GetCurrentDuck(game);
+            Dog dog = GetDog(game);
+            if (duck.isHit)
+            {
+                if (duck.posY < 64 * 6)
+                {
+                    duck.posY += duck.speed * delta;
+                }
+                else
+                {
+
+                    dogController.SetDogPosition(dog, duck);
+                    
+                    dogController.Reval(dog, delta);
+                    // Change Dog Animation Style
+                    // Make Dog visable
+                    // After Animation hide dog and continue game
+                    // dog shows up holding duck
+                }
+            }
+            else if (duck.isFlyAway)
+            {
+                if (duck.posY > -64)
+                {
+                    duck.posY -= duck.speed * delta;
+                }
+                else
+                {
+                    // dog shows up laughing
+                    // Make Dog visable
+                    // Change Dog Animation Style
+                    // After Animation hide dog and continue game
+
+
+                }
+            }
         }
 
 
@@ -91,9 +135,9 @@ namespace DuckHunterGame.src.controllers
             game.canShoot = !game.canShoot;
         }
         
-        public int GetCurrentDuck(DHGame game)
+        public Duck GetCurrentDuck(DHGame game)
         {
-            return game.currentDuck;
+            return game.ducks[game.currentDuck];
         }
         public void NextDuck(DHGame game)
         {
@@ -118,6 +162,14 @@ namespace DuckHunterGame.src.controllers
         public Dog GetDog(DHGame game)
         {
             return game.dog;
+        }
+        public bool GetIsIntro(DHGame game)
+        {
+            return game.isIntro;
+        }
+        public void DisableIntro(DHGame game)
+        {
+            game.isIntro = false;
         }
     }
 }

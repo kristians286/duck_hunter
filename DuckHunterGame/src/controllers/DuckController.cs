@@ -13,10 +13,12 @@ namespace DuckHunterGame.src.controllers
     {
         public Duck NewDuck()
         {
+            Random rand = new Random(); 
             Duck duck = new();
-            duck.posX = 255;
-            duck.posY = 400;
-            duck.speed = 100;
+            duck.posX = rand.Next(0, 64 * 7);
+            duck.posY = 64*7;
+            duck.speed = 200;
+            duck.flyDirHorizontal = rand.Next(2) == 1;
             return duck;
         }
 
@@ -64,28 +66,6 @@ namespace DuckHunterGame.src.controllers
             }
         }
 
-        public void Leave(Duck duck, float delta)
-        {
-            if (duck.isHit) { 
-                if (duck.posY < 64*7)
-                {
-                    duck.posY += duck.speed * delta;
-                } else
-                {
-                    // dog shows up holding duck
-                }
-            } else if (duck.isFlyAway)
-            {
-                if (duck.posY > 0)
-                {
-                    duck.posY -= duck.speed * delta;
-                } else
-                {
-                    // dog shows up laughing
-                }
-            }
-        }
-
         public bool GetIsHit(Duck duck)
         {
             return duck.isHit;
@@ -127,5 +107,7 @@ namespace DuckHunterGame.src.controllers
         {
             duck.enumDuckAnimState = targetState;
         }
+
+
     }
 }

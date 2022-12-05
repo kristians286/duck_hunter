@@ -22,6 +22,7 @@ namespace DuckHunterGame.src.models
         public Dog dog;
 
         public bool isGameOver;
+        public bool isIntro;
         public bool canShoot;
     }
 }

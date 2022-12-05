@@ -14,6 +14,9 @@ namespace DuckHunterGame.src.controllers
         {
             Dog dog = new();
             dog.posY = 64 * 6;
+            dog.posX = 64;
+            dog.isVisable = true;
+            dog.isInBackround = false;
             return dog;
         }
 
@@ -36,7 +39,7 @@ namespace DuckHunterGame.src.controllers
             //TODO
         }
 
-        public void JumpInBush(Dog dog, int targetPosX , float delta)
+        public void JumpInBush(Dog dog, int targetPosX , float delta) // MIGHT NEED TO MOVE TO GAME CONTROLLER
         {
             if (dog.posX < targetPosX + 32)
             {
@@ -44,21 +47,50 @@ namespace DuckHunterGame.src.controllers
                 dog.posY -= 100* delta;
             } else
             {   
-                ChangeDisplayLayer(dog);
+                ChangeIsInBackgound(dog);
                 if (dog.posY < 64*6)
                 {
                     dog.posY += 100 * delta;
                 } else
                 {
                     ChangeIsVisable(dog);
+                    //gameController.NextDuck(game); // IDK 
                 }
             
             }
         }
 
+        public void Reval(Dog dog, float delta)
+        {
+
+            if (dog.posY < 64*4)
+            {
+                dog.posY -= 200 * delta;
+            } else
+            {
+                if (dog.animDuration < 0.5)
+                {
+                    dog.animDuration += delta;
+                } else
+                {
+                    Hide(dog, delta);
+                }
+            }
+        }
+        public void Hide(Dog dog, float delta)
+        {
+            if (dog.posY > 64* 6)
+            {
+                dog.posY += 200* delta;
+            } else
+            {
+                //ChangeIsVisable(dog);
+            }
+        }
+
         public void SetDogPosition(Dog dog, Duck duck)
         {
-            dog.posX = (int)duck.posX;
+            dog.posX = duck.posX;
         }
 
         public void CenterDog(Dog dog, DHGame game)
@@ -81,9 +113,13 @@ namespace DuckHunterGame.src.controllers
             return dog.isVisable;
         }
 
-        public void ChangeDisplayLayer(Dog dog)
+        public void ChangeIsInBackgound(Dog dog)
         {
             dog.isInBackround = !dog.isInBackround;
+        }
+        public bool GetIsInBackground(Dog dog)
+        {
+            return dog.isInBackround;
         }
     }
 }
