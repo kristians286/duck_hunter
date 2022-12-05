@@ -17,10 +17,11 @@ namespace DuckHunterGame.src.controllers
             dog.posX = 64;
             dog.isVisable = true;
             dog.isInBackround = false;
+            dog.enumDogAnimState = EnumDogAnimState.WALK;
             return dog;
         }
 
-        public void Move(Dog dog, int targetPosX, float delta)
+        public void Walk(Dog dog, int targetPosX, float delta)
         {
             if (dog.posX < targetPosX)
             {
@@ -32,6 +33,7 @@ namespace DuckHunterGame.src.controllers
                     dog.animDuration += delta;
                 } else 
                 {
+                    dog.enumDogAnimState = EnumDogAnimState.JUMP;
                     JumpInBush(dog, targetPosX, delta);
                 }
                 
@@ -54,38 +56,20 @@ namespace DuckHunterGame.src.controllers
                 } else
                 {
                     ChangeIsVisable(dog);
-                    //gameController.NextDuck(game); // IDK 
+                    ResetAnimDuration(dog);
                 }
             
             }
         }
 
-        public void Reval(Dog dog, float delta)
+        public void Reveal(Dog dog, float delta)
         {
-
-            if (dog.posY < 64*4)
-            {
-                dog.posY -= 200 * delta;
-            } else
-            {
-                if (dog.animDuration < 0.5)
-                {
-                    dog.animDuration += delta;
-                } else
-                {
-                    Hide(dog, delta);
-                }
-            }
+            dog.posY -= 100 * delta;
+             
         }
         public void Hide(Dog dog, float delta)
         {
-            if (dog.posY > 64* 6)
-            {
-                dog.posY += 200* delta;
-            } else
-            {
-                //ChangeIsVisable(dog);
-            }
+            dog.posY += 100* delta;
         }
 
         public void SetDogPosition(Dog dog, Duck duck)
@@ -120,6 +104,11 @@ namespace DuckHunterGame.src.controllers
         public bool GetIsInBackground(Dog dog)
         {
             return dog.isInBackround;
+        }
+
+        public void ResetAnimDuration(Dog dog)
+        {
+            dog.animDuration = 0;
         }
     }
 }

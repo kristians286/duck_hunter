@@ -13,6 +13,7 @@ namespace DuckHunterGame.src
         private SpriteBatch _spriteBatch;
 
         private DHGame game;
+
         private DHGameController gameController = new();
         private DuckController duckController = new();
         private DogController dogController = new();
@@ -82,41 +83,37 @@ namespace DuckHunterGame.src
 
             // TODO: Add your update logic here
 
-            if (gameController.GetIsIntro(game)) 
+            if (dogController.IsVisable(gameController.GetDog(game))) 
             {
-                dogController.Move(gameController.GetDog(game), 64*3, delta);
-                //STOP INTRO
-                if (dogController.GetIsInBackground(gameController.GetDog(game)))
+                if (gameController.GetIsIntro(game)){ 
+                    dogController.Walk(gameController.GetDog(game), 64*3, delta);
+                } else
                 {
-                    gameController.DisableIntro(game); 
+                    gameController.AnimateDog(game, delta);
+                    
                 }
+
             } else {
-            
 
-
-
-            if (!gameController.GetCanShoot(game)) {
-                mouseState = Mouse.GetState();
-                if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
-                {
-                    mousePos = (mouseState.X, mouseState.Y); // DELETE LATER
-                    gameController.Shoot(game, mouseState.X, mouseState.Y);
+                if (!gameController.GetCanShoot(game)) {
+                    mouseState = Mouse.GetState();
+                    if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                    {
+                        mousePos = (mouseState.X, mouseState.Y); // DELETE LATER
+                        gameController.Shoot(game, mouseState.X, mouseState.Y);
+                    }
                 }
-            }
 
-            if ( !(gameController.GetCurrentDuck(game).isFlyAway ^ gameController.GetCurrentDuck(game).isHit) )
-            {
-                duckController.Fly(gameController.GetCurrentDuck(game), delta);
-            } else
-            {
-                gameController.DuckLeave(game, delta);
-            }
+                if ( !(gameController.GetCurrentDuck(game).isFlyAway ^ gameController.GetCurrentDuck(game).isHit) )
+                {
+                    duckController.Fly(gameController.GetCurrentDuck(game), delta);
+                } else
+                {
+                    gameController.DuckLeave(game, delta);
+                }
 
-            prevMouseState = mouseState;
-            
-           
-
-            }
+                prevMouseState = mouseState;
+                }
 
             dogPosition = new Vector2(game.dog.posX, game.dog.posY);
             duckPosition = new Vector2(gameController.GetCurrentDuck(game).posX, gameController.GetCurrentDuck(game).posY);
@@ -133,12 +130,16 @@ namespace DuckHunterGame.src
 
             _spriteBatch.DrawString(font, "X:" + game.ducks[game.currentDuck].posX +
                                         "\nY:" + game.ducks[game.currentDuck].posY +
+                                        "\nState:" + game.ducks[game.currentDuck].enumDuckAnimState+
                                         "\nmPos:" + mousePos +
                                         "\ndogX:" + game.dog.posX +
                                         "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);
             _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) , new Vector2(0, 64*7), Color.Black);
-            
-            
+
+            _spriteBatch.DrawString(font, "Dog: " + gameController.GetDog(game).animDuration 
+                + gameController.GetDog(game).isVisable + gameController.GetDog(game).enumDogAnimState
+
+                , new Vector2(0, 64 * 6), Color.Black);
             _spriteBatch.Draw(duckHitBox, duckPosition, null,
                                 Color.Red, 0f, new Vector2(0,0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);

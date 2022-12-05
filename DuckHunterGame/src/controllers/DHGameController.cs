@@ -1,4 +1,5 @@
-﻿using DuckHunterGame.src.models;
+﻿using DuckHunterGame.src.enums;
+using DuckHunterGame.src.models;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,44 +57,72 @@ namespace DuckHunterGame.src.controllers
 
         public void DuckLeave(DHGame game, float delta) // MAYBE MOVE TO GAME CONTROLLER // MOVED FROM DUCK CONTROLLER
         {
+            DisableIntro(game);
             Duck duck = GetCurrentDuck(game);
             Dog dog = GetDog(game);
             if (duck.isHit)
             {
+                if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
+                {
+                    duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
+                }
+
                 if (duck.posY < 64 * 6)
                 {
                     duck.posY += duck.speed * delta;
                 }
                 else
                 {
-
+                    dogController.ChangeIsVisable(dog);
                     dogController.SetDogPosition(dog, duck);
-                    
-                    dogController.Reval(dog, delta);
-                    // Change Dog Animation Style
-                    // Make Dog visable
-                    // After Animation hide dog and continue game
-                    // dog shows up holding duck
+                    dogController.ChangeDogAnimState(dog, enums.EnumDogAnimState.SHOW_DUCK);
                 }
             }
             else if (duck.isFlyAway)
             {
+                if (duckController.GetAnimState(duck) != EnumDuckAnimState.FLY_UP)
+                {
+                    duckController.ChangeAnimState(duck, EnumDuckAnimState.FLY_UP);
+                }
+
                 if (duck.posY > -64)
                 {
                     duck.posY -= duck.speed * delta;
                 }
                 else
                 {
-                    // dog shows up laughing
-                    // Make Dog visable
-                    // Change Dog Animation Style
-                    // After Animation hide dog and continue game
-
-
+                    dogController.ChangeIsVisable(dog);
+                    dogController.CenterDog(dog, game);
+                    dogController.ChangeDogAnimState(dog, enums.EnumDogAnimState.LAUGH);
                 }
             }
         }
+        public void AnimateDog(DHGame game, float delta)
+        {
+            Dog dog = GetDog(game);
+            if (dog.enumDogAnimState == EnumDogAnimState.SHOW_DUCK)
+            {
+                if (dog.animDuration < 1)
+                {
+                    dog.animDuration += delta;
+                    dogController.Reveal(dog, delta);
 
+                }
+                else if (1 < dog.animDuration && dog.animDuration < 2)
+                {
+                    dog.animDuration += delta;
+                    dogController.Hide(dog, delta);
+                }
+                else
+                {
+                    dog.enumDogAnimState = EnumDogAnimState.IDLE;
+                    dogController.ChangeIsVisable(dog);
+                    dogController.ResetAnimDuration(dog);
+                    NextDuck(game);
+                }
+
+            }
+        }
 
         public int GetRound(DHGame game)
         {
