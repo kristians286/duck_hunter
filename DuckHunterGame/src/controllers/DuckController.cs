@@ -111,7 +111,7 @@ namespace DuckHunterGame.src.controllers
                 }
             }
 
-            if (GetAnimState(duck) == EnumDuckAnimState.FALL) 
+            if (GetAnimState(duck) == EnumDuckAnimState.FALL)  // DOSENT WORK
             {
                 duck.frames = 2;
                 if (duck.animDuration < 0.2)

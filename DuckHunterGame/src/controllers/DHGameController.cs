@@ -65,8 +65,8 @@ namespace DuckHunterGame.src.controllers
                 DisableIntro(game);
             }
 
-            //slows down code;
-            
+            // only slows down code;
+            // duckController.AnimateDuck(GetCurrentDuck(game), delta);
 
             Duck duck = GetCurrentDuck(game);
             Dog dog = GetDog(game);
@@ -85,7 +85,7 @@ namespace DuckHunterGame.src.controllers
                     }
                     duck.animDuration += delta;
                 } else {
-                    duckController.AnimateDuck(GetCurrentDuck(game), delta);
+                    
 
                     if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
                     {
