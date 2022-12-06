@@ -24,6 +24,9 @@ namespace DuckHunterGame.src.models
         public bool flyDirHorizontal;
 
         public float animDuration;
+        public int frame; // FLIGHT TEST
+        public int frames;
+
         public EnumDuckType enumDuckType;
         public EnumDuckAnimState enumDuckAnimState;
 

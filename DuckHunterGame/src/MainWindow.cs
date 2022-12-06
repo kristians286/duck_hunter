@@ -1,8 +1,10 @@
 ﻿using DuckHunterGame.src.controllers;
+using DuckHunterGame.src.enums;
 using DuckHunterGame.src.models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -35,6 +37,8 @@ namespace DuckHunterGame.src
         private (float, float) mousePos;
 
         private Texture2D background;
+        private Rectangle coolerDuckPosition;
+        private Texture2D duckSprite;
 
         public MainWindow()
         {
@@ -62,9 +66,11 @@ namespace DuckHunterGame.src
 
             // TODO: use this.Content to load your game content here
 
+            duckSprite = Content.Load<Texture2D>("birb");
             background = Content.Load<Texture2D>("background");
 
             font = Content.Load<SpriteFont>("File");
+
             duckHitBox = new Texture2D(GraphicsDevice, 1, 1);
             duckHitBox.SetData(new[] { Color.White });
 
@@ -72,7 +78,7 @@ namespace DuckHunterGame.src
             dogHitBox.SetData(new[] { Color.White });
         }
 
-        protected override void UnloadContent() // WILL BE REMOVED
+        protected override void UnloadContent() // WILL BE REMOVED only used to draw Hitboxes
         {
             base.UnloadContent();
             _spriteBatch.Dispose();
@@ -123,6 +129,7 @@ namespace DuckHunterGame.src
 
             dogPosition = new Vector2(game.dog.posX, game.dog.posY);
             duckPosition = new Vector2(gameController.GetCurrentDuck(game).posX, gameController.GetCurrentDuck(game).posY);
+            coolerDuckPosition = new Rectangle((int)gameController.GetCurrentDuck(game).posX, (int)gameController.GetCurrentDuck(game).posY, 64, 64);
             base.Update(gameTime);
         }
 
@@ -130,13 +137,19 @@ namespace DuckHunterGame.src
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            // TODO: Add your drawing code here  //IGNORE THIS CHAOS FOR NOW THIS IS TESTING. RIGHT ?
             _spriteBatch.Begin();
-
+            
             _spriteBatch.Draw(duckHitBox, duckPosition, null,
                                 Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);
+            if (gameController.GetCurrentDuck(game).flyDirHorizontal) {
+                _spriteBatch.Draw(duckSprite, coolerDuckPosition, new Rectangle(36 * gameController.GetCurrentDuck(game).frame, 0, 36, 36), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
+            } else
+            {
+                _spriteBatch.Draw(duckSprite, coolerDuckPosition, new Rectangle(36 * gameController.GetCurrentDuck(game).frame, 0, 36, 36), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
 
+            }
             if (dogController.GetIsInBackground(gameController.GetDog(game)))
             {
                 _spriteBatch.Draw(dogHitBox, dogPosition, null,
@@ -156,7 +169,7 @@ namespace DuckHunterGame.src
                             "\nY:" + game.ducks[game.currentDuck].posY +
                             "\nGamePoints:" + gameController.GetPoints(game) +
                             "\nmPos:" + mousePos + "\n" +gameController.GetDog(game).isInBackround+
-                            "\ndogX:" + game.dog.posX +
+                            "\nB_FRAME:" + gameController.GetCurrentDuck(game).frame +
                             "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);
             _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) +
                                         "\nround: " + gameController.GetRound(game)

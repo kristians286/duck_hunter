@@ -33,7 +33,7 @@ namespace DuckHunterGame.src.controllers
                 dog.posX += 50 * delta;
             } else
             {   
-                if (dog.animDuration < 1)
+                if (GetAnimDuration(dog) < 0.5)
                 {
                     dog.animDuration += delta;
                 } else 
@@ -48,7 +48,7 @@ namespace DuckHunterGame.src.controllers
         {
             if (dog.posX < targetPosX + 32)
             {
-                dog.posX += 25* delta;
+                dog.posX += 50* delta;
                 dog.posY -= 100* delta;
             } else
             {   

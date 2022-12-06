@@ -64,7 +64,10 @@ namespace DuckHunterGame.src.controllers
             {
                 DisableIntro(game);
             }
+
+            //slows down code;
             
+
             Duck duck = GetCurrentDuck(game);
             Dog dog = GetDog(game);
             
@@ -76,16 +79,18 @@ namespace DuckHunterGame.src.controllers
                 {
                     if (duckController.GetAnimState(duck) != EnumDuckAnimState.HIT)
                     {
+                        ChangeCanShoot(game);
                         duckController.ChangeAnimState(duck, EnumDuckAnimState.HIT);
-
+                        //duckController.RestoreAnimDuration(duck); // For now not realy needed
                     }
                     duck.animDuration += delta;
-                } else { 
+                } else {
+                    duckController.AnimateDuck(GetCurrentDuck(game), delta);
 
                     if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
                     {
                         duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
-                        ChangeCanShoot(game);
+
                         AddHitCount(game);
                         AddPoints(game, duckController.GetPoints(duck));
                     }
@@ -132,13 +137,13 @@ namespace DuckHunterGame.src.controllers
             Dog dog = GetDog(game);
             if (dogController.GetAnimState(dog) == EnumDogAnimState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogAnimState.LAUGH )
             {
-                if (dogController.GetAnimDuration(dog) < 1)
+                if (dogController.GetAnimDuration(dog) < 0.7)
                 {
                     dog.animDuration += delta;
                     dogController.Reveal(dog, delta);
 
                 }
-                else if (1 < dogController.GetAnimDuration(dog) && dogController.GetAnimDuration(dog) < 2)
+                else if (0.7 < dogController.GetAnimDuration(dog) && dogController.GetAnimDuration(dog) < 1.4)
                 {
                     dog.animDuration += delta;
                     dogController.Hide(dog, delta);

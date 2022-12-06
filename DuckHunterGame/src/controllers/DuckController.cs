@@ -37,8 +37,9 @@ namespace DuckHunterGame.src.controllers
                 duck.enumDuckAnimState = EnumDuckAnimState.FLY_LEFT;
             }
             duck.enumDuckType = (EnumDuckType)duckTypeList.GetValue(enumDuckTypeValues);
-            duck.points = 500 + (enumDuckTypeValues * 500); 
-            
+            duck.points = 500 + (enumDuckTypeValues * 500);
+
+            duck.frames = 3;
         }
 
         public void GenerateDucks(DHGame game)
@@ -51,6 +52,9 @@ namespace DuckHunterGame.src.controllers
         
         public void Fly(Duck duck, float delta) // TODO ADD DEVIATION = A RANDOM VAR THAT MAKES IT LESS PREDICTABLE
         {
+
+            
+            AnimateDuck(duck,delta);
 
             if (duck.flyDirVertical)
             {
@@ -84,6 +88,43 @@ namespace DuckHunterGame.src.controllers
                     ChangeFlyDirHorizontal(duck);
                     ChangeAnimState(duck, EnumDuckAnimState.FLY_RIGHT);
                 }
+            }
+        }
+
+        public void AnimateDuck(Duck duck, float delta) // MUST REDO 100% sure
+        {
+            if (GetAnimState(duck) == EnumDuckAnimState.FLY_RIGHT || GetAnimState(duck) == EnumDuckAnimState.FLY_LEFT)
+            {
+                duck.frames = 3;
+                if (duck.animDuration < 0.1) //FLIGHT TEST
+                {
+                    duck.animDuration += delta;
+                }
+                else
+                {
+                    duck.frame++;
+                    if (duck.frame >= duck.frames)
+                    {
+                        duck.frame = 0;
+                    }
+                    RestoreAnimDuration(duck);
+                }
+            }
+
+            if (GetAnimState(duck) == EnumDuckAnimState.FALL) 
+            {
+                duck.frames = 2;
+                if (duck.animDuration < 0.2)
+                {
+                    duck.animDuration += delta;
+                } else
+                {
+                    duck.frame++;
+                } if (duck.frame >= duck.frames)
+                {
+                    duck.frame = 0;
+                }
+                RestoreAnimDuration(duck);
             }
         }
 
