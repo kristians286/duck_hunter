@@ -68,23 +68,24 @@ namespace DuckHunterGame.src.controllers
             
             if (duck.isHit)
             {
-                if (duckController.GetAnimState(duck) != EnumDuckAnimState.HIT)
-                {
-                    duckController.ChangeAnimState(duck, EnumDuckAnimState.HIT);
-                    ChangeCanShoot(game);
-                    AddHitCount(game);
-                    AddPoints(game, duckController.GetPoints(duck));
-                }
+                
 
                 if (duckController.GetAnimDuration(duck) < 0.3)
                 {
+                    if (duckController.GetAnimState(duck) != EnumDuckAnimState.HIT)
+                    {
+                        duckController.ChangeAnimState(duck, EnumDuckAnimState.HIT);
+
+                    }
                     duck.animDuration += delta;
-                    
                 } else { 
 
                     if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
                     {
                         duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
+                        ChangeCanShoot(game);
+                        AddHitCount(game);
+                        AddPoints(game, duckController.GetPoints(duck));
                     }
 
                     if (duck.posY < 64 * 6)
