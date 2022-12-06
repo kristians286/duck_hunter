@@ -134,7 +134,9 @@ namespace DuckHunterGame.src
                                         "\nmPos:" + mousePos +
                                         "\ndogX:" + game.dog.posX +
                                         "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);
-            _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) , new Vector2(0, 64*7), Color.Black);
+            _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) +
+                                        "\nround: " + gameController.GetRound(game) 
+                , new Vector2(0, 64*7), Color.Black);
 
             _spriteBatch.DrawString(font, "Dog: " + gameController.GetDog(game).animDuration 
                 + gameController.GetDog(game).isVisable + gameController.GetDog(game).enumDogAnimState

@@ -19,7 +19,7 @@ namespace DuckHunterGame.src.controllers
             game.screenHeight = 8 * 64;
             game.screenWidth = 8 * 64;
 
-            game.round = 0;
+            game.round = 1;
             game.points = 0;
             game.bullets = 3;
             game.ducks = new List<Duck>();
@@ -58,7 +58,7 @@ namespace DuckHunterGame.src.controllers
 
         public void DuckLeave(DHGame game, float delta) // MAYBE MOVE TO GAME CONTROLLER // MOVED FROM DUCK CONTROLLER
         {
-            if (game.currentDuck == 0 && game.isIntro)
+            if (game.isIntro)
             {
                 DisableIntro(game);
             }
@@ -71,6 +71,7 @@ namespace DuckHunterGame.src.controllers
                 if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
                 {
                     ChangeCanShoot(game);
+                    AddHitCount(game);
                     AddPoints(game, duckController.GetPoints(duck));
                     duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
                 }
@@ -84,7 +85,7 @@ namespace DuckHunterGame.src.controllers
                     ChangeCanShoot(game);
                     dogController.ChangeIsVisable(dog);
                     dogController.SetDogPosition(dog, duck);
-                    dogController.ChangeDogAnimState(dog, enums.EnumDogAnimState.SHOW_DUCK);
+                    dogController.ChangeDogAnimState(dog, EnumDogAnimState.SHOW_DUCK);
                 }
             }
             else if (duck.isFlyAway)
@@ -104,7 +105,7 @@ namespace DuckHunterGame.src.controllers
                     ChangeCanShoot(game);
                     dogController.ChangeIsVisable(dog);
                     dogController.CenterDog(dog, game);
-                    dogController.ChangeDogAnimState(dog, enums.EnumDogAnimState.LAUGH);
+                    dogController.ChangeDogAnimState(dog, EnumDogAnimState.LAUGH);
                 }
             }
             
@@ -133,6 +134,7 @@ namespace DuckHunterGame.src.controllers
                     
                     if (game.currentDuck == game.ducks.Count()-1)
                     {
+                        
                         if (GetHitGoal(game) <= GetDucksHitCount(game))
                         {
                             NextRound(game);
@@ -140,6 +142,8 @@ namespace DuckHunterGame.src.controllers
                         {
                             RestartGame(game);
                         }
+                        
+                        
                     } else
                     {
                         NextDuck(game);
@@ -158,6 +162,13 @@ namespace DuckHunterGame.src.controllers
             game.round++;
             game.ducks.Clear();
             duckController.GenerateDucks(game);
+
+
+            //dogController.ChangeDogAnimState(GetDog(game), EnumDogAnimState.WALK);
+            //dogController.ChangeIsVisable(GetDog(game));
+            game.dog = dogController.NewDog();
+
+
             game.currentDuck = 0;
             game.ducksHitCount = 0;
             game.isIntro = true;
@@ -214,6 +225,12 @@ namespace DuckHunterGame.src.controllers
         {
             return game.ducksHitGoal;
         }
+
+        public void AddHitCount(DHGame game)
+        {
+            game.ducksHitCount++;
+        }
+
         public int GetDucksHitCount(DHGame game)
         {
             return game.ducksHitCount;
@@ -221,7 +238,16 @@ namespace DuckHunterGame.src.controllers
 
         public void RestartGame(DHGame game) 
         {
-            game = NewGame();
+            game.round = 1;
+            game.points = 0;
+            game.ducks.Clear();
+            duckController.GenerateDucks(game);
+            game.dog = dogController.NewDog();
+            game.ducksHitGoal = 1;
+            game.ducksHitCount = 0;
+            game.currentDuck = 0;
+
+            game.isIntro = true;
         }
 
         public Dog GetDog(DHGame game)
