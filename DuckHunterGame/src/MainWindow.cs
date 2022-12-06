@@ -3,6 +3,7 @@ using DuckHunterGame.src.models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 using System.Threading;
 
 namespace DuckHunterGame.src
@@ -89,8 +90,7 @@ namespace DuckHunterGame.src
                     dogController.Walk(gameController.GetDog(game), 64*3, delta);
                 } else
                 {
-                    gameController.AnimateDog(game, delta);
-                    
+                    gameController.AnimateDog(game, delta); 
                 }
 
             } else {
@@ -130,7 +130,7 @@ namespace DuckHunterGame.src
 
             _spriteBatch.DrawString(font, "X:" + game.ducks[game.currentDuck].posX +
                                         "\nY:" + game.ducks[game.currentDuck].posY +
-                                        "\nState:" + game.ducks[game.currentDuck].enumDuckAnimState+
+                                        "\nGamePoints:" + gameController.GetPoints(game)+
                                         "\nmPos:" + mousePos +
                                         "\ndogX:" + game.dog.posX +
                                         "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);

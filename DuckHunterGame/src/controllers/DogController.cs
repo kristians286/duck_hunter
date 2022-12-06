@@ -79,7 +79,7 @@ namespace DuckHunterGame.src.controllers
 
         public void CenterDog(Dog dog, DHGame game)
         {
-            dog.posX = game.screenWidth / 2;
+            dog.posX = game.screenWidth / 2 - 32;
         }
 
         public void ChangeDogAnimState(Dog dog, EnumDogAnimState targetState)

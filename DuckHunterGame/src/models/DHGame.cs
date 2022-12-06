@@ -16,7 +16,8 @@ namespace DuckHunterGame.src.models
         public int bullets;
 
         public List<Duck> ducks;
-        public int birdHitGoal;
+        public int ducksHitGoal;
+        public int ducksHitCount;
         public int currentDuck;
 
         public Dog dog;

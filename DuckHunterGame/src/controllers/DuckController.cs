@@ -19,6 +19,7 @@ namespace DuckHunterGame.src.controllers
             duck.posY = 64*7;
             duck.speed = 200;
             duck.flyDirHorizontal = rand.Next(2) == 1;
+            duck.points = 500; // Increese with duck
             if (duck.flyDirHorizontal)
             {
                 duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
@@ -31,7 +32,7 @@ namespace DuckHunterGame.src.controllers
 
         public void GenerateDucks(DHGame game)
         {
-            for (int i = 0; i < 10; i ++)
+            for (int i = 0; i < 2; i ++)
             {
                 game.ducks.Add(NewDuck());
             }
@@ -73,6 +74,11 @@ namespace DuckHunterGame.src.controllers
                     duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
                 }
             }
+        }
+
+        public int GetPoints(Duck duck)
+        {
+            return duck.points;
         }
 
         public bool GetIsHit(Duck duck)
