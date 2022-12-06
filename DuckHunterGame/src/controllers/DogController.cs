@@ -13,12 +13,17 @@ namespace DuckHunterGame.src.controllers
         public Dog NewDog()
         {
             Dog dog = new();
-            dog.posY = 64 * 6 -32;
+            setDefaultValues(dog);
+            return dog;
+        }
+
+        private void setDefaultValues(Dog dog)
+        {
+            dog.posY = 64 * 6 - 32;
             dog.posX = 64 * 2;
             dog.isVisable = true;
             dog.isInBackround = false;
             dog.enumDogAnimState = EnumDogAnimState.WALK;
-            return dog;
         }
 
         public void Walk(Dog dog, int targetPosX, float delta)
@@ -36,9 +41,7 @@ namespace DuckHunterGame.src.controllers
                     dog.enumDogAnimState = EnumDogAnimState.JUMP;
                     JumpInBush(dog, targetPosX, delta);
                 }
-                
             }
-            //TODO
         }
 
         public void JumpInBush(Dog dog, int targetPosX , float delta) // MIGHT NEED TO MOVE TO GAME CONTROLLER
@@ -64,7 +67,14 @@ namespace DuckHunterGame.src.controllers
             
             }
         }
-
+        public float GetAnimDuration(Dog dog)
+        {
+            return dog.animDuration;
+        }
+        public EnumDogAnimState GetAnimState(Dog dog)
+        {
+            return dog.enumDogAnimState;
+        }
         public void Reveal(Dog dog, float delta)
         {
             dog.posY -= 100 * delta;
@@ -74,32 +84,26 @@ namespace DuckHunterGame.src.controllers
         {
             dog.posY += 100* delta;
         }
-
         public void SetDogPosition(Dog dog, Duck duck)
         {
             dog.posX = duck.posX;
         }
-
         public void CenterDog(Dog dog, DHGame game)
         {
             dog.posX = game.screenWidth / 2 - 32;
         }
-
         public void ChangeDogAnimState(Dog dog, EnumDogAnimState targetState)
         {
             dog.enumDogAnimState = targetState;
         }
-
-        public void ChangeIsVisable(Dog dog) // MIGHT REMOVE BECAUSE THE DOG WOULD ALWAYS BE IN BACKGROUND
+        public void ChangeIsVisable(Dog dog)
         {
             dog.isVisable = !dog.isVisable;
         }
-
         public bool IsVisable(Dog dog)
         {
             return dog.isVisable;
         }
-
         public void ChangeIsInBackgound(Dog dog)
         {
             dog.isInBackround = !dog.isInBackround;
@@ -108,7 +112,6 @@ namespace DuckHunterGame.src.controllers
         {
             return dog.isInBackround;
         }
-
         public void ResetAnimDuration(Dog dog)
         {
             dog.animDuration = 0;

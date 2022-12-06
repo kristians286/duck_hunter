@@ -13,22 +13,32 @@ namespace DuckHunterGame.src.controllers
     {
         public Duck NewDuck()
         {
-            Random rand = new (); 
+             
             Duck duck = new();
+            setDefaultSettings(duck);
+            return duck;
+        }
+
+        private void setDefaultSettings(Duck duck)
+        {
+            Random rand = new();
+            Array duckTypeList = Enum.GetValues(typeof(EnumDuckType));
+            int enumDuckTypeValues = rand.Next(duckTypeList.Length);
             duck.posX = rand.Next(0, 64 * 7);
-            duck.posY = 64*7;
-            duck.speed = 200;
+            duck.posY = 64 * 7;
+            duck.speed = 200 + (50 * enumDuckTypeValues);
             duck.flyDirHorizontal = rand.Next(2) == 1;
-            duck.points = 500; // Increese with duckType
-            duck.enumDuckType = EnumDuckType.BLACK_DUCK;
             if (duck.flyDirHorizontal)
             {
                 duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
-            } else
+            }
+            else
             {
                 duck.enumDuckAnimState = EnumDuckAnimState.FLY_LEFT;
             }
-            return duck;
+            duck.enumDuckType = (EnumDuckType)duckTypeList.GetValue(enumDuckTypeValues);
+            duck.points = 500 + (enumDuckTypeValues * 500); 
+            
         }
 
         public void GenerateDucks(DHGame game)
@@ -81,17 +91,14 @@ namespace DuckHunterGame.src.controllers
         {
             return duck.points;
         }
-
         public bool GetIsHit(Duck duck)
         {
             return duck.isHit;
         }
-
         public void ChangeIsHit(Duck duck)
         {
             duck.isHit = !duck.isHit;
         }
-        
         public bool GetIsVisable(Duck duck)
         {
             return duck.isVisable;
@@ -100,7 +107,6 @@ namespace DuckHunterGame.src.controllers
         {
             duck.isVisable = !duck.isVisable;
         }
-
         public bool GetIsFlyAway(Duck duck)
         {
             return duck.isFlyAway;
@@ -109,7 +115,6 @@ namespace DuckHunterGame.src.controllers
         {
             duck.isFlyAway= !duck.isFlyAway;
         }
-
         public void ChangeFlyDirVertical(Duck duck)
         {
             duck.flyDirVertical = !duck.flyDirVertical;
@@ -118,7 +123,6 @@ namespace DuckHunterGame.src.controllers
         {
             duck.flyDirHorizontal = !duck.flyDirHorizontal;
         }
-        
         public void ChangeAnimState(Duck duck, EnumDuckAnimState targetState)
         {
             duck.enumDuckAnimState = targetState;
@@ -127,7 +131,6 @@ namespace DuckHunterGame.src.controllers
         {
             return duck.enumDuckAnimState;
         }
-
         public float GetAnimDuration(Duck duck)
         {
             return duck.animDuration;
