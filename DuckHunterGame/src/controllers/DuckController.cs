@@ -13,13 +13,14 @@ namespace DuckHunterGame.src.controllers
     {
         public Duck NewDuck()
         {
-            Random rand = new Random(); 
+            Random rand = new (); 
             Duck duck = new();
             duck.posX = rand.Next(0, 64 * 7);
             duck.posY = 64*7;
             duck.speed = 200;
             duck.flyDirHorizontal = rand.Next(2) == 1;
             duck.points = 500; // Increese with duckType
+            duck.enumDuckType = EnumDuckType.BLACK_DUCK;
             if (duck.flyDirHorizontal)
             {
                 duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
@@ -63,7 +64,7 @@ namespace DuckHunterGame.src.controllers
                 if (duck.posX > 64 * 7)
                 {
                     ChangeFlyDirHorizontal(duck);
-                    duck.enumDuckAnimState = EnumDuckAnimState.FLY_LEFT;
+                    ChangeAnimState(duck, EnumDuckAnimState.FLY_LEFT);
                 }
             } else
             {
@@ -71,7 +72,7 @@ namespace DuckHunterGame.src.controllers
                 if (duck.posX < 0)
                 {
                     ChangeFlyDirHorizontal(duck);
-                    duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
+                    ChangeAnimState(duck, EnumDuckAnimState.FLY_RIGHT);
                 }
             }
         }
@@ -125,6 +126,15 @@ namespace DuckHunterGame.src.controllers
         public EnumDuckAnimState GetAnimState(Duck duck)
         {
             return duck.enumDuckAnimState;
+        }
+
+        public float GetAnimDuration(Duck duck)
+        {
+            return duck.animDuration;
+        }
+        public void RestoreAnimDuration(Duck duck)
+        {
+            duck.animDuration = 0;
         }
 
 

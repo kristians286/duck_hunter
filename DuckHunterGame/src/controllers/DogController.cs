@@ -13,8 +13,8 @@ namespace DuckHunterGame.src.controllers
         public Dog NewDog()
         {
             Dog dog = new();
-            dog.posY = 64 * 6;
-            dog.posX = 64;
+            dog.posY = 64 * 6 -32;
+            dog.posX = 64 * 2;
             dog.isVisable = true;
             dog.isInBackround = false;
             dog.enumDogAnimState = EnumDogAnimState.WALK;
@@ -49,8 +49,11 @@ namespace DuckHunterGame.src.controllers
                 dog.posY -= 100* delta;
             } else
             {   
-                ChangeIsInBackgound(dog);
-                if (dog.posY < 64*6)
+                if (dog.isInBackround != true)
+                {
+                    ChangeIsInBackgound(dog);
+                }
+                if (dog.posY < 64*6 - 32)
                 {
                     dog.posY += 100 * delta;
                 } else

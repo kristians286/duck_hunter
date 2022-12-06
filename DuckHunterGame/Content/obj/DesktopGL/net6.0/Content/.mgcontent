@@ -4,9 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/background.png</File>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

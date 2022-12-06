@@ -24,3 +24,4 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\obj\Debug\net6.0\DuckHunterG
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\obj\Debug\net6.0\DuckHunterGame.genruntimeconfig.cache
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\obj\Debug\net6.0\ref\DuckHunterGame.dll
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\File.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\background.xnb

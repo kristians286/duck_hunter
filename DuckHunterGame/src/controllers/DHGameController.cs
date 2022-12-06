@@ -68,24 +68,36 @@ namespace DuckHunterGame.src.controllers
             
             if (duck.isHit)
             {
-                if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
+                if (duckController.GetAnimState(duck) != EnumDuckAnimState.HIT)
                 {
+                    duckController.ChangeAnimState(duck, EnumDuckAnimState.HIT);
                     ChangeCanShoot(game);
                     AddHitCount(game);
                     AddPoints(game, duckController.GetPoints(duck));
-                    duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
                 }
 
-                if (duck.posY < 64 * 6)
+                if (duckController.GetAnimDuration(duck) < 0.3)
                 {
-                    duck.posY += duck.speed * delta;
-                }
-                else
-                {
-                    ChangeCanShoot(game);
-                    dogController.ChangeIsVisable(dog);
-                    dogController.SetDogPosition(dog, duck);
-                    dogController.ChangeDogAnimState(dog, EnumDogAnimState.SHOW_DUCK);
+                    duck.animDuration += delta;
+                    
+                } else { 
+
+                    if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
+                    {
+                        duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
+                    }
+
+                    if (duck.posY < 64 * 6)
+                    {
+                        duck.posY += duck.speed * delta;
+                    }
+                    else
+                    {
+                        ChangeCanShoot(game);
+                        dogController.ChangeIsVisable(dog);
+                        dogController.SetDogPosition(dog, duck);
+                        dogController.ChangeDogAnimState(dog, EnumDogAnimState.SHOW_DUCK);
+                    }
                 }
             }
             else if (duck.isFlyAway)
@@ -108,7 +120,9 @@ namespace DuckHunterGame.src.controllers
                     dogController.ChangeDogAnimState(dog, EnumDogAnimState.LAUGH);
                 }
             }
+
             
+
         }
         public void AnimateDog(DHGame game, float delta)
         {

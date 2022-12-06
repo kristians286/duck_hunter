@@ -34,6 +34,8 @@ namespace DuckHunterGame.src
         private Vector2 dogPosition;
         private (float, float) mousePos;
 
+        private Texture2D background;
+
         public MainWindow()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -57,8 +59,12 @@ namespace DuckHunterGame.src
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("File");
+
             // TODO: use this.Content to load your game content here
+
+            background = Content.Load<Texture2D>("background");
+
+            font = Content.Load<SpriteFont>("File");
             duckHitBox = new Texture2D(GraphicsDevice, 1, 1);
             duckHitBox.SetData(new[] { Color.White });
 
@@ -127,27 +133,39 @@ namespace DuckHunterGame.src
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-
-            _spriteBatch.DrawString(font, "X:" + game.ducks[game.currentDuck].posX +
-                                        "\nY:" + game.ducks[game.currentDuck].posY +
-                                        "\nGamePoints:" + gameController.GetPoints(game)+
-                                        "\nmPos:" + mousePos +
-                                        "\ndogX:" + game.dog.posX +
-                                        "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);
-            _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) +
-                                        "\nround: " + gameController.GetRound(game) 
-                , new Vector2(0, 64*7), Color.Black);
-
-            _spriteBatch.DrawString(font, "Dog: " + gameController.GetDog(game).animDuration 
-                + gameController.GetDog(game).isVisable + gameController.GetDog(game).enumDogAnimState
-
-                , new Vector2(0, 64 * 6), Color.Black);
             _spriteBatch.Draw(duckHitBox, duckPosition, null,
-                                Color.Red, 0f, new Vector2(0,0), new Vector2(64f, 64f),
+                                Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);
-            _spriteBatch.Draw(dogHitBox, dogPosition, null,
+
+            if (dogController.GetIsInBackground(gameController.GetDog(game)))
+            {
+                _spriteBatch.Draw(dogHitBox, dogPosition, null,
                                 Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);
+                _spriteBatch.Draw(background, new Rectangle(0, 32, game.screenHeight, game.screenHeight), Color.White);
+            } else
+            {
+                _spriteBatch.Draw(background, new Rectangle(0, 32, game.screenHeight, game.screenHeight), Color.White);
+                _spriteBatch.Draw(dogHitBox, dogPosition, null,
+                                    Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
+                                    SpriteEffects.None, 0f);
+            }
+            
+
+            _spriteBatch.DrawString(font, "X:" + game.ducks[game.currentDuck].posX +
+                            "\nY:" + game.ducks[game.currentDuck].posY +
+                            "\nGamePoints:" + gameController.GetPoints(game) +
+                            "\nmPos:" + mousePos + "\n" +gameController.GetDog(game).isInBackround+
+                            "\ndogX:" + game.dog.posX +
+                            "\ndogY:" + game.dog.posY, new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(font, "Bullets: " + gameController.GetBullets(game) +
+                                        "\nround: " + gameController.GetRound(game)
+                , new Vector2(0, 64 * 7), Color.Black);
+
+            _spriteBatch.DrawString(font, "Dog: " + gameController.GetDog(game).animDuration
+                + gameController.GetDog(game).isVisable + gameController.GetDog(game).enumDogAnimState
+                , new Vector2(0, 64 * 6), Color.Black);
+
 
             _spriteBatch.End();
 

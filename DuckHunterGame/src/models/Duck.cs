@@ -23,7 +23,7 @@ namespace DuckHunterGame.src.models
         public bool flyDirVertical;
         public bool flyDirHorizontal;
 
-        public int animDuration;
+        public float animDuration;
         public EnumDuckType enumDuckType;
         public EnumDuckAnimState enumDuckAnimState;
 
