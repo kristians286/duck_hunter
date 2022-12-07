@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DuckHunterGame.src.enums
 {
-    internal enum EnumDuckType
+    public enum EnumDuckType
     {
         RED_DUCK,
         BLUE_DUCK,

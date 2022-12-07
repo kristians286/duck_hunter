@@ -41,6 +41,9 @@ namespace DuckHunterGame.src.views
         private Rectangle coolerDuckPosition;
         private Texture2D duckSprite;
 
+
+        private Dictionary<EnumDuckAnimState, Rectangle> _spiteDuckPosition = new Dictionary<EnumDuckAnimState, Rectangle>();
+
         public MainWindow()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -52,6 +55,11 @@ namespace DuckHunterGame.src.views
             _graphics.PreferredBackBufferWidth = _game.screenWidth;
             _graphics.PreferredBackBufferHeight = _game.screenHeight;
             _graphics.ApplyChanges();
+
+            //_spiteDuckPosition = new Dictionary<EnumDuckAnimState, Rectangle>();
+            _spiteDuckPosition.Add(EnumDuckAnimState.FLY_LEFT, new Rectangle(0, 0, 36, 36));
+            _spiteDuckPosition.Add(EnumDuckAnimState.FLY_RIGHT, new Rectangle(36, 0, 36, 36));
+            //_spiteDuckPosition.Add(EnumDuckAnimState.FLY_LEFT, new Rectangle(72, 0, 36, 36));
         }
 
         protected override void Initialize()
@@ -165,18 +173,16 @@ namespace DuckHunterGame.src.views
             _spriteBatch.Draw(duckHitBox, duckPosition, null,
                                 Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);
-            /*
+            
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
-                _spriteBatch.Draw(duckSprite, coolerDuckPosition, new Rectangle(36 * _gameController.GetCurrentDuck(_game).frame, 0 + 36 * (int)_gameController.GetCurrentDuck(_game).enumDuckType,
-                                                                                36, 36), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(duckSprite, coolerDuckPosition, _spiteDuckPosition[_game.ducks[_game.currentDuck].enumDuckAnimState], Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
             }
             else
             {
-                _spriteBatch.Draw(duckSprite, coolerDuckPosition, new Rectangle(36 * _gameController.GetCurrentDuck(_game).frame, 0 + 36 * (int)_gameController.GetCurrentDuck(_game).enumDuckType,
-                                                                                _game.ducks[_game.currentDuck].height, _game.ducks[_game.currentDuck].width), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(duckSprite, coolerDuckPosition, _spiteDuckPosition[_game.ducks[_game.currentDuck].enumDuckAnimState], Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
             }
-            */
+            
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {

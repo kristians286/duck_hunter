@@ -22,8 +22,8 @@ namespace DuckHunterGame.src.models
 
         public Dog dog;
 
-        // TURN THIS IN TO ENUM
-        public bool isGameOver;
+        // TURN THIS IN to EnumGameState
+        public bool isGameOver; // not used for now
         public bool isIntro;
         public bool canShoot;
     }
