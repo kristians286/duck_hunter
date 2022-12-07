@@ -1,6 +1,7 @@
 ﻿using DuckHunterGame.src.controllers;
 using DuckHunterGame.src.enums;
 using DuckHunterGame.src.models;
+using DuckHunterGame.src.serializer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -20,6 +21,8 @@ namespace DuckHunterGame.src.views
         private GameController _gameController = new GameController();
         private DuckController _duckController = new DuckController();
         private DogController _dogController = new DogController();
+
+        private GameSerializer _serializer = new GameSerializer();
 
         private Texture2D duckHitBox;
         private Texture2D dogHitBox;
@@ -69,7 +72,7 @@ namespace DuckHunterGame.src.views
 
             font = Content.Load<SpriteFont>("TextFont");
 
-            duckHitBox = new Texture2D(GraphicsDevice, 1, 1);
+            duckHitBox = new Texture2D(GraphicsDevice, 1, 1); // Will be deleted
             duckHitBox.SetData(new[] { Color.White });
 
             dogHitBox = new Texture2D(GraphicsDevice, 1, 1);
@@ -127,6 +130,7 @@ namespace DuckHunterGame.src.views
                     {
                         mousePos = (mouseState.X, mouseState.Y); // DELETE LATER
                         _gameController.Shoot(_game, mouseState.X, mouseState.Y);
+                        //_serializer.SaveGame(_game);  // Save Game 
                     }
                 }
 

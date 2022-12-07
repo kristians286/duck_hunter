@@ -17,12 +17,12 @@ namespace DuckHunterGame.src.models
         public int height;
         public int width;
 
-        public int points;
-        public int speed;
+        public int points { set; get; }
+        public int speed { set; get; }
 
-        public bool isHit;
-        public bool isFlyAway;
-        public bool isVisable;
+        public bool isHit { set; get; }
+        public bool isFlyAway { set; get; }
+        public bool isVisable { set; get; }
 
         public bool flyDirVertical;
         public bool flyDirHorizontal;
