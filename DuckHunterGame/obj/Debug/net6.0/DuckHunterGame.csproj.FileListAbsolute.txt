@@ -25,4 +25,5 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\obj\Debug\net6.0\DuckHunterG
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\obj\Debug\net6.0\ref\DuckHunterGame.dll
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\File.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\background.xnb
-C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\birb.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\ducks.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\TextFont.xnb

@@ -1,2 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1902742
+"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/background.png","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/background.xnb","TextureProcessor","Texture2DContent",4875,262229,0.1122735
+"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/ducks.png","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/ducks.xnb","TextureProcessor","Texture2DContent",2298,46741,0.00637
+"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/TextFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.0852835

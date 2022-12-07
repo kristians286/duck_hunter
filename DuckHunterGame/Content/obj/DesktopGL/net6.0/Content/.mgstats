@@ -1,4 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/background.png","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/Content/background.xnb","TextureProcessor","Texture2DContent",4875,262229,0.1666217
-"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/birb.png","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/Content/birb.xnb","TextureProcessor","Texture2DContent",10679,15637,0.0999303
-"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.2073623
+"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/ducks.png","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/Content/ducks.xnb","TextureProcessor","Texture2DContent",2298,46741,0.1127594
+"C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont","C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/bin/DesktopGL/Content/TextFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1751441

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DuckHunterGame.src.models
 {
-    internal class DHGame
+    internal class Game
     {
         public int screenHeight;
         public int screenWidth;

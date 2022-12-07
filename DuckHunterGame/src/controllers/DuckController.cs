@@ -38,11 +38,12 @@ namespace DuckHunterGame.src.controllers
             }
             duck.enumDuckType = (EnumDuckType)duckTypeList.GetValue(enumDuckTypeValues);
             duck.points = 500 + (enumDuckTypeValues * 500);
+            duck.height = 64;
+            duck.width = 64;
 
-            duck.frames = 3;
         }
 
-        public void GenerateDucks(DHGame game)
+        public void GenerateDucks(models.Game game)
         {
             for (int i = 0; i < 10; i ++)
             {
@@ -52,9 +53,6 @@ namespace DuckHunterGame.src.controllers
         
         public void Fly(Duck duck, float delta) // TODO ADD DEVIATION = A RANDOM VAR THAT MAKES IT LESS PREDICTABLE
         {
-
-            
-            AnimateDuck(duck,delta);
 
             if (duck.flyDirVertical)
             {
@@ -91,8 +89,9 @@ namespace DuckHunterGame.src.controllers
             }
         }
 
-        public void AnimateDuck(Duck duck, float delta) // MUST REDO 100% sure
+        public void AnimateDuck(Duck duck, float delta) // Will be deleted
         {
+            /*
             if (GetAnimState(duck) == EnumDuckAnimState.FLY_RIGHT || GetAnimState(duck) == EnumDuckAnimState.FLY_LEFT)
             {
                 duck.frames = 3;
@@ -110,22 +109,7 @@ namespace DuckHunterGame.src.controllers
                     RestoreAnimDuration(duck);
                 }
             }
-
-            if (GetAnimState(duck) == EnumDuckAnimState.FALL)  // DOSENT WORK
-            {
-                duck.frames = 2;
-                if (duck.animDuration < 0.2)
-                {
-                    duck.animDuration += delta;
-                } else
-                {
-                    duck.frame++;
-                } if (duck.frame >= duck.frames)
-                {
-                    duck.frame = 0;
-                }
-                RestoreAnimDuration(duck);
-            }
+            */
         }
 
         public int GetPoints(Duck duck)

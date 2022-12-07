@@ -13,6 +13,10 @@ namespace DuckHunterGame.src.models
     {
         public float posX;
         public float posY;
+
+        public int height;
+        public int width;
+
         public int points;
         public int speed;
 
@@ -24,8 +28,6 @@ namespace DuckHunterGame.src.models
         public bool flyDirHorizontal;
 
         public float animDuration;
-        public int frame; // FLIGHT TEST
-        public int frames;
 
         public EnumDuckType enumDuckType;
         public EnumDuckAnimState enumDuckAnimState;

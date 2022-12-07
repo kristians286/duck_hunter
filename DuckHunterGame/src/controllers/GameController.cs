@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace DuckHunterGame.src.controllers
 {
-    internal class DHGameController
+    internal class GameController
     {
         private DuckController duckController = new();
         private DogController dogController = new();
-        public DHGame NewGame()
+        public models.Game NewGame()
         {
-            DHGame game = new();
+            models.Game game = new();
             setDefaultSettings(game);
             return game;
         }
 
-        private void setDefaultSettings(DHGame game)
+        private void setDefaultSettings(models.Game game)
         {
             game.screenHeight = 8 * 64;
             game.screenWidth = 8 * 64;
@@ -37,7 +37,7 @@ namespace DuckHunterGame.src.controllers
             game.isIntro = true;
         }
 
-        public void Shoot(DHGame game, int MousePosX, int MousePosY)
+        public void Shoot(models.Game game, int MousePosX, int MousePosY)
         {
             //TODO
             SubBullets(game);
@@ -58,7 +58,7 @@ namespace DuckHunterGame.src.controllers
             
         }
 
-        public void DuckLeave(DHGame game, float delta) // MAYBE MOVE TO GAME CONTROLLER // MOVED FROM DUCK CONTROLLER
+        public void DuckLeave(models.Game game, float delta) // MAYBE MOVE TO GAME CONTROLLER // MOVED FROM DUCK CONTROLLER
         {
             if (game.isIntro)
             {
@@ -85,19 +85,17 @@ namespace DuckHunterGame.src.controllers
                     }
                     duck.animDuration += delta;
                 } else {
-                    
-
                     if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
                     {
                         duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
-
                         AddHitCount(game);
                         AddPoints(game, duckController.GetPoints(duck));
                     }
-
+                    
                     if (duck.posY < 64 * 6)
                     {
                         duck.posY += 200 * delta;
+
                     }
                     else
                     {
@@ -132,7 +130,7 @@ namespace DuckHunterGame.src.controllers
             
 
         }
-        public void DogReaction(DHGame game, float delta)
+        public void DogReaction(models.Game game, float delta)
         {
             Dog dog = GetDog(game);
             if (dogController.GetAnimState(dog) == EnumDogAnimState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogAnimState.LAUGH )
@@ -171,11 +169,11 @@ namespace DuckHunterGame.src.controllers
             }
         }
 
-        public int GetRound(DHGame game)
+        public int GetRound(models.Game game)
         {
             return game.round;
         }
-        public void NextRound(DHGame game)
+        public void NextRound(models.Game game)
         {
             
             game.round++;
@@ -192,7 +190,7 @@ namespace DuckHunterGame.src.controllers
 
             
         }
-        public void RestartGame(DHGame game)
+        public void RestartGame(models.Game game)
         {
             game.round = 1;
             game.points = 0;
@@ -205,75 +203,75 @@ namespace DuckHunterGame.src.controllers
 
             game.isIntro = true;
         }
-        public int GetPoints(DHGame game) 
+        public int GetPoints(models.Game game) 
         { 
             return game.points;
         }
-        public void AddPoints(DHGame game, int points)
+        public void AddPoints(models.Game game, int points)
         {
             game.points += points;
         }
-        public int GetBullets(DHGame game)
+        public int GetBullets(models.Game game)
         {
             return game.bullets;
         }
-        public void SubBullets(DHGame game)
+        public void SubBullets(models.Game game)
         {
             game.bullets--;
         }
-        public void RestoreBullets(DHGame game)
+        public void RestoreBullets(models.Game game)
         {
             game.bullets = 3;
         }
-        public bool GetCanShoot(DHGame game)
+        public bool GetCanShoot(models.Game game)
         {
             return game.canShoot;
         }
-        public void ChangeCanShoot(DHGame game)
+        public void ChangeCanShoot(models.Game game)
         {
             game.canShoot = !game.canShoot;
         }
-        public Duck GetCurrentDuck(DHGame game)
+        public Duck GetCurrentDuck(models.Game game)
         {
             return game.ducks[game.currentDuck];
         }
-        public int GetCurrentDuckNr(DHGame game)
+        public int GetCurrentDuckNr(models.Game game)
         {
             return game.currentDuck;
         }
-        public int GetTotalDucksNr(DHGame game)
+        public int GetTotalDucksNr(models.Game game)
         {
             return game.ducks.Count() - 1;
         }
-        public void NextDuck(DHGame game)
+        public void NextDuck(models.Game game)
         {
             game.currentDuck++;
         }
-        public void ChangeGameOver(DHGame game)
+        public void ChangeGameOver(models.Game game)
         {
             game.isGameOver = !game.isGameOver;
         }
-        public int GetHitGoal(DHGame game)
+        public int GetHitGoal(models.Game game)
         {
             return game.ducksHitGoal;
         }
-        public void AddHitCount(DHGame game)
+        public void AddHitCount(models.Game game)
         {
             game.ducksHitCount++;
         }
-        public int GetDucksHitCount(DHGame game)
+        public int GetDucksHitCount(models.Game game)
         {
             return game.ducksHitCount;
         }
-        public Dog GetDog(DHGame game)
+        public Dog GetDog(models.Game game)
         {
             return game.dog;
         }
-        public bool GetIsIntro(DHGame game)
+        public bool GetIsIntro(models.Game game)
         {
             return game.isIntro;
         }
-        public void DisableIntro(DHGame game)
+        public void DisableIntro(models.Game game)
         {
             game.isIntro = false;
         }
