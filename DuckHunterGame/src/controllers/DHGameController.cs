@@ -132,7 +132,7 @@ namespace DuckHunterGame.src.controllers
             
 
         }
-        public void AnimateDog(DHGame game, float delta)
+        public void DogReaction(DHGame game, float delta)
         {
             Dog dog = GetDog(game);
             if (dogController.GetAnimState(dog) == EnumDogAnimState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogAnimState.LAUGH )

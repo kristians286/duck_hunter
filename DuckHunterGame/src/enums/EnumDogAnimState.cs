@@ -13,5 +13,6 @@ namespace DuckHunterGame.src.enums
         JUMP,
         SHOW_DUCK,
         LAUGH,
+        SNIFF,
     }
 }

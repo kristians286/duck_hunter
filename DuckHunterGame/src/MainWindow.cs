@@ -96,16 +96,28 @@ namespace DuckHunterGame.src
 
             // TODO: Add your update logic here
 
-            if (dogController.IsVisable(gameController.GetDog(game))) 
+            if (dogController.IsVisable(gameController.GetDog(game))) // DOG
             {
-                if (gameController.GetIsIntro(game)){ 
-                    dogController.Walk(gameController.GetDog(game), 64*3, delta);
-                } else
+                if (gameController.GetIsIntro(game))
                 {
-                    gameController.AnimateDog(game, delta); 
+                    if (dogController.GetAnimState(gameController.GetDog(game)) == EnumDogAnimState.WALK) 
+                    { 
+                        dogController.Walk(gameController.GetDog(game), 64 * 2, delta);
+                    } 
+                    else if (dogController.GetAnimState(gameController.GetDog(game)) == EnumDogAnimState.SNIFF) 
+                    {
+                        dogController.Sniff(gameController.GetDog(game), delta);
+                    }
+                    else if (dogController.GetAnimState(gameController.GetDog(game)) == EnumDogAnimState.JUMP)
+                    {
+                        dogController.JumpInBush(gameController.GetDog(game), 64 * 2, delta);
+                    }
+                } else 
+                {
+                    gameController.DogReaction(game, delta);
                 }
 
-            } else {
+            } else { // DUCK
 
                 if (!gameController.GetCanShoot(game)) {
                     mouseState = Mouse.GetState();
@@ -123,10 +135,10 @@ namespace DuckHunterGame.src
                 {
                     gameController.DuckLeave(game, delta);
                 }
-
                 prevMouseState = mouseState;
                 }
 
+            // POSITIONS
             dogPosition = new Vector2(game.dog.posX, game.dog.posY);
             duckPosition = new Vector2(gameController.GetCurrentDuck(game).posX, gameController.GetCurrentDuck(game).posY);
             coolerDuckPosition = new Rectangle((int)gameController.GetCurrentDuck(game).posX, (int)gameController.GetCurrentDuck(game).posY, 64, 64);

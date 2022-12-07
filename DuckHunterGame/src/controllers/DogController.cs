@@ -20,7 +20,7 @@ namespace DuckHunterGame.src.controllers
         private void setDefaultValues(Dog dog)
         {
             dog.posY = 64 * 6 - 32;
-            dog.posX = 64 * 2;
+            dog.posX = 64;
             dog.isVisable = true;
             dog.isInBackround = false;
             dog.enumDogAnimState = EnumDogAnimState.WALK;
@@ -28,19 +28,34 @@ namespace DuckHunterGame.src.controllers
 
         public void Walk(Dog dog, int targetPosX, float delta)
         {
+            //add: if enum state not WALK {}
+
             if (dog.posX < targetPosX)
             {
                 dog.posX += 50 * delta;
             } else
             {   
-                if (GetAnimDuration(dog) < 0.5)
-                {
-                    dog.animDuration += delta;
-                } else 
-                {
-                    dog.enumDogAnimState = EnumDogAnimState.JUMP;
-                    JumpInBush(dog, targetPosX, delta);
-                }
+                
+                    
+                    dog.enumDogAnimState = EnumDogAnimState.SNIFF;
+                    //JumpInBush(dog, targetPosX, delta);
+                
+            }
+        }
+
+        public void Sniff(Dog dog, float delta)
+        {
+            if (dog.animDuration < 0.5)
+            {
+                dog.animDuration += delta;
+            } else if (0.5 < dog.animDuration && dog.animDuration < 1) 
+            {
+                dog.animDuration += delta * 100;
+                // looks up before jumping in bush
+            } else
+            {
+                ResetAnimDuration(dog);
+                ChangeDogAnimState(dog, EnumDogAnimState.JUMP);
             }
         }
 
