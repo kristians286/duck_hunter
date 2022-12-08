@@ -89,29 +89,6 @@ namespace DuckHunterGame.src.controllers
             }
         }
 
-        public void AnimateDuck(Duck duck, float delta) // Will be deleted
-        {
-            /*
-            if (GetAnimState(duck) == EnumDuckAnimState.FLY_RIGHT || GetAnimState(duck) == EnumDuckAnimState.FLY_LEFT)
-            {
-                duck.frames = 3;
-                if (duck.animDuration < 0.1) //FLIGHT TEST
-                {
-                    duck.animDuration += delta;
-                }
-                else
-                {
-                    duck.frame++;
-                    if (duck.frame >= duck.frames)
-                    {
-                        duck.frame = 0;
-                    }
-                    RestoreAnimDuration(duck);
-                }
-            }
-            */
-        }
-
         public int GetPoints(Duck duck)
         {
             return duck.points;

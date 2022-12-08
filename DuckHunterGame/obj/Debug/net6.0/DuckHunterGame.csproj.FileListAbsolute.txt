@@ -28,3 +28,4 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\bac
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\ducks.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\TextFont.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\blackBird.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\dog.xnb

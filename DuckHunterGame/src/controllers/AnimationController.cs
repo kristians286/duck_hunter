@@ -19,7 +19,6 @@ namespace DuckHunterGame.src.controllers
 
         private int _row;
         private int _col;
-        private int _totalRows;
         private int _totalCols;
 
         private float _timeElapsed;
@@ -34,8 +33,6 @@ namespace DuckHunterGame.src.controllers
             _row = textureRow;
             _textureWidth = textureWidth;
 
-
-            _totalRows = (_textureHeight / _spriteHeight) -1;
             _totalCols = (_textureWidth / _spriteWidth) -1;
 
             _timePerFreme = timePerFrame;
@@ -63,7 +60,7 @@ namespace DuckHunterGame.src.controllers
             return new Rectangle(_spriteWidth * _col, _spriteHeight * _row, _spriteWidth, _spriteHeight); ;
         }
 
-        public String print()
+        public String print() // For viewing only / will be deleted
         {
             return $"{_timeElapsed},\n {_row}, {_col}";
         }
