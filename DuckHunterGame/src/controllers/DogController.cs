@@ -42,14 +42,10 @@ namespace DuckHunterGame.src.controllers
 
         public void Sniff(Dog dog, float delta)
         {
-            if (dog.animDuration < 0.5)
+            if (dog.animDuration < 1.5)
             {
                 dog.animDuration += delta;
-            } else if (0.5 < dog.animDuration && dog.animDuration < 1) 
-            {
-                dog.animDuration += delta * 100;
-                // looks up before jumping in bush
-            } else
+            } else 
             {
                 ResetAnimDuration(dog);
                 ChangeDogAnimState(dog, EnumDogState.JUMP);
@@ -75,6 +71,7 @@ namespace DuckHunterGame.src.controllers
                 {
                     ChangeIsVisable(dog);
                     ResetAnimDuration(dog);
+                    ChangeDogAnimState(dog, EnumDogState.IDLE);
                 }
             
             }
@@ -89,12 +86,12 @@ namespace DuckHunterGame.src.controllers
         }
         public void Reveal(Dog dog, float delta)
         {
-            dog.posY -= 100 * delta;
+            dog.posY -= 200 * delta;
              
         }
         public void Hide(Dog dog, float delta)
         {
-            dog.posY += 100* delta;
+            dog.posY += 200* delta;
         }
         public void SetDogPosition(Dog dog, Duck duck)
         {

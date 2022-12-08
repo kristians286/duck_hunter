@@ -70,8 +70,8 @@ namespace DuckHunterGame.src.views
             _spriteDuckStates.Add(EnumDuckState.IDLE, new AnimationController       (1, 1, 1, 1, 1));
 
             _spriteDogStates.Add(EnumDogState.WALK, new AnimationController     (48, 56, 0, 56 * 4, 0.15f));
-            _spriteDogStates.Add(EnumDogState.SNIFF, new AnimationController    (48, 56, 1, 56 * 3, 0.15f));
-            _spriteDogStates.Add(EnumDogState.JUMP, new AnimationController     (48, 56, 2, 56 * 2, 0.15f));
+            _spriteDogStates.Add(EnumDogState.SNIFF, new AnimationController    (48, 56, 1, 56 * 3, 0.6f));
+            _spriteDogStates.Add(EnumDogState.JUMP, new AnimationController     (48, 56, 2, 56 * 2, 0.7f));
             _spriteDogStates.Add(EnumDogState.SHOW_DUCK, new AnimationController(48, 56, 3, 56, 0.2f));
             _spriteDogStates.Add(EnumDogState.LAUGH, new AnimationController    (48, 56, 4, 56 * 2 , 0.15f));
             _spriteDogStates.Add(EnumDogState.IDLE, new AnimationController     (1, 1, 1, 1, 1));
@@ -186,7 +186,7 @@ namespace DuckHunterGame.src.views
             dogPosition = new Vector2(_game.dog.posX, _game.dog.posY);
             duckPosition = new Vector2(_game.ducks[_game.currentDuck].posX, _game.ducks[_game.currentDuck].posY);
             coolerDuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, _game.ducks[_game.currentDuck].height, _game.ducks[_game.currentDuck].width);
-            coolerDogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY,120, 120);
+            coolerDogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY,128, 128);
             // TODO: Add your drawing code here  //IGNORE THIS CHAOS FOR NOW THIS IS TESTING. RIGHT ?
             _spriteBatch.Begin();
 
