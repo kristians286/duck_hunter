@@ -30,7 +30,7 @@ namespace DuckHunterGame.src.models
         public float animDuration;
 
         public EnumDuckType enumDuckType;
-        public EnumDuckAnimState enumDuckAnimState;
+        public EnumDuckState enumDuckAnimState;
 
     }
 }

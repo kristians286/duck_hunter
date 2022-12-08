@@ -23,7 +23,7 @@ namespace DuckHunterGame.src.controllers
             dog.posX = 64;
             dog.isVisable = true;
             dog.isInBackround = false;
-            dog.enumDogAnimState = EnumDogAnimState.WALK;
+            dog.enumDogAnimState = EnumDogState.WALK;
         }
 
         public void Walk(Dog dog, int targetPosX, float delta)
@@ -35,7 +35,7 @@ namespace DuckHunterGame.src.controllers
                 dog.posX += 50 * delta;
             } else
             {   
-                dog.enumDogAnimState = EnumDogAnimState.SNIFF;
+                dog.enumDogAnimState = EnumDogState.SNIFF;
                 //JumpInBush(dog, targetPosX, delta);
             }
         }
@@ -52,7 +52,7 @@ namespace DuckHunterGame.src.controllers
             } else
             {
                 ResetAnimDuration(dog);
-                ChangeDogAnimState(dog, EnumDogAnimState.JUMP);
+                ChangeDogAnimState(dog, EnumDogState.JUMP);
             }
         }
 
@@ -83,7 +83,7 @@ namespace DuckHunterGame.src.controllers
         {
             return dog.animDuration;
         }
-        public EnumDogAnimState GetAnimState(Dog dog)
+        public EnumDogState GetAnimState(Dog dog)
         {
             return dog.enumDogAnimState;
         }
@@ -104,7 +104,7 @@ namespace DuckHunterGame.src.controllers
         {
             dog.posX = game.screenWidth / 2 - 32;
         }
-        public void ChangeDogAnimState(Dog dog, EnumDogAnimState targetState)
+        public void ChangeDogAnimState(Dog dog, EnumDogState targetState)
         {
             dog.enumDogAnimState = targetState;
         }

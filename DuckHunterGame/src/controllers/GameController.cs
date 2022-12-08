@@ -77,17 +77,17 @@ namespace DuckHunterGame.src.controllers
 
                 if (duckController.GetAnimDuration(duck) < 0.3)
                 {
-                    if (duckController.GetAnimState(duck) != EnumDuckAnimState.HIT)
+                    if (duckController.GetAnimState(duck) != EnumDuckState.HIT)
                     {
                         ChangeCanShoot(game);
-                        duckController.ChangeAnimState(duck, EnumDuckAnimState.HIT);
+                        duckController.ChangeAnimState(duck, EnumDuckState.HIT);
                         //duckController.RestoreAnimDuration(duck); // For now not realy needed
                     }
                     duck.animDuration += delta;
                 } else {
-                    if (duckController.GetAnimState(duck) != EnumDuckAnimState.FALL) 
+                    if (duckController.GetAnimState(duck) != EnumDuckState.FALL) 
                     {
-                        duckController.ChangeAnimState(duck, EnumDuckAnimState.FALL);
+                        duckController.ChangeAnimState(duck, EnumDuckState.FALL);
                         AddHitCount(game);
                         AddPoints(game, duckController.GetPoints(duck));
                     }
@@ -101,17 +101,17 @@ namespace DuckHunterGame.src.controllers
                     {
                         ChangeCanShoot(game);
                         dogController.ChangeIsVisable(dog);
-                        dogController.SetDogPosition(dog, duck);
-                        dogController.ChangeDogAnimState(dog, EnumDogAnimState.SHOW_DUCK);
+                        dogController.SetDogPosition(dog, duck); // TODO: limit the posX to only be between tree and bush
+                        dogController.ChangeDogAnimState(dog, EnumDogState.SHOW_DUCK);
                     }
                 }
             }
             else if (duckController.GetIsFlyAway(duck))
             {
-                if (duckController.GetAnimState(duck) != EnumDuckAnimState.FLY_UP)
+                if (duckController.GetAnimState(duck) != EnumDuckState.FLY_UP)
                 {
                     ChangeCanShoot(game);
-                    duckController.ChangeAnimState(duck, EnumDuckAnimState.FLY_UP);
+                    duckController.ChangeAnimState(duck, EnumDuckState.FLY_UP);
                 }
 
                 if (duck.posY > -64)
@@ -123,7 +123,7 @@ namespace DuckHunterGame.src.controllers
                     ChangeCanShoot(game);
                     dogController.ChangeIsVisable(dog);
                     dogController.CenterDog(dog, game);
-                    dogController.ChangeDogAnimState(dog, EnumDogAnimState.LAUGH);
+                    dogController.ChangeDogAnimState(dog, EnumDogState.LAUGH);
                 }
             }
 
@@ -133,7 +133,7 @@ namespace DuckHunterGame.src.controllers
         public void DogReaction(models.Game game, float delta)
         {
             Dog dog = GetDog(game);
-            if (dogController.GetAnimState(dog) == EnumDogAnimState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogAnimState.LAUGH )
+            if (dogController.GetAnimState(dog) == EnumDogState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogState.LAUGH )
             {
                 if (dogController.GetAnimDuration(dog) < 0.7)
                 {
@@ -148,7 +148,7 @@ namespace DuckHunterGame.src.controllers
                 }
                 else
                 {
-                    dog.enumDogAnimState = EnumDogAnimState.IDLE;
+                    dog.enumDogAnimState = EnumDogState.IDLE;
                     dogController.ChangeIsVisable(dog);
                     dogController.ResetAnimDuration(dog);
                     

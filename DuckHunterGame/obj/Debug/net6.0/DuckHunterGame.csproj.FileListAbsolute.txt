@@ -27,3 +27,4 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\Fil
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\background.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\ducks.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\TextFont.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\blackBird.xnb

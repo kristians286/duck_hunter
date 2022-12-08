@@ -18,6 +18,6 @@ namespace DuckHunterGame.src.models
         public bool isVisable;
         
         public float animDuration;
-        public EnumDogAnimState enumDogAnimState;
+        public EnumDogState enumDogAnimState;
     }
 }

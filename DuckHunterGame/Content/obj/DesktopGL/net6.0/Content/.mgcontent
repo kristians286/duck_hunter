@@ -5,10 +5,12 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/background.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/blackBird.png</File>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/ducks.png</File>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>TextFont.spritefont</File>
