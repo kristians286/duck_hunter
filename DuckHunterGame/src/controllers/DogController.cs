@@ -69,9 +69,16 @@ namespace DuckHunterGame.src.controllers
                     dog.posY += 100 * delta;
                 } else
                 {
-                    ChangeIsVisable(dog);
-                    ResetAnimDuration(dog);
-                    ChangeDogAnimState(dog, EnumDogState.IDLE);
+                    if (dog.animDuration < 2)
+                    {
+                        dog.animDuration += delta;
+                    } else
+                    {
+                        ChangeIsVisable(dog);
+                        ResetAnimDuration(dog);
+                        ChangeDogAnimState(dog, EnumDogState.IDLE);
+                    }
+                    
                 }
             
             }

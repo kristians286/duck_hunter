@@ -186,7 +186,7 @@ namespace DuckHunterGame.src.views
             dogPosition = new Vector2(_game.dog.posX, _game.dog.posY);
             duckPosition = new Vector2(_game.ducks[_game.currentDuck].posX, _game.ducks[_game.currentDuck].posY);
             coolerDuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, _game.ducks[_game.currentDuck].height, _game.ducks[_game.currentDuck].width);
-            coolerDogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY,128, 128);
+            coolerDogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, (int)(128* 0.8), 128);
             // TODO: Add your drawing code here  //IGNORE THIS CHAOS FOR NOW THIS IS TESTING. RIGHT ?
             _spriteBatch.Begin();
 
@@ -206,9 +206,7 @@ namespace DuckHunterGame.src.views
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {
-                _spriteBatch.Draw(dogHitBox, dogPosition, null,
-                                Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
-                                SpriteEffects.None, 0f);
+                //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
                 _spriteBatch.Draw(dogSprite, coolerDogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
                 
                 _spriteBatch.Draw(background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
@@ -216,9 +214,7 @@ namespace DuckHunterGame.src.views
             else
             {
                 _spriteBatch.Draw(background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
-                _spriteBatch.Draw(dogHitBox, dogPosition, null,
-                                    Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
-                                    SpriteEffects.None, 0f);
+                //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
                 _spriteBatch.Draw(dogSprite, coolerDogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
