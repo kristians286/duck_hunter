@@ -29,3 +29,5 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\duc
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\TextFont.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\blackBird.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\dog.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\blueBird.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\redBird.xnb

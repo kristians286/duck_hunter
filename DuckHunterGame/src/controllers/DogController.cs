@@ -19,7 +19,7 @@ namespace DuckHunterGame.src.controllers
 
         private void setDefaultValues(Dog dog)
         {
-            dog.posY = 64 * 6 - 32;
+            dog.posY = 64 * 5 - 32;
             dog.posX = 64;
             dog.isVisable = true;
             dog.isInBackround = false;
@@ -66,7 +66,7 @@ namespace DuckHunterGame.src.controllers
                 }
                 if (dog.posY < 64*6 - 32)
                 {
-                    dog.posY += 100 * delta;
+                    dog.posY += 200 * delta;
                 } else
                 {
                     if (dog.animDuration < 2)

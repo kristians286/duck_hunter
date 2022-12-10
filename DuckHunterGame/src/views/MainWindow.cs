@@ -38,13 +38,18 @@ namespace DuckHunterGame.src.views
         private (float, float) mousePos;
 
         private Texture2D background;
-        private Rectangle coolerDuckPosition;
-        private Rectangle coolerDogPosition;
+        
         private Texture2D duckSprite;
         private Texture2D dogSprite;
 
-        private Texture2D blackBirdSprite;
+        private Rectangle _DuckPosition;
+        private Rectangle _DogPosition;
 
+        private Texture2D _blackBirdSprite;
+        private Texture2D _blueBirdSprite;
+        private Texture2D _redBirdSprite;
+
+        private Dictionary<EnumDuckType, Texture2D> _currentDuckType = new Dictionary<EnumDuckType, Texture2D>();
         //private AnimatedTexture 
 
         private Dictionary<EnumDuckState, AnimationController> _spriteDuckStates = new Dictionary<EnumDuckState, AnimationController>();
@@ -76,6 +81,7 @@ namespace DuckHunterGame.src.views
             _spriteDogStates.Add(EnumDogState.LAUGH, new AnimationController    (48, 56, 4, 56 * 2 , 0.15f));
             _spriteDogStates.Add(EnumDogState.IDLE, new AnimationController     (1, 1, 1, 1, 1));
 
+            
         }
 
 
@@ -91,7 +97,13 @@ namespace DuckHunterGame.src.views
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            blackBirdSprite = Content.Load<Texture2D>("blackBird");
+            _blackBirdSprite = Content.Load<Texture2D>("blackBird");
+            _blueBirdSprite = Content.Load<Texture2D>("blueBird");
+            _redBirdSprite = Content.Load<Texture2D>("redBird");
+            _currentDuckType.Add(EnumDuckType.BLACK_DUCK, _blackBirdSprite);
+            _currentDuckType.Add(EnumDuckType.BLUE_DUCK, _blueBirdSprite);
+            _currentDuckType.Add(EnumDuckType.RED_DUCK, _redBirdSprite);
+
             dogSprite = Content.Load<Texture2D>("dog");
 
             duckSprite = Content.Load<Texture2D>("ducks");
@@ -185,29 +197,29 @@ namespace DuckHunterGame.src.views
             // POSITIONS
             dogPosition = new Vector2(_game.dog.posX, _game.dog.posY);
             duckPosition = new Vector2(_game.ducks[_game.currentDuck].posX, _game.ducks[_game.currentDuck].posY);
-            coolerDuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, _game.ducks[_game.currentDuck].height, _game.ducks[_game.currentDuck].width);
-            coolerDogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, (int)(128* 0.8), 128);
+            _DuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, _game.ducks[_game.currentDuck].height, _game.ducks[_game.currentDuck].width);
+            _DogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, 48 *2, 56 *2);
             // TODO: Add your drawing code here  //IGNORE THIS CHAOS FOR NOW THIS IS TESTING. RIGHT ?
             _spriteBatch.Begin();
-
+            /*
             _spriteBatch.Draw(duckHitBox, duckPosition, null,
                                 Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
                                 SpriteEffects.None, 0f);
-            
+            */
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
-                _spriteBatch.Draw(blackBirdSprite, coolerDuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
             }
             else
             {
-                _spriteBatch.Draw(blackBirdSprite, coolerDuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
             }
             
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {
                 //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
-                _spriteBatch.Draw(dogSprite, coolerDogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
+                _spriteBatch.Draw(dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
                 
                 _spriteBatch.Draw(background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
             }
@@ -215,7 +227,7 @@ namespace DuckHunterGame.src.views
             {
                 _spriteBatch.Draw(background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
                 //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
-                _spriteBatch.Draw(dogSprite, coolerDogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
+                _spriteBatch.Draw(dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
 
@@ -224,7 +236,7 @@ namespace DuckHunterGame.src.views
                             "\nY:" + _game.ducks[_game.currentDuck].posY +
                             "\nGamePoints:" + _gameController.GetPoints(_game) +
                             "\nmPos:" + mousePos + "\n" + _gameController.GetDog(_game).isInBackround +
-                            "\nB_FRAME:" + _gameController.GetCurrentDuck(_game) +
+                            "\nDT:" + _gameController.GetCurrentDuck(_game).enumDuckType +
                             "\ndogY:" + _game.dog.posY, new Vector2(0, 0), Color.Black);
             _spriteBatch.DrawString(font, "Bullets: " + _gameController.GetBullets(_game) +
                                         "\nround: " + _gameController.GetRound(_game) +

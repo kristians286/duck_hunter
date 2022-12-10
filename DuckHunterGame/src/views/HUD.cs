@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DuckHunterGame.src.enums
+namespace DuckHunterGame.src.views
 {
-    public enum EnumDuckType
+    internal class HUD
     {
-        BLACK_DUCK,
-        BLUE_DUCK,
-        RED_DUCK,
     }
 }
