@@ -38,8 +38,6 @@ namespace DuckHunterGame.src.controllers
             }
             duck.enumDuckType = (EnumDuckType)duckTypeList.GetValue(enumDuckTypeValues);
             duck.points = 500 + (enumDuckTypeValues * 500);
-            duck.height = 64;
-            duck.width = 64;
 
         }
 

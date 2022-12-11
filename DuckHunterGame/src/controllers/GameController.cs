@@ -47,13 +47,13 @@ namespace DuckHunterGame.src.controllers
                 MousePosY > duck.posY && MousePosY < duck.posY + 64) {
                 
                 duckController.ChangeIsHit(duck);
-                RestoreBullets(game);
+                
                 
             
             } else if (GetBullets(game) == 0)
             {
                 duckController.ChangeIsFlyAway(duck);
-                RestoreBullets(game);
+                
             }
             
         }
@@ -163,6 +163,7 @@ namespace DuckHunterGame.src.controllers
                         }
                     } else
                     {
+                        RestoreBullets(game);
                         NextDuck(game);
                     }
                 }

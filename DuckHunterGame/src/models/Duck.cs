@@ -14,9 +14,6 @@ namespace DuckHunterGame.src.models
         public float posX;
         public float posY;
 
-        public int height;
-        public int width;
-
         public int points { set; get; }
         public int speed { set; get; }
 

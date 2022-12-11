@@ -19,8 +19,8 @@ namespace DuckHunterGame.src.controllers
 
         private void setDefaultValues(Dog dog)
         {
-            dog.posY = 64 * 5 - 32;
-            dog.posX = 64;
+            dog.posY = 64 * 5;
+            dog.posX = 64 + 32;
             dog.isVisable = true;
             dog.isInBackround = false;
             dog.enumDogAnimState = EnumDogState.WALK;
@@ -54,7 +54,7 @@ namespace DuckHunterGame.src.controllers
 
         public void JumpInBush(Dog dog, int targetPosX , float delta) // MIGHT NEED TO MOVE TO GAME CONTROLLER
         {
-            if (dog.posX < targetPosX + 32)
+            if (dog.posX < targetPosX)
             {
                 dog.posX += 50* delta;
                 dog.posY -= 100* delta;
@@ -93,16 +93,27 @@ namespace DuckHunterGame.src.controllers
         }
         public void Reveal(Dog dog, float delta)
         {
-            dog.posY -= 200 * delta;
+            dog.posY -= 150 * delta;
              
         }
         public void Hide(Dog dog, float delta)
         {
-            dog.posY += 200* delta;
+            dog.posY += 150 * delta;
         }
         public void SetDogPosition(Dog dog, Duck duck)
         {
-            dog.posX = duck.posX;
+            if (duck.posX > 64 * 5 - 32)
+            {
+                dog.posX = 64 * 5 - 32;
+            } 
+            else if ( duck.posX < 64 *2)
+            {
+                dog.posX = 64 * 2;
+            } else
+            {
+                dog.posX = duck.posX;
+            }
+            
         }
         public void CenterDog(Dog dog, models.Game game)
         {
