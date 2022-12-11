@@ -48,11 +48,11 @@ namespace DuckHunterGame.src.views
                     spriteBatch.Draw(hudElements, new Rectangle(64 * 3 + (16 * i) - 2, 64 * 7, 16, 16), new Rectangle(88, 8, 8, 8), Color.White);
                 }
             }
-            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 3 + (0), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 100000 % 10), 8, 8, 8), Color.White);
-            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 3 + (16), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 10000 % 10), 8, 8, 8), Color.White);
-            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 3 + (16 *2), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 1000 % 10), 8, 8, 8), Color.White);
-            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 3 + (16*3), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 100 % 10), 8, 8, 8), Color.White);
-            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 3 + (16*4), 64 * 7, 16, 16), new Rectangle(8 * (game.points % 10), 8, 8, 8), Color.White);
+            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 2 + (0), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 100000 % 10), 8, 8, 8), Color.White);
+            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 2 + (16), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 10000 % 10), 8, 8, 8), Color.White);
+            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 2 + (16 *2), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 1000 % 10), 8, 8, 8), Color.White);
+            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 2 + (16*3), 64 * 7, 16, 16), new Rectangle(8 * (game.points / 100 % 10), 8, 8, 8), Color.White);
+            spriteBatch.Draw(hudElements, new Rectangle(64 * 6 - 2 + (16*4), 64 * 7, 16, 16), new Rectangle(8 * (game.points % 10), 8, 8, 8), Color.White);
         }
     }
 }

@@ -18,45 +18,40 @@ namespace DuckHunterGame.src.views
 
         private models.Game _game;
 
+        // CONTROLLERS
         private GameController _gameController = new GameController();
         private DuckController _duckController = new DuckController();
         private DogController _dogController = new DogController();
 
         private GameSerializer _serializer = new GameSerializer();
-
+        
+        // VIEWS
         private HUD _hudView;
-
-        private Texture2D duckHitBox;
-        private Texture2D dogHitBox;
 
         // MOUSE
         private MouseState mouseState;
         private MouseState prevMouseState;
 
-        // Sprite code
-        private SpriteFont font;
-        private Vector2 duckPosition;
-        private Vector2 dogPosition;
-        private (float, float) mousePos;
-
+        // SPRITES
         private Texture2D _background;
-        
         private Texture2D _dogSprite;
-
-        private Rectangle _DuckPosition;
-        private Rectangle _DogPosition;
-
         private Texture2D _blackBirdSprite;
         private Texture2D _blueBirdSprite;
         private Texture2D _redBirdSprite;
+        private Rectangle _DuckPosition;
+        private Rectangle _DogPosition;
 
         private Texture2D _hudElements;
 
         private Dictionary<EnumDuckType, Texture2D> _currentDuckType = new Dictionary<EnumDuckType, Texture2D>();
-        //private AnimatedTexture 
-
         private Dictionary<EnumDuckState, AnimationController> _spriteDuckStates = new Dictionary<EnumDuckState, AnimationController>();
         private Dictionary<EnumDogState, AnimationController> _spriteDogStates = new Dictionary<EnumDogState, AnimationController>();
+
+        /// <bugs>
+        /// 
+        /// On next round dogs animation on SNIFF state is not reset making him start on a different frame
+        /// 
+        /// </bugs>
 
 
         public MainWindow()
@@ -71,7 +66,6 @@ namespace DuckHunterGame.src.views
             _graphics.PreferredBackBufferHeight = _game.screenHeight;
             _graphics.ApplyChanges();
 
-            //_spiteDuckPosition = new Dictionary<EnumDuckAnimState, Rectangle>();
             _spriteDuckStates.Add(EnumDuckState.FLY_LEFT, new AnimationController   (36, 36, 0, 36*3, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.FLY_RIGHT, new AnimationController  (36, 36, 1, 36*3, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.HIT, new AnimationController        (36, 36, 2, 36, 0.15f));
@@ -116,27 +110,9 @@ namespace DuckHunterGame.src.views
 
             _hudElements = Content.Load<Texture2D>("hudElements");
 
-
-            font = Content.Load<SpriteFont>("TextFont");
-
-            duckHitBox = new Texture2D(GraphicsDevice, 1, 1); // Will be deleted
-            duckHitBox.SetData(new[] { Color.White });
-
-            dogHitBox = new Texture2D(GraphicsDevice, 1, 1);
-            dogHitBox.SetData(new[] { Color.White });
-
             _hudView = new HUD(_game, _hudElements, _spriteBatch);
         }
 
-        protected override void UnloadContent() // WILL BE REMOVED only used to draw Hitboxes
-        {
-            base.UnloadContent();
-            _spriteBatch.Dispose();
-            // If you are creating your texture (instead of loading it with
-            // Content.Load) then you must Dispose of it
-            duckHitBox.Dispose();
-            dogHitBox.Dispose();
-        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -170,17 +146,15 @@ namespace DuckHunterGame.src.views
                 }
 
             }
-            else
-            { // DUCK
+            else // DUCK
+            { 
 
                 if (!_gameController.GetCanShoot(_game))
                 {
                     mouseState = Mouse.GetState();
                     if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                     {
-                        mousePos = (mouseState.X, mouseState.Y); // DELETE LATER
                         _gameController.Shoot(_game, mouseState.X, mouseState.Y);
-                        //_serializer.SaveGame(_game);  // Save Game 
                     }
                 }
 
@@ -206,17 +180,11 @@ namespace DuckHunterGame.src.views
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // POSITIONS
-            dogPosition = new Vector2(_game.dog.posX, _game.dog.posY);
-            duckPosition = new Vector2(_game.ducks[_game.currentDuck].posX, _game.ducks[_game.currentDuck].posY);
             _DuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, 64, 64);
             _DogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, 48 *2, 56 *2);
-            // TODO: Add your drawing code here  //IGNORE THIS CHAOS FOR NOW THIS IS TESTING. RIGHT ?
+            // TODO: Add your drawing code here 
             _spriteBatch.Begin();
-            /*
-            _spriteBatch.Draw(duckHitBox, duckPosition, null,
-                                Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),
-                                SpriteEffects.None, 0f);
-            */
+
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
                 _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
@@ -229,35 +197,15 @@ namespace DuckHunterGame.src.views
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {
-                //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Red, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
-                
                 _spriteBatch.Draw(_background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
             }
             else
             {
                 _spriteBatch.Draw(_background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);
-                //_spriteBatch.Draw(dogHitBox, dogPosition, null,Color.Orange, 0f, new Vector2(0, 0), new Vector2(64f, 64f),SpriteEffects.None, 0f);
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
-
-
-            _spriteBatch.DrawString(font, "X:" + _game.ducks[_game.currentDuck].posX +
-                            "\nY:" + _game.ducks[_game.currentDuck].posY +
-                            "\nGamePoints:" + _gameController.GetPoints(_game) +
-                            "\nmPos:" + mousePos + "\n" + _gameController.GetDog(_game).isInBackround +
-                            "\nDT:" + _gameController.GetCurrentDuck(_game).enumDuckType +
-                            "\ndogY:" + _game.dog.posY, new Vector2(0, 0), Color.Black);
-            _spriteBatch.DrawString(font, "Bullets: " + _gameController.GetBullets(_game) +
-                                        "\nround: " + _gameController.GetRound(_game) +
-                                        "\n" + _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].print()
-                , new Vector2(0, 64 * 5), Color.Black);
-
-            _spriteBatch.DrawString(font, "Dog: " + _gameController.GetDog(_game).animDuration
-                + _gameController.GetDog(_game).isVisable + _gameController.GetDog(_game).enumDogAnimState
-                , new Vector2(0, 64 * 6), Color.Black);
-
 
             _hudView.Draw(gameTime);
 
