@@ -130,21 +130,32 @@ namespace DuckHunterGame.src.views
                 Position = new Vector2(30,20),
                 Text = "Save"
             };
-            saveButton.ClickEvent += SaveGame_Click;
+            saveButton.ClickEvent += (object sender, System.EventArgs e) =>
+            {
+                _serializer.SaveGame(_game);
+            };
 
             var loadButton = new ComponentButton(_buttonTexture, _textFont)
             {
                 Position = new Vector2(30 + 160, 20),
                 Text = "Load"
             };
-            loadButton.ClickEvent += LoadGame_Click;
+            loadButton.ClickEvent += (object sender, System.EventArgs e) =>
+            {
+                _game = _serializer.LoadGame(_game);
+                _hudView = new HUD(_game, _hudElements, _spriteBatch);
+            };
 
             var newGameButton = new ComponentButton(_buttonTexture, _textFont)
             {
                 Position = new Vector2(30 + 320, 20),
                 Text = "New Game"
             };
-            newGameButton.ClickEvent += NewGame_Click;
+            newGameButton.ClickEvent += (object sender, System.EventArgs e) =>
+            {
+                _game = _gameController.NewGame();
+                _hudView = new HUD(_game, _hudElements, _spriteBatch);
+            };
 
             _componentButtons = new List<ComponentButton>
             {
@@ -153,22 +164,6 @@ namespace DuckHunterGame.src.views
                 newGameButton,
             };
         }
-
-        private void SaveGame_Click(object sender, System.EventArgs e)
-        {
-            _serializer.SaveGame(_game);
-        }
-        private void LoadGame_Click(object sender, System.EventArgs e)
-        {
-            _game = _serializer.LoadGame(_game);
-            _hudView = new HUD(_game, _hudElements, _spriteBatch);
-        }
-        private void NewGame_Click(object sender, System.EventArgs e)
-        {
-            _game = _gameController.NewGame();
-            _hudView = new HUD(_game, _hudElements, _spriteBatch);
-        }
-
 
         protected override void Update(GameTime gameTime)
         {
