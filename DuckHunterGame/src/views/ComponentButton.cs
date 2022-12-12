@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,9 +14,6 @@ namespace DuckHunterGame.src.views
     {
         public Vector2 Position { get; set; }
         public String Text { get; set; }
-
-        private int width;
-        private int height;
 
         private MouseState _mouseState;
         private MouseState _prevMouseState;

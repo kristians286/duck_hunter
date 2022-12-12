@@ -78,7 +78,7 @@ namespace DuckHunterGame.src.views
             _spriteDuckStates.Add(EnumDuckState.FLY_LEFT, new AnimationController   (36, 36, 0, 36*3, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.FLY_RIGHT, new AnimationController  (36, 36, 1, 36*3, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.HIT, new AnimationController        (36, 36, 2, 36, 0.15f));
-            _spriteDuckStates.Add(EnumDuckState.FALL, new AnimationController       (36, 36, 3, 36*2, 0.2f));
+            _spriteDuckStates.Add(EnumDuckState.FALL, new AnimationController       (36, 36, 3, 36*2, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.FLY_UP, new AnimationController     (36, 36, 0, 36*3, 0.15f));
             _spriteDuckStates.Add(EnumDuckState.IDLE, new AnimationController       (1, 1, 1, 1, 1));
 
@@ -153,8 +153,8 @@ namespace DuckHunterGame.src.views
             };
             newGameButton.ClickEvent += (object sender, System.EventArgs e) =>
             {
-                _game = _gameController.NewGame();
-                _hudView = new HUD(_game, _hudElements, _spriteBatch);
+                _gameController.RestartGame(_game);
+                
             };
 
             _componentButtons = new List<ComponentButton>
@@ -227,9 +227,6 @@ namespace DuckHunterGame.src.views
             _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
             _spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
 
-
-            
-
             base.Update(gameTime);
         }
 
@@ -258,7 +255,6 @@ namespace DuckHunterGame.src.views
             {
                 _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
             }
-            
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {

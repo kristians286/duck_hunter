@@ -37,19 +37,18 @@ namespace DuckHunterGame.src.controllers
             {   
                 dog.enumDogAnimState = EnumDogState.SNIFF;
                 ResetAnimDuration(dog);
-                //JumpInBush(dog, targetPosX, delta);
             }
         }
 
         public void Sniff(Dog dog, float delta)
         {
-            if (dog.animDuration < 2.1f)
+            if (dog.animDuration < 1.79f)
             {
                 dog.animDuration += delta;
             } else 
             {
-                ResetAnimDuration(dog);
                 ChangeDogAnimState(dog, EnumDogState.JUMP);
+                ResetAnimDuration(dog);
             }
         }
 
@@ -76,8 +75,8 @@ namespace DuckHunterGame.src.controllers
                     } else
                     {
                         ChangeIsVisable(dog);
-                        ResetAnimDuration(dog);
                         ChangeDogAnimState(dog, EnumDogState.IDLE);
+                        ResetAnimDuration(dog);
                     }
                     
                 }

@@ -181,16 +181,11 @@ namespace DuckHunterGame.src.controllers
             game.round++;
             game.ducks.Clear();
             duckController.GenerateDucks(game);
-
-            //dogController.ChangeDogAnimState(GetDog(game), EnumDogAnimState.WALK);
-            //dogController.ChangeIsVisable(GetDog(game));
             game.dog = dogController.NewDog();
-
             game.currentDuck = 0;
             game.ducksHitCount = 0;
             game.isIntro = true;
 
-            
         }
         public void RestartGame(models.Game game)
         {
@@ -202,7 +197,7 @@ namespace DuckHunterGame.src.controllers
             game.ducksHitGoal = 1;
             game.ducksHitCount = 0;
             game.currentDuck = 0;
-
+            game.bullets = 3;
             game.isIntro = true;
         }
         public int GetPoints(models.Game game) 
