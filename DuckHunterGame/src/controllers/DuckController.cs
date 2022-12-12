@@ -30,19 +30,18 @@ namespace DuckHunterGame.src.controllers
             duck.flyDirHorizontal = rand.Next(2) == 1;
             if (duck.flyDirHorizontal)
             {
-                duck.enumDuckAnimState = EnumDuckAnimState.FLY_RIGHT;
+                duck.enumDuckAnimState = EnumDuckState.FLY_RIGHT;
             }
             else
             {
-                duck.enumDuckAnimState = EnumDuckAnimState.FLY_LEFT;
+                duck.enumDuckAnimState = EnumDuckState.FLY_LEFT;
             }
             duck.enumDuckType = (EnumDuckType)duckTypeList.GetValue(enumDuckTypeValues);
             duck.points = 500 + (enumDuckTypeValues * 500);
 
-            duck.frames = 3;
         }
 
-        public void GenerateDucks(DHGame game)
+        public void GenerateDucks(models.Game game)
         {
             for (int i = 0; i < 10; i ++)
             {
@@ -52,9 +51,6 @@ namespace DuckHunterGame.src.controllers
         
         public void Fly(Duck duck, float delta) // TODO ADD DEVIATION = A RANDOM VAR THAT MAKES IT LESS PREDICTABLE
         {
-
-            
-            AnimateDuck(duck,delta);
 
             if (duck.flyDirVertical)
             {
@@ -78,7 +74,7 @@ namespace DuckHunterGame.src.controllers
                 if (duck.posX > 64 * 7)
                 {
                     ChangeFlyDirHorizontal(duck);
-                    ChangeAnimState(duck, EnumDuckAnimState.FLY_LEFT);
+                    ChangeAnimState(duck, EnumDuckState.FLY_LEFT);
                 }
             } else
             {
@@ -86,45 +82,8 @@ namespace DuckHunterGame.src.controllers
                 if (duck.posX < 0)
                 {
                     ChangeFlyDirHorizontal(duck);
-                    ChangeAnimState(duck, EnumDuckAnimState.FLY_RIGHT);
+                    ChangeAnimState(duck, EnumDuckState.FLY_RIGHT);
                 }
-            }
-        }
-
-        public void AnimateDuck(Duck duck, float delta) // MUST REDO 100% sure
-        {
-            if (GetAnimState(duck) == EnumDuckAnimState.FLY_RIGHT || GetAnimState(duck) == EnumDuckAnimState.FLY_LEFT)
-            {
-                duck.frames = 3;
-                if (duck.animDuration < 0.1) //FLIGHT TEST
-                {
-                    duck.animDuration += delta;
-                }
-                else
-                {
-                    duck.frame++;
-                    if (duck.frame >= duck.frames)
-                    {
-                        duck.frame = 0;
-                    }
-                    RestoreAnimDuration(duck);
-                }
-            }
-
-            if (GetAnimState(duck) == EnumDuckAnimState.FALL)  // DOSENT WORK
-            {
-                duck.frames = 2;
-                if (duck.animDuration < 0.2)
-                {
-                    duck.animDuration += delta;
-                } else
-                {
-                    duck.frame++;
-                } if (duck.frame >= duck.frames)
-                {
-                    duck.frame = 0;
-                }
-                RestoreAnimDuration(duck);
             }
         }
 
@@ -164,11 +123,11 @@ namespace DuckHunterGame.src.controllers
         {
             duck.flyDirHorizontal = !duck.flyDirHorizontal;
         }
-        public void ChangeAnimState(Duck duck, EnumDuckAnimState targetState)
+        public void ChangeAnimState(Duck duck, EnumDuckState targetState)
         {
             duck.enumDuckAnimState = targetState;
         }
-        public EnumDuckAnimState GetAnimState(Duck duck)
+        public EnumDuckState GetAnimState(Duck duck)
         {
             return duck.enumDuckAnimState;
         }

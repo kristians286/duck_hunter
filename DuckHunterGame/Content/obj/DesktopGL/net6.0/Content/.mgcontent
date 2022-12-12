@@ -5,11 +5,21 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/background.png</File>
-    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/birb.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/blackBird.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/blueBird.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/Button.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/dog.png</File>
     <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/File.spritefont</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/hudElements.png</File>
+    <File>C:/Users/krist/Documents/duck_hunter/DuckHunterGame/Content/redBird.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>TextFont.spritefont</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

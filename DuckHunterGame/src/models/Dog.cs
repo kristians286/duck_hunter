@@ -9,15 +9,15 @@ namespace DuckHunterGame.src.models
 {
     internal class Dog
     {
-        public float posX;
-        public float posY;
+        public float posX { get; set; }
+        public float posY { get; set; }
         public int posTargetX;
         public int posTargetY;
 
-        public bool isInBackround;
-        public bool isVisable;
-        
-        public float animDuration;
-        public EnumDogAnimState enumDogAnimState;
+        public bool isInBackround { get; set; }
+        public bool isVisable { get; set; }
+
+        public float animDuration { get; set; }
+        public EnumDogState enumDogAnimState { get; set; }
     }
 }

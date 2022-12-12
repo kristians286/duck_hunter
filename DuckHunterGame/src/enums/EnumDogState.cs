@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DuckHunterGame.src.enums
 {
-    internal enum EnumDogAnimState
+    public enum EnumDogState
     {
         IDLE,
         WALK,
