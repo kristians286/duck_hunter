@@ -14,11 +14,22 @@ namespace DuckHunterGame.src.serializer
     {
         public void SaveGame(Game game)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string fileName = "/DuckHunterGameSaveData.json";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string fullPath = path+ fileName;
             string jsonString = JsonSerializer.Serialize(game);
             File.WriteAllText(fullPath, jsonString);
+        }
+
+        public Game LoadGame(Game game)
+        {
+            string fileName = "/DuckHunterGameSaveData.json";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string fullPath = path + fileName;
+            string jsonString = File.ReadAllText(fullPath);
+
+            game = JsonSerializer.Deserialize<Game>(jsonString)!;
+            return game;
         }
     }
 }

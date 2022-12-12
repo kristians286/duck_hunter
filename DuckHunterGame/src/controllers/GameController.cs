@@ -156,6 +156,7 @@ namespace DuckHunterGame.src.controllers
                     {
                         if (GetHitGoal(game) <= GetDucksHitCount(game))
                         {
+                            RestoreBullets(game);
                             NextRound(game);
                         } else
                         {

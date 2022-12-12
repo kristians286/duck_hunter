@@ -11,8 +11,8 @@ namespace DuckHunterGame.src.models
 {
     internal class Duck
     {
-        public float posX;
-        public float posY;
+        public float posX { get; set; }
+        public float posY { get; set; }
 
         public int points { set; get; }
         public int speed { set; get; }
@@ -21,13 +21,13 @@ namespace DuckHunterGame.src.models
         public bool isFlyAway { set; get; }
         public bool isVisable { set; get; }
 
-        public bool flyDirVertical;
-        public bool flyDirHorizontal;
+        public bool flyDirVertical { get; set; }
+        public bool flyDirHorizontal { get; set; }
 
-        public float animDuration;
+        public float animDuration { get; set; }
 
-        public EnumDuckType enumDuckType;
-        public EnumDuckState enumDuckAnimState;
+        public EnumDuckType enumDuckType { get; set; }
+        public EnumDuckState enumDuckAnimState { get; set; }
 
     }
 }

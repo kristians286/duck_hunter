@@ -8,8 +8,8 @@ namespace DuckHunterGame.src.models
 {
     internal class Game
     {
-        public int screenHeight;
-        public int screenWidth;
+        public int screenHeight { get; set; }
+        public int screenWidth { get; set; }
 
         public int round { set; get; }
         public int points { set; get; }
@@ -20,11 +20,11 @@ namespace DuckHunterGame.src.models
         public int ducksHitCount { set; get; }
         public int currentDuck { set; get; }
 
-        public Dog dog;
+        public Dog dog { get; set; }
 
         // TURN THIS IN to EnumGameState
-        public bool isGameOver; // not used for now
-        public bool isIntro;
-        public bool canShoot;
+        public bool isGameOver { get; set; } // not used for now
+        public bool isIntro { get; set; }
+        public bool canShoot { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
@@ -43,6 +44,8 @@ namespace DuckHunterGame.src.views
 
         private Texture2D _hudElements;
 
+        private SpriteFont _textFont;
+
         private Dictionary<EnumDuckType, Texture2D> _currentDuckType = new Dictionary<EnumDuckType, Texture2D>();
         private Dictionary<EnumDuckState, AnimationController> _spriteDuckStates = new Dictionary<EnumDuckState, AnimationController>();
         private Dictionary<EnumDogState, AnimationController> _spriteDogStates = new Dictionary<EnumDogState, AnimationController>();
@@ -51,9 +54,15 @@ namespace DuckHunterGame.src.views
         /// 
         /// On next round dogs animation on SNIFF state is not reset making him start on a different frame
         /// 
+        /// Clicking outside of game window still uses a shot
+        /// 
+        /// Clicking a button will shoot one bullet 
         /// </bugs>
 
+        // BUTTONS
+        private List<ComponentButton> _componentButtons;
 
+        private Texture2D _buttonTexture;
         public MainWindow()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -110,6 +119,53 @@ namespace DuckHunterGame.src.views
 
             _hudElements = Content.Load<Texture2D>("hudElements");
 
+            _textFont = Content.Load<SpriteFont>("TextFont");
+
+            _hudView = new HUD(_game, _hudElements, _spriteBatch);
+
+            _buttonTexture = Content.Load<Texture2D>("Button");
+
+            var saveButton = new ComponentButton(_buttonTexture, _textFont) 
+            { 
+                Position = new Vector2(20,20),
+                Text = "Save"
+            };
+            saveButton.ClickEvent += SaveGame_Click;
+
+            var loadButton = new ComponentButton(_buttonTexture, _textFont)
+            {
+                Position = new Vector2(20 + 80* 2, 20),
+                Text = "Load"
+            };
+            loadButton.ClickEvent += LoadGame_Click;
+
+            var newGameButton = new ComponentButton(_buttonTexture, _textFont)
+            {
+                Position = new Vector2(20 + 80 *4, 20),
+                Text = "New Game"
+            };
+            newGameButton.ClickEvent += NewGame_Click;
+
+            _componentButtons = new List<ComponentButton>
+            {
+                saveButton,
+                loadButton,
+                newGameButton,
+            };
+        }
+
+        private void SaveGame_Click(object sender, System.EventArgs e)
+        {
+            _serializer.SaveGame(_game);
+        }
+        private void LoadGame_Click(object sender, System.EventArgs e)
+        {
+            _game = _serializer.LoadGame(_game);
+            _hudView = new HUD(_game, _hudElements, _spriteBatch);
+        }
+        private void NewGame_Click(object sender, System.EventArgs e)
+        {
+            _game = _gameController.NewGame();
             _hudView = new HUD(_game, _hudElements, _spriteBatch);
         }
 
@@ -121,7 +177,10 @@ namespace DuckHunterGame.src.views
                 Exit();
 
             // TODO: Add your update logic here
-            
+
+            foreach (var component in _componentButtons)
+                component.Update(gameTime);
+
 
             if (_dogController.IsVisible(_gameController.GetDog(_game))) // DOG
             {
@@ -147,8 +206,8 @@ namespace DuckHunterGame.src.views
 
             }
             else // DUCK
-            { 
-
+            {
+                
                 if (!_gameController.GetCanShoot(_game))
                 {
                     mouseState = Mouse.GetState();
@@ -172,12 +231,23 @@ namespace DuckHunterGame.src.views
 
             _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
             _spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
+
+
+            
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            
+            if (_game.ducks[_game.currentDuck].isFlyAway)
+            {
+                GraphicsDevice.Clear(Color.Pink);
+            } else
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+            }
 
             // POSITIONS
             _DuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, 64, 64);
@@ -206,8 +276,11 @@ namespace DuckHunterGame.src.views
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
-
+            
             _hudView.Draw(gameTime);
+
+            foreach (var component in _componentButtons)
+                component.Draw(gameTime,_spriteBatch);
 
             _spriteBatch.End();
 

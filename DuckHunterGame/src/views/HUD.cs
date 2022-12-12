@@ -24,6 +24,8 @@ namespace DuckHunterGame.src.views
 
         public void Draw(GameTime gameTime) 
         {
+            
+
             if (game.round < 10)
             {
                 spriteBatch.Draw(hudElements, new Rectangle(64 + 16, 64 * 6 + 32, 16, 16), new Rectangle(8 * game.round, 0, 8, 8), Color.White);

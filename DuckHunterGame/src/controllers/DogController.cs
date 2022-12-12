@@ -57,8 +57,8 @@ namespace DuckHunterGame.src.controllers
         {
             if (dog.posX < targetPosX)
             {
-                dog.posX += 50* delta;
-                dog.posY -= 100* delta;
+                dog.posX += 64 * delta;
+                dog.posY -= 64*3 * delta;
             } else
             {   
                 if (dog.isInBackround != true)

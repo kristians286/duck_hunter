@@ -31,3 +31,4 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\dog
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\blueBird.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\redBird.xnb
 C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\hudElements.xnb
+C:\Users\krist\Documents\duck_hunter\DuckHunterGame\bin\Debug\net6.0\Content\Button.xnb
