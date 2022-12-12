@@ -52,6 +52,7 @@ namespace DuckHunterGame.src.views
         private Dictionary<EnumDuckState, AnimationController> _spriteDuckStates = new Dictionary<EnumDuckState, AnimationController>();
         private Dictionary<EnumDogState, AnimationController> _spriteDogStates = new Dictionary<EnumDogState, AnimationController>();
 
+
         /// <bugs>
         /// 
         /// On next round dogs animation on SNIFF state is not reset making him start on a different frame
@@ -61,6 +62,9 @@ namespace DuckHunterGame.src.views
         /// Clicking a button will shoot one bullet 
         /// 
         /// </bugs>
+        private EnumDogState _prevEnumState;
+
+
 
         // BUTTONS
         private List<ComponentButton> _componentButtons;
@@ -173,11 +177,20 @@ namespace DuckHunterGame.src.views
                 Exit();
 
             // TODO: Add your update logic here
-            foreach (var spriteDogState in _spriteDogStates)
-                 if (_game.dog.enumDogAnimState != spriteDogState.Key)
-                 {
-                    spriteDogState.Value.RestoreToFirstFrame();
-                 } 
+
+            if (_prevEnumState != _game.dog.enumDogAnimState)
+            {
+                foreach (var spriteDogState in _spriteDogStates)
+                    if (_prevEnumState == spriteDogState.Key)
+                    {
+                        Debug.WriteLine("Restore: "+ spriteDogState.Key);
+                        spriteDogState.Value.RestoreToFirstFrame();
+                    }
+            }
+            _prevEnumState = _game.dog.enumDogAnimState;
+            
+            
+
 
             foreach (var component in _componentButtons)
                 component.Update(gameTime);
@@ -253,8 +266,6 @@ namespace DuckHunterGame.src.views
             _DogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, 48 *2, 56 *2);
             // TODO: Add your drawing code here 
             _spriteBatch.Begin();
-
-            _spriteBatch.DrawString(_textFont,"X:" + _spriteDogStates[_game.dog.enumDogAnimState].col(), new Vector2(0,0),Color.White);
 
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {

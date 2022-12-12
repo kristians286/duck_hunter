@@ -65,10 +65,5 @@ namespace DuckHunterGame.src.controllers
             _col = 0;
             _timeElapsed = 0;
         }
-
-        public int col()
-        {
-            return _col;
-        }
     }
 }
