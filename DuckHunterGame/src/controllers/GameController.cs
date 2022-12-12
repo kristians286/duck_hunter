@@ -65,9 +65,6 @@ namespace DuckHunterGame.src.controllers
                 DisableIntro(game);
             }
 
-            // only slows down code;
-            // duckController.AnimateDuck(GetCurrentDuck(game), delta);
-
             Duck duck = GetCurrentDuck(game);
             Dog dog = GetDog(game);
             
@@ -81,7 +78,6 @@ namespace DuckHunterGame.src.controllers
                     {
                         ChangeCanShoot(game);
                         duckController.ChangeAnimState(duck, EnumDuckState.HIT);
-                        //duckController.RestoreAnimDuration(duck); // For now not realy needed
                     }
                     duck.animDuration += delta;
                 } else {
@@ -101,7 +97,7 @@ namespace DuckHunterGame.src.controllers
                     {
                         ChangeCanShoot(game);
                         dogController.ChangeIsVisable(dog);
-                        dogController.SetDogPosition(dog, duck); // TODO: limit the posX to only be between tree and bush
+                        dogController.SetDogPosition(dog, duck); 
                         dogController.ChangeDogAnimState(dog, EnumDogState.SHOW_DUCK);
                     }
                 }
@@ -181,16 +177,11 @@ namespace DuckHunterGame.src.controllers
             game.round++;
             game.ducks.Clear();
             duckController.GenerateDucks(game);
-
-            //dogController.ChangeDogAnimState(GetDog(game), EnumDogAnimState.WALK);
-            //dogController.ChangeIsVisable(GetDog(game));
             game.dog = dogController.NewDog();
-
             game.currentDuck = 0;
             game.ducksHitCount = 0;
             game.isIntro = true;
 
-            
         }
         public void RestartGame(models.Game game)
         {
@@ -202,9 +193,22 @@ namespace DuckHunterGame.src.controllers
             game.ducksHitGoal = 1;
             game.ducksHitCount = 0;
             game.currentDuck = 0;
-
+            game.bullets = 3;
             game.isIntro = true;
         }
+
+        public Dictionary<EnumDogState, AnimationController> CreateDogAnimations()
+        {
+            var dogSprites = new Dictionary<EnumDogState, AnimationController>();
+            dogSprites.Add(EnumDogState.WALK, new AnimationController(48, 56, 0, 56 * 4, 0.15f));
+            dogSprites.Add(EnumDogState.SNIFF, new AnimationController(48, 56, 1, 56 * 3, 0.5f));
+            dogSprites.Add(EnumDogState.JUMP, new AnimationController(48, 56, 2, 56 * 2, 0.5f));
+            dogSprites.Add(EnumDogState.SHOW_DUCK, new AnimationController(48, 56, 3, 56, 0.2f));
+            dogSprites.Add(EnumDogState.LAUGH, new AnimationController(48, 56, 4, 56 * 2, 0.15f));
+            dogSprites.Add(EnumDogState.IDLE, new AnimationController(1, 1, 1, 1, 1));
+            return dogSprites;
+        }
+
         public int GetPoints(models.Game game) 
         { 
             return game.points;

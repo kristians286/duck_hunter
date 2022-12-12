@@ -34,50 +34,50 @@ namespace DuckHunterGame.src.controllers
             {
                 dog.posX += 50 * delta;
             } else
-            {   
+            {
                 dog.enumDogAnimState = EnumDogState.SNIFF;
                 ResetAnimDuration(dog);
-                //JumpInBush(dog, targetPosX, delta);
             }
         }
 
         public void Sniff(Dog dog, float delta)
         {
-            if (dog.animDuration < 2.1f)
+            if (dog.animDuration < 1.46f)
             {
                 dog.animDuration += delta;
-            } else 
+            } else
             {
-                ResetAnimDuration(dog);
                 ChangeDogAnimState(dog, EnumDogState.JUMP);
+                ResetAnimDuration(dog);
             }
         }
 
         public void JumpInBush(Dog dog, int targetPosX , float delta) // MIGHT NEED TO MOVE TO GAME CONTROLLER
         {
+            dog.animDuration += delta;
             if (dog.posX < targetPosX)
             {
-                dog.posX += 64 * delta;
-                dog.posY -= 64*3 * delta;
+                dog.posX += 64 * delta ;
+                dog.posY -= 64 * 3 * delta ;
             } else
             {   
                 if (dog.isInBackround != true)
                 {
                     ChangeIsInBackgound(dog);
                 }
-                if (dog.posY < 64*6 - 32)
+                if (dog.posY < 64 * 6 - 32)
                 {
-                    dog.posY += 200 * delta;
+                    dog.posY += 300 * delta ;
                 } else
                 {
-                    if (dog.animDuration < 2)
+                    if (dog.animDuration < 3)
                     {
-                        dog.animDuration += delta;
+                        
                     } else
                     {
                         ChangeIsVisable(dog);
-                        ResetAnimDuration(dog);
                         ChangeDogAnimState(dog, EnumDogState.IDLE);
+                        ResetAnimDuration(dog);
                     }
                     
                 }
