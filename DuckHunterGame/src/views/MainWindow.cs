@@ -127,21 +127,21 @@ namespace DuckHunterGame.src.views
 
             var saveButton = new ComponentButton(_buttonTexture, _textFont) 
             { 
-                Position = new Vector2(20,20),
+                Position = new Vector2(30,20),
                 Text = "Save"
             };
             saveButton.ClickEvent += SaveGame_Click;
 
             var loadButton = new ComponentButton(_buttonTexture, _textFont)
             {
-                Position = new Vector2(20 + 80* 2, 20),
+                Position = new Vector2(30 + 160, 20),
                 Text = "Load"
             };
             loadButton.ClickEvent += LoadGame_Click;
 
             var newGameButton = new ComponentButton(_buttonTexture, _textFont)
             {
-                Position = new Vector2(20 + 80 *4, 20),
+                Position = new Vector2(30 + 320, 20),
                 Text = "New Game"
             };
             newGameButton.ClickEvent += NewGame_Click;

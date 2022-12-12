@@ -36,7 +36,6 @@ namespace DuckHunterGame.src.views
 
         public void OnClick()
         {
-            Debug.WriteLine(Text);
             ClickEvent?.Invoke(this,EventArgs.Empty);   
         }
 
@@ -54,7 +53,6 @@ namespace DuckHunterGame.src.views
 
                 if (_mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
                 {
-                    Debug.WriteLine("CALL");
                     OnClick();
                 }
             }

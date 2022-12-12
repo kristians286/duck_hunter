@@ -60,10 +60,5 @@ namespace DuckHunterGame.src.controllers
             return new Rectangle(_spriteWidth * _col, _spriteHeight * _row, _spriteWidth, _spriteHeight); ;
         }
 
-        public String print() // For viewing only / will be deleted
-        {
-            return $"{_timeElapsed},\n {_row}, {_col}";
-        }
-
     }
 }
