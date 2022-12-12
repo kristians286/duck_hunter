@@ -14,7 +14,7 @@ namespace DuckHunterGame.src.controllers
         private int _spriteHeight;
         private int _spriteWidth;
 
-        private int _textureHeight;
+        private bool start = true;
         private int _textureWidth;
 
         private int _row;
@@ -41,7 +41,7 @@ namespace DuckHunterGame.src.controllers
 
         public void UpdateFrame(float delta)
         {
-            
+
             _timeElapsed += delta;
             if (_timeElapsed > _timePerFreme)
             {
@@ -51,8 +51,8 @@ namespace DuckHunterGame.src.controllers
                 {
                     _col = 0;
                 }
-            } 
-
+            }
+            
         }
 
         public Rectangle GetFrame()
@@ -60,5 +60,15 @@ namespace DuckHunterGame.src.controllers
             return new Rectangle(_spriteWidth * _col, _spriteHeight * _row, _spriteWidth, _spriteHeight); ;
         }
 
+        public void RestoreToFirstFrame()
+        {
+            _col = 0;
+            _timeElapsed = 0;
+        }
+
+        public int col()
+        {
+            return _col;
+        }
     }
 }

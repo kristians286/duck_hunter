@@ -5,8 +5,10 @@ using DuckHunterGame.src.serializer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -57,6 +59,7 @@ namespace DuckHunterGame.src.views
         /// Clicking outside of game window still uses a shot
         /// 
         /// Clicking a button will shoot one bullet 
+        /// 
         /// </bugs>
 
         // BUTTONS
@@ -83,13 +86,11 @@ namespace DuckHunterGame.src.views
             _spriteDuckStates.Add(EnumDuckState.IDLE, new AnimationController       (1, 1, 1, 1, 1));
 
             _spriteDogStates.Add(EnumDogState.WALK, new AnimationController     (48, 56, 0, 56 * 4, 0.15f));
-            _spriteDogStates.Add(EnumDogState.SNIFF, new AnimationController    (48, 56, 1, 56 * 3, 0.6f));
-            _spriteDogStates.Add(EnumDogState.JUMP, new AnimationController     (48, 56, 2, 56 * 2, 0.7f));
+            _spriteDogStates.Add(EnumDogState.SNIFF, new AnimationController    (48, 56, 1, 56 * 3, 0.5f));
+            _spriteDogStates.Add(EnumDogState.JUMP, new AnimationController     (48, 56, 2, 56 * 2, 0.5f));
             _spriteDogStates.Add(EnumDogState.SHOW_DUCK, new AnimationController(48, 56, 3, 56, 0.2f));
             _spriteDogStates.Add(EnumDogState.LAUGH, new AnimationController    (48, 56, 4, 56 * 2 , 0.15f));
             _spriteDogStates.Add(EnumDogState.IDLE, new AnimationController     (1, 1, 1, 1, 1));
-
-            
 
         }
 
@@ -172,6 +173,11 @@ namespace DuckHunterGame.src.views
                 Exit();
 
             // TODO: Add your update logic here
+            foreach (var spriteDogState in _spriteDogStates)
+                 if (_game.dog.enumDogAnimState != spriteDogState.Key)
+                 {
+                    spriteDogState.Value.RestoreToFirstFrame();
+                 } 
 
             foreach (var component in _componentButtons)
                 component.Update(gameTime);
@@ -184,6 +190,7 @@ namespace DuckHunterGame.src.views
                     if (_dogController.GetAnimState(_game.dog) == EnumDogState.WALK)
                     {
                         _dogController.Walk(_game.dog, _game.screenWidth/2 - 64 -32, delta);
+
                     }
                     else if (_dogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
                     {
@@ -246,6 +253,8 @@ namespace DuckHunterGame.src.views
             _DogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, 48 *2, 56 *2);
             // TODO: Add your drawing code here 
             _spriteBatch.Begin();
+
+            _spriteBatch.DrawString(_textFont,"X:" + _spriteDogStates[_game.dog.enumDogAnimState].col(), new Vector2(0,0),Color.White);
 
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
