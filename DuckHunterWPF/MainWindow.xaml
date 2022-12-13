@@ -15,13 +15,9 @@
             <Button Click="uiButtonLoad_Click"  x:Name="uiButtonLoad" Margin="14,46,-14,-46">Load</Button>
             <Button Click="uiButtonNewGame_Click"  x:Name="uiButtonNewGame" Margin="14,72,-14,-71">NewGame</Button>
 
-
+            <TextBlock Margin="14,107,-14,-107">COOL AS HECK TEXT</TextBlock>
+            <TextBlock Margin="14,128,-14,-128" Text="{Binding Score, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
         </Grid>
-        
-        
-
-        
-
 
     </Canvas>
 </Window>

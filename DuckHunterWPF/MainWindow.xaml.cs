@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 
 using DuckHunter.Models.Enums;
+using System.ComponentModel;
 
 namespace DuckHunterWPF
 {
@@ -40,10 +41,12 @@ namespace DuckHunterWPF
 
         private MouseButtonState mouseState;
         private MouseButtonState prevMouseState;
+
+        public int Score { get { return _game.points; } }
         public MainWindow()
         {
             InitializeComponent();
-
+            
             
 
             _game = _gameController.NewGame();
@@ -60,11 +63,13 @@ namespace DuckHunterWPF
             _dogSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/dog.png"));
             _dogSprite.Viewbox = new Rect(0,0,0.25,.2);
             _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
-            _duckSprite.Viewbox = new Rect(0, 0, 0.25, 0.25);
+            _duckSprite.Viewbox = new Rect(0, 0, 0.33, 0.25);
+            
             DataContext = this;
             findMyBackground();
             findMyDog();
             findMyDuck();
+            
 
         }
 
@@ -75,10 +80,9 @@ namespace DuckHunterWPF
             float delta = (float) (_current.Millisecond - _previous.Millisecond) / 1000;
             if (delta < 0)
             {
-                delta = 0;
+                delta = 0.01f;
             }
             Debug.WriteLine(delta);
-            //delta = 0.01f;
             _previous = _current;
 
             if (_dogController.IsVisible(_gameController.GetDog(_game))) // DOG
@@ -144,6 +148,10 @@ namespace DuckHunterWPF
             if (_game.dog.isInBackround) 
             {
                 Panel.SetZIndex(_dogRect, 0);
+            } 
+            else if (_game.isIntro)
+            {
+                Panel.SetZIndex(_dogRect, 2);
             }
             
             Canvas.SetLeft(_duckRect, _game.Ducks[_game.currentDuck].posX);
@@ -191,17 +199,19 @@ namespace DuckHunterWPF
 
         private void uiButtonSaves_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Save button click");
+            Debug.WriteLine("Save button click + "+ Score);
+            
         }
 
         private void uiButtonLoad_Click(object sender, RoutedEventArgs e)
         {
-
+            _gameController.NextRound(_game);
         }
 
         private void uiButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
-
+            _game = _gameController.NewGame();
         }
+
     }
 }
