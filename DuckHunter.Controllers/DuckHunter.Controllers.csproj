@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DuckHunter.Models\DuckHunter.Models.csproj" />
+  </ItemGroup>
+
 </Project>

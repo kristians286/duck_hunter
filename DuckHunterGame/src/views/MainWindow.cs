@@ -1,4 +1,5 @@
-﻿using DuckHunterGame.src.controllers;
+﻿using DuckHunter.Models;
+using DuckHunterGame.src.controllers;
 using DuckHunterGame.src.enums;
 using DuckHunterGame.src.models;
 using DuckHunterGame.src.serializer;
@@ -292,7 +293,10 @@ namespace DuckHunterGame.src.views
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
-            
+
+            var test = new DuckHunter.Models.Dog();
+
+
             _hudView.Draw(gameTime);
 
             foreach (var component in _componentButtons)

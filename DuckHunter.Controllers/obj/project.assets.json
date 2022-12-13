@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "DuckHunter.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "DuckHunter.Models/1.0.0": {
+      "type": "project",
+      "path": "../DuckHunter.Models/DuckHunter.Models.csproj",
+      "msbuildProject": "../DuckHunter.Models/DuckHunter.Models.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "DuckHunter.Models >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\krist\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Models\\DuckHunter.Models.csproj": {
+              "projectPath": "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Models\\DuckHunter.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

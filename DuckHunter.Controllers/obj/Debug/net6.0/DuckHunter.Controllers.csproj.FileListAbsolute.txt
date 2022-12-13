@@ -1,0 +1,15 @@
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\bin\Debug\net6.0\DuckHunter.Controllers.deps.json
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\bin\Debug\net6.0\DuckHunter.Controllers.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\bin\Debug\net6.0\DuckHunter.Controllers.pdb
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\bin\Debug\net6.0\DuckHunter.Models.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\bin\Debug\net6.0\DuckHunter.Models.pdb
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.csproj.AssemblyReference.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.AssemblyInfoInputs.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.AssemblyInfo.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.csproj.CoreCompileInputs.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.csproj.CopyComplete
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\refint\DuckHunter.Controllers.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\DuckHunter.Controllers.pdb
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Controllers\obj\Debug\net6.0\ref\DuckHunter.Controllers.dll

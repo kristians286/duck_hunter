@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DuckHunterWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="uiButtonSaves">Save</Button>
-    </Grid>
+        ResizeMode="NoResize"
+        Title="Duck Hunter" Height="548" Width="526" 
+        Background="CornflowerBlue">
+    <Canvas Name="MainCanvas">
+
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="99">
+            <Button Click="uiButtonSaves_Click"  x:Name="uiButtonSaves" Margin="14,20,-14,-20">Save</Button>
+            <Button Click="uiButtonLoad_Click"  x:Name="uiButtonLoad" Margin="14,46,-14,-46">Load</Button>
+            <Button Click="uiButtonNewGame_Click"  x:Name="uiButtonNewGame" Margin="14,72,-14,-71">NewGame</Button>
+
+
+        </Grid>
+        
+        
+
+        
+
+
+    </Canvas>
 </Window>

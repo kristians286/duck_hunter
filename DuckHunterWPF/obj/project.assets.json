@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net6.0-windows7.0": {}
+    "net6.0-windows7.0": {
+      "DuckHunter.Controllers/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "DuckHunter.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DuckHunter.Controllers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DuckHunter.Controllers.dll": {}
+        }
+      },
+      "DuckHunter.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "DuckHunter.Controllers/1.0.0": {
+      "type": "project",
+      "path": "../DuckHunter.Controllers/DuckHunter.Controllers.csproj",
+      "msbuildProject": "../DuckHunter.Controllers/DuckHunter.Controllers.csproj"
+    },
+    "DuckHunter.Models/1.0.0": {
+      "type": "project",
+      "path": "../DuckHunter.Models/DuckHunter.Models.csproj",
+      "msbuildProject": "../DuckHunter.Models/DuckHunter.Models.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0-windows7.0": []
+    "net6.0-windows7.0": [
+      "DuckHunter.Controllers >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\krist\\.nuget\\packages\\": {}
@@ -33,7 +70,11 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Controllers\\DuckHunter.Controllers.csproj": {
+              "projectPath": "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Controllers\\DuckHunter.Controllers.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
