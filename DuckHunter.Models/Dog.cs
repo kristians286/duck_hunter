@@ -4,6 +4,7 @@ namespace DuckHunter.Models
 {
     public class Dog
     {
+
         public float posX { get; set; }
         public float posY { get; set; }
         public int posTargetX;

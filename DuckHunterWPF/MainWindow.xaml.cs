@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 using DuckHunter.Models.Enums;
 using System.ComponentModel;
+using System.Windows.Media.Animation;
 
 namespace DuckHunterWPF
 {
@@ -28,6 +29,8 @@ namespace DuckHunterWPF
         private GameController _gameController = new GameController();
         private DogController _dogController = new DogController();
         private DuckController _duckController = new DuckController();
+
+        private GameSerializer _gameSerializer = new GameSerializer();
         
         private ImageBrush _background = new ImageBrush();
         private ImageBrush _duckSprite = new ImageBrush();
@@ -46,14 +49,14 @@ namespace DuckHunterWPF
         public MainWindow()
         {
             InitializeComponent();
-            
-            
+            Cursor = Cursors.None;
+
 
             _game = _gameController.NewGame();
 
-            gameTime.Interval = TimeSpan.FromMilliseconds(1);
+            gameTime.Interval = TimeSpan.FromMilliseconds(16.6666666667);
             Debug.WriteLine(gameTime.Interval.ToString());
-            gameTime.Tick += GameLoop;
+            gameTime.Tick += GameTick;
             gameTime.Start();
 
 
@@ -73,8 +76,12 @@ namespace DuckHunterWPF
 
         }
 
-        private void GameLoop(object? sender, EventArgs e)
+        private void GameTick(object? sender, EventArgs e)
         {
+            var mp = Mouse.GetPosition(this);
+            Canvas.SetLeft(Crosshair, mp.X - Crosshair.ActualWidth / 2);
+            Canvas.SetTop(Crosshair, mp.Y - Crosshair.ActualHeight / 2);
+
 
             _current = DateTime.Now;
             float delta = (float) (_current.Millisecond - _previous.Millisecond) / 1000;
@@ -82,9 +89,9 @@ namespace DuckHunterWPF
             {
                 delta = 0.01f;
             }
-            Debug.WriteLine(delta);
+            //Debug.WriteLine(delta);
             _previous = _current;
-
+            
             if (_dogController.IsVisible(_gameController.GetDog(_game))) // DOG
             {
                 if (_gameController.GetIsIntro(_game))
@@ -92,7 +99,7 @@ namespace DuckHunterWPF
                     if (_dogController.GetAnimState(_game.dog) == EnumDogState.WALK)
                     {
                         _dogController.Walk(_game.dog, _game.screenWidth / 2 - 64 - 32, delta);
-
+                            
                     }
                     else if (_dogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
                     {
@@ -143,6 +150,7 @@ namespace DuckHunterWPF
 
         private void updateEntities()
         {
+
             Canvas.SetLeft(_dogRect, _game.dog.posX);
             Canvas.SetTop(_dogRect, _game.dog.posY);
             if (_game.dog.isInBackround) 
@@ -153,7 +161,7 @@ namespace DuckHunterWPF
             {
                 Panel.SetZIndex(_dogRect, 2);
             }
-            
+
             Canvas.SetLeft(_duckRect, _game.Ducks[_game.currentDuck].posX);
             Canvas.SetTop(_duckRect,  _game.Ducks[_game.currentDuck].posY);
         }
@@ -178,7 +186,7 @@ namespace DuckHunterWPF
                 Height = 120,
                 Fill = _dogSprite,
                 Stretch = Stretch.Fill,
-        };
+            };
             Panel.SetZIndex(_dogRect, 2);
             MainCanvas.Children.Add(_dogRect);
 
@@ -192,6 +200,7 @@ namespace DuckHunterWPF
                 Height = 64,
                 Fill = _duckSprite,
                 Stretch = Stretch.Fill,
+                
             };
             Panel.SetZIndex(_duckRect, 0);
             MainCanvas.Children.Add(_duckRect);
@@ -200,12 +209,13 @@ namespace DuckHunterWPF
         private void uiButtonSaves_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Save button click + "+ Score);
+            _gameSerializer.SaveGame(_game);
             
         }
 
         private void uiButtonLoad_Click(object sender, RoutedEventArgs e)
         {
-            _gameController.NextRound(_game);
+            _game = _gameSerializer.LoadGame();
         }
 
         private void uiButtonNewGame_Click(object sender, RoutedEventArgs e)

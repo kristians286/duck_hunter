@@ -10,6 +10,7 @@ namespace DuckHunter.Models
 {
     public class Duck
     {
+
         public float posX { get; set; }
         public float posY { get; set; }
 

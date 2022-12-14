@@ -1,8 +1,14 @@
 ﻿
+using System.Xml.Serialization;
+
 namespace DuckHunter.Models
 {
+
+    [XmlRoot("Game")]
     public class Game
     {
+        
+
         public int screenHeight { get; set; }
         public int screenWidth { get; set; }
 
