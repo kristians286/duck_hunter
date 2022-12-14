@@ -35,6 +35,7 @@ namespace DuckHunterWPF
         private ImageBrush _background = new ImageBrush();
         private ImageBrush _duckSprite = new ImageBrush();
         private ImageBrush _dogSprite = new ImageBrush();
+        private ImageBrush _hudElements = new ImageBrush();
 
         private Rectangle _dogRect = new Rectangle();
         private Rectangle _duckRect = new Rectangle();
@@ -61,8 +62,9 @@ namespace DuckHunterWPF
 
 
             _background.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/background.png"));
-            
-            
+
+            _hudElements.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/hudElements.png"));
+
             _dogSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/dog.png"));
             _dogSprite.Viewbox = new Rect(0,0,0.25,.2);
             _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
@@ -144,7 +146,7 @@ namespace DuckHunterWPF
 
             //_spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
             //_spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
-             
+
             updateEntities();
         }
 
