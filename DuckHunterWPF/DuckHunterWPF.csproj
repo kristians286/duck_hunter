@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\background.png" />
+    <None Remove="images\blackBird.png" />
+    <None Remove="images\dog.png" />
+    <None Remove="images\hudElements.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DuckHunter.Controllers\DuckHunter.Controllers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\background.png" />
+    <Resource Include="images\blackBird.png" />
+    <Resource Include="images\dog.png" />
+    <Resource Include="images\hudElements.png" />
+  </ItemGroup>
+
+</Project>

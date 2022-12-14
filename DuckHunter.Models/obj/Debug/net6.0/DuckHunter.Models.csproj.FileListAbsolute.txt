@@ -1,0 +1,12 @@
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\bin\Debug\net6.0\DuckHunter.Models.deps.json
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\bin\Debug\net6.0\DuckHunter.Models.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\bin\Debug\net6.0\DuckHunter.Models.pdb
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.csproj.AssemblyReference.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.AssemblyInfoInputs.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.AssemblyInfo.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.csproj.CoreCompileInputs.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\refint\DuckHunter.Models.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\DuckHunter.Models.pdb
+C:\Users\krist\Documents\duck_hunter\DuckHunter.Models\obj\Debug\net6.0\ref\DuckHunter.Models.dll

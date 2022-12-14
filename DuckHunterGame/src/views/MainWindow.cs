@@ -1,4 +1,5 @@
-﻿using DuckHunterGame.src.controllers;
+﻿using DuckHunter.Models;
+using DuckHunterGame.src.controllers;
 using DuckHunterGame.src.enums;
 using DuckHunterGame.src.models;
 using DuckHunterGame.src.serializer;
@@ -52,24 +53,22 @@ namespace DuckHunterGame.src.views
         private Dictionary<EnumDuckState, AnimationController> _spriteDuckStates = new Dictionary<EnumDuckState, AnimationController>();
         private Dictionary<EnumDogState, AnimationController> _spriteDogStates = new Dictionary<EnumDogState, AnimationController>();
 
+        private EnumDogState _prevEnumState;
+
+        // BUTTONS
+        private List<ComponentButton> _componentButtons;
+        
+        private Texture2D _buttonTexture;
+
 
         /// <bugs>
-        /// 
-        /// On next round dogs animation on SNIFF state is not reset making him start on a different frame
         /// 
         /// Clicking outside of game window still uses a shot
         /// 
         /// Clicking a button will shoot one bullet 
         /// 
         /// </bugs>
-        private EnumDogState _prevEnumState;
 
-
-
-        // BUTTONS
-        private List<ComponentButton> _componentButtons;
-
-        private Texture2D _buttonTexture;
         public MainWindow()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -252,7 +251,7 @@ namespace DuckHunterGame.src.views
 
         protected override void Draw(GameTime gameTime)
         {
-            
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_game.ducks[_game.currentDuck].isFlyAway)
             {
                 GraphicsDevice.Clear(Color.Pink);
@@ -267,6 +266,11 @@ namespace DuckHunterGame.src.views
             // TODO: Add your drawing code here 
             _spriteBatch.Begin();
 
+            if (_game.ducks[_game.currentDuck].enumDuckAnimState == EnumDuckState.FALL)
+            {
+                _spriteBatch.DrawString(_textFont, _game.ducks[_game.currentDuck].points.ToString(), new Vector2(mouseState.X - _game.ducks[_game.currentDuck].points.ToString().Length * 4, mouseState.Y), Color.White);
+            }
+
             if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
                 _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
@@ -275,6 +279,8 @@ namespace DuckHunterGame.src.views
             {
                 _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
             }
+            
+
 
             if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
             {
@@ -287,7 +293,10 @@ namespace DuckHunterGame.src.views
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
 
             }
-            
+
+            var test = new DuckHunter.Models.Dog();
+
+
             _hudView.Draw(gameTime);
 
             foreach (var component in _componentButtons)

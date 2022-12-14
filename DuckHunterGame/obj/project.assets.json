@@ -54,6 +54,29 @@
             "rid": "win-x86"
           }
         }
+      },
+      "DuckHunter.Controllers/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "DuckHunter.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DuckHunter.Controllers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DuckHunter.Controllers.dll": {}
+        }
+      },
+      "DuckHunter.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DuckHunter.Models.dll": {}
+        }
       }
     }
   },
@@ -93,10 +116,22 @@
         "runtimes/win-x86/native/SDL2.dll",
         "runtimes/win-x86/native/soft_oal.dll"
       ]
+    },
+    "DuckHunter.Controllers/1.0.0": {
+      "type": "project",
+      "path": "../DuckHunter.Controllers/DuckHunter.Controllers.csproj",
+      "msbuildProject": "../DuckHunter.Controllers/DuckHunter.Controllers.csproj"
+    },
+    "DuckHunter.Models/1.0.0": {
+      "type": "project",
+      "path": "../DuckHunter.Models/DuckHunter.Models.csproj",
+      "msbuildProject": "../DuckHunter.Models/DuckHunter.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "DuckHunter.Controllers >= 1.0.0",
+      "DuckHunter.Models >= 1.0.0",
       "MonoGame.Content.Builder.Task >= 3.8.1.303",
       "MonoGame.Framework.DesktopGL >= 3.8.1.303"
     ]
@@ -127,7 +162,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Controllers\\DuckHunter.Controllers.csproj": {
+              "projectPath": "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Controllers\\DuckHunter.Controllers.csproj"
+            },
+            "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Models\\DuckHunter.Models.csproj": {
+              "projectPath": "C:\\Users\\krist\\Documents\\duck_hunter\\DuckHunter.Models\\DuckHunter.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

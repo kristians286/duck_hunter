@@ -14,7 +14,6 @@ namespace DuckHunterGame.src.controllers
         private int _spriteHeight;
         private int _spriteWidth;
 
-        private bool start = true;
         private int _textureWidth;
 
         private int _row;

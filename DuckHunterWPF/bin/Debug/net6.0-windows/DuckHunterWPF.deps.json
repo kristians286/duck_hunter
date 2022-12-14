@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "DuckHunterWPF/1.0.0": {
+        "dependencies": {
+          "DuckHunter.Controllers": "1.0.0"
+        },
+        "runtime": {
+          "DuckHunterWPF.dll": {}
+        }
+      },
+      "DuckHunter.Controllers/1.0.0": {
+        "dependencies": {
+          "DuckHunter.Models": "1.0.0"
+        },
+        "runtime": {
+          "DuckHunter.Controllers.dll": {}
+        }
+      },
+      "DuckHunter.Models/1.0.0": {
+        "runtime": {
+          "DuckHunter.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DuckHunterWPF/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DuckHunter.Controllers/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DuckHunter.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

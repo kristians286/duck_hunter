@@ -197,18 +197,6 @@ namespace DuckHunterGame.src.controllers
             game.isIntro = true;
         }
 
-        public Dictionary<EnumDogState, AnimationController> CreateDogAnimations()
-        {
-            var dogSprites = new Dictionary<EnumDogState, AnimationController>();
-            dogSprites.Add(EnumDogState.WALK, new AnimationController(48, 56, 0, 56 * 4, 0.15f));
-            dogSprites.Add(EnumDogState.SNIFF, new AnimationController(48, 56, 1, 56 * 3, 0.5f));
-            dogSprites.Add(EnumDogState.JUMP, new AnimationController(48, 56, 2, 56 * 2, 0.5f));
-            dogSprites.Add(EnumDogState.SHOW_DUCK, new AnimationController(48, 56, 3, 56, 0.2f));
-            dogSprites.Add(EnumDogState.LAUGH, new AnimationController(48, 56, 4, 56 * 2, 0.15f));
-            dogSprites.Add(EnumDogState.IDLE, new AnimationController(1, 1, 1, 1, 1));
-            return dogSprites;
-        }
-
         public int GetPoints(models.Game game) 
         { 
             return game.points;
