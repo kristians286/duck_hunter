@@ -46,12 +46,11 @@ namespace DuckHunterWPF
         private MouseButtonState mouseState;
         private MouseButtonState prevMouseState;
 
-        public int Score { get { return _game.points; } }
+
         public MainWindow()
         {
             InitializeComponent();
             Cursor = Cursors.None;
-
 
             _game = _gameController.NewGame();
 
@@ -70,7 +69,7 @@ namespace DuckHunterWPF
             _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
             _duckSprite.Viewbox = new Rect(0, 0, 0.33, 0.25);
             
-            DataContext = this;
+            this.DataContext = _game;
             findMyBackground();
             findMyDog();
             findMyDuck();
@@ -210,7 +209,7 @@ namespace DuckHunterWPF
 
         private void uiButtonSaves_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Save button click + "+ Score);
+            Debug.WriteLine("Save button click + "+ _game.points);
             _gameSerializer.SaveGame(_game);
             
         }
