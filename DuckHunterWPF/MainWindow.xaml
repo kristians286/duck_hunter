@@ -53,10 +53,12 @@
         </Grid>
 
         <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
-            <TextBlock Text="TEST"></TextBlock>
-            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,16,0,-16"></TextBlock>
-            <TextBlock x:Name="Round" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,32,0,-32"></TextBlock>
-            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,48,0,-48"></TextBlock>
+            <TextBlock Text="Points: " Margin="94,-74,-94,74"></TextBlock>
+            <TextBlock Text="Bullets: " Margin="94,-58,-94,58"></TextBlock>
+            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-74,-135,74"></TextBlock>
+            <TextBlock x:Name="Round" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-90,-135,90"></TextBlock>
+            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-58,-135,58"></TextBlock>
+            <TextBlock Text="Round: " Margin="94,-90,-94,90"/>
         </Grid>
 
         <Grid x:Name="Crosshair" Canvas.Left="255" Canvas.Top="260" Panel.ZIndex="97" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -66,7 +68,7 @@
 
         </Grid>
 
-        
+
 
     </Canvas>
 
