@@ -217,11 +217,13 @@ namespace DuckHunterWPF
         private void uiButtonLoad_Click(object sender, RoutedEventArgs e)
         {
             _game = _gameSerializer.LoadGame();
+            this.DataContext = _game;
         }
 
         private void uiButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
             _game = _gameController.NewGame();
+            this.DataContext = _game;
         }
 
     }
