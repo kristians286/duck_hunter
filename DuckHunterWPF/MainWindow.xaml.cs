@@ -14,6 +14,7 @@ using System.Windows.Input;
 using DuckHunter.Models.Enums;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using System.IO;
 
 namespace DuckHunterWPF
 {
@@ -23,6 +24,8 @@ namespace DuckHunterWPF
     /// 
     public partial class MainWindow : Window
     {
+        private MediaPlayer _mediaPlayer = new MediaPlayer();
+
         DispatcherTimer gameTime = new DispatcherTimer();
 
         private Game _game;
@@ -51,7 +54,9 @@ namespace DuckHunterWPF
         {
             InitializeComponent();
             Cursor = Cursors.None;
-
+            var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\music\melody.mp3"));
+            _mediaPlayer.Open(new Uri(musicPath));
+            _mediaPlayer.MediaEnded += new EventHandler(Media_ended);
             _game = _gameController.NewGame();
 
             gameTime.Interval = TimeSpan.FromMilliseconds(16.6666666667);
@@ -75,6 +80,12 @@ namespace DuckHunterWPF
             findMyDuck();
             
 
+        }
+
+        private void Media_ended(object? sender, EventArgs e)
+        {
+            _mediaPlayer.Position = TimeSpan.Zero; 
+            _mediaPlayer.Play();
         }
 
         private void GameTick(object? sender, EventArgs e)
@@ -226,5 +237,24 @@ namespace DuckHunterWPF
             this.DataContext = _game;
         }
 
+        private void mediaPlay(object sender, RoutedEventArgs e)
+        {
+            _mediaPlayer.Play();
+        }
+
+        private int i = 0;
+        private void mediaPause(object sender, RoutedEventArgs e)
+        {
+            
+            if (i > 10)
+            {
+                _mediaPlayer.Pause();
+                i= 0;
+            } else
+            {
+                i++;
+            }
+            
+        }
     }
 }

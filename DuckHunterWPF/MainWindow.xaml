@@ -69,6 +69,12 @@
         </Grid>
 
 
+        <Grid Panel.ZIndex="99">
+            <TextBlock Text="Radio" Margin="321,7,-322,-7"></TextBlock>
+            <Button Content = "Play" Margin = "360,4,-350,-4" Padding = "5" Click = "mediaPlay" />
+            <Button Content = "Pause" Margin = "422,4,-413,-4" Padding = "5" Click = "mediaPause" />
+
+        </Grid>
 
     </Canvas>
 
