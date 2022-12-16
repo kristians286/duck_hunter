@@ -14,6 +14,7 @@ using System.Windows.Input;
 using DuckHunter.Models.Enums;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using System.IO;
 
 namespace DuckHunterWPF
 {
@@ -23,6 +24,8 @@ namespace DuckHunterWPF
     /// 
     public partial class MainWindow : Window
     {
+        private MediaPlayer _mediaPlayer = new MediaPlayer();
+
         DispatcherTimer gameTime = new DispatcherTimer();
 
         private Game _game;
@@ -46,13 +49,14 @@ namespace DuckHunterWPF
         private MouseButtonState mouseState;
         private MouseButtonState prevMouseState;
 
-        public int Score { get { return _game.points; } }
+
         public MainWindow()
         {
             InitializeComponent();
             Cursor = Cursors.None;
-
-
+            var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\music\melody.mp3"));
+            _mediaPlayer.Open(new Uri(musicPath));
+            _mediaPlayer.MediaEnded += new EventHandler(Media_ended);
             _game = _gameController.NewGame();
 
             gameTime.Interval = TimeSpan.FromMilliseconds(16.6666666667);
@@ -70,12 +74,18 @@ namespace DuckHunterWPF
             _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
             _duckSprite.Viewbox = new Rect(0, 0, 0.33, 0.25);
             
-            DataContext = this;
+            this.DataContext = _game;
             findMyBackground();
             findMyDog();
             findMyDuck();
             
 
+        }
+
+        private void Media_ended(object? sender, EventArgs e)
+        {
+            _mediaPlayer.Position = TimeSpan.Zero; 
+            _mediaPlayer.Play();
         }
 
         private void GameTick(object? sender, EventArgs e)
@@ -210,7 +220,7 @@ namespace DuckHunterWPF
 
         private void uiButtonSaves_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Save button click + "+ Score);
+            Debug.WriteLine("Save button click + "+ _game.points);
             _gameSerializer.SaveGame(_game);
             
         }
@@ -218,12 +228,33 @@ namespace DuckHunterWPF
         private void uiButtonLoad_Click(object sender, RoutedEventArgs e)
         {
             _game = _gameSerializer.LoadGame();
+            this.DataContext = _game;
         }
 
         private void uiButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
             _game = _gameController.NewGame();
+            this.DataContext = _game;
         }
 
+        private void mediaPlay(object sender, RoutedEventArgs e)
+        {
+            _mediaPlayer.Play();
+        }
+
+        private int i = 0;
+        private void mediaPause(object sender, RoutedEventArgs e)
+        {
+            
+            if (i > 10)
+            {
+                _mediaPlayer.Pause();
+                i= 0;
+            } else
+            {
+                i++;
+            }
+            
+        }
     }
 }

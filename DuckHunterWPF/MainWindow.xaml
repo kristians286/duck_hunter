@@ -52,6 +52,15 @@
 
         </Grid>
 
+        <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
+            <TextBlock Text="Points: " Margin="94,-74,-94,74"></TextBlock>
+            <TextBlock Text="Bullets: " Margin="94,-58,-94,58"></TextBlock>
+            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-74,-135,74"></TextBlock>
+            <TextBlock x:Name="Round" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-90,-135,90"></TextBlock>
+            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-58,-135,58"></TextBlock>
+            <TextBlock Text="Round: " Margin="94,-90,-94,90"/>
+        </Grid>
+
         <Grid x:Name="Crosshair" Canvas.Left="255" Canvas.Top="260" Panel.ZIndex="97" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Rectangle Height="24" RadiusX="12" RadiusY="12" VerticalAlignment="Center" StrokeThickness="2" Stroke="Black"/>
             <Rectangle  Width="24" Height="1" Fill="Black" ></Rectangle>
@@ -59,7 +68,13 @@
 
         </Grid>
 
-        
+
+        <Grid Panel.ZIndex="99">
+            <TextBlock Text="Radio" Margin="321,7,-322,-7"></TextBlock>
+            <Button Content = "Play" Margin = "360,4,-350,-4" Padding = "5" Click = "mediaPlay" />
+            <Button Content = "Pause" Margin = "422,4,-413,-4" Padding = "5" Click = "mediaPause" />
+
+        </Grid>
 
     </Canvas>
 
