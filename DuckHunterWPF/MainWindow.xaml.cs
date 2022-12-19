@@ -99,6 +99,14 @@ namespace DuckHunterWPF
                 delta = 0.02f;
             }
 
+            if (GameStateButtons.IsMouseOver)
+            {
+                _game.canShoot = true;
+            } else
+            {
+                _game.canShoot = false;
+            }
+
             _game.timer += (_currentTime - _previous);
 
             var mp = Mouse.GetPosition(this);

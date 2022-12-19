@@ -55,11 +55,12 @@
 
     <Canvas Name="MainCanvas" Focusable="True">
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="98">
+        <Grid x:Name="GameStateButtons" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="98">
             <Button Click="uiButtonSaves_Click"  x:Name="uiButtonSaves" Margin="10,10,-10,-10">Save</Button>
             <Button Click="uiButtonLoad_Click"  x:Name="uiButtonLoad" Margin="10,36,-10,-36">Load</Button>
             <Button Click="uiButtonNewGame_Click"  x:Name="uiButtonNewGame" Margin="10,62,-10,-61">New Game</Button>
-
+            <Button Content = "Play" Margin = "418,10,-408,-10"  Click = "mediaPlay" />
+            <Button Content = "Pause" Margin = "418,36,-409,-36"  Click = "mediaPause" />
         </Grid>
 
         <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
@@ -77,14 +78,11 @@
 
 
         <Grid Panel.ZIndex="99">
-            <TextBlock Text="Radio" Margin="338,7,-340,-7"></TextBlock>
-            <Button Content = "Play" Margin = "377,4,-368,-4" Padding = "5" Click = "mediaPlay" />
-            <Button Content = "Pause" Margin = "439,4,-431,-4" Padding = "5" Click = "mediaPause" />
-
+            <TextBlock Text="Radio" Margin="380,24,-382,-24"></TextBlock>
         </Grid>
 
         <Grid>
-            <TextBlock Background="Black" Text="{Binding timer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="209,64,0,-64" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Background="Black" Text="{Binding timer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="205,32,0,-64"></TextBlock>
         </Grid>
     </Canvas>
 
