@@ -5,15 +5,15 @@ namespace DuckHunter.Controllers
 {
     public class DuckController
     {
-        public Duck NewDuck()
+        public static Duck NewDuck()
         {
              
             Duck duck = new();
-            setDefaultSettings(duck);
+            SetDefaultSettings(duck);
             return duck;
         }
 
-        private void setDefaultSettings(Duck duck)
+        private static void SetDefaultSettings(Duck duck)
         {
             Random rand = new();
             Array duckTypeList = Enum.GetValues(typeof(EnumDuckType));
@@ -35,15 +35,15 @@ namespace DuckHunter.Controllers
 
         }
 
-        public void GenerateDucks(Game game)
+        public static void GenerateDucks(Game game)
         {
             for (int i = 0; i < 10; i ++)
             {
                 game.Ducks.Add(NewDuck());
             }
         }
-        
-        public void Fly(Duck duck, float delta) // TODO ADD DEVIATION = A RANDOM VAR THAT MAKES IT LESS PREDICTABLE
+
+        public static void Fly(Duck duck, float delta) // TODO ADD DEVIATION = A RANDOM VAR THAT MAKES IT LESS PREDICTABLE
         {
 
             if (duck.flyDirVertical)
@@ -81,55 +81,55 @@ namespace DuckHunter.Controllers
             }
         }
 
-        public int GetPoints(Duck duck)
+        public static int GetPoints(Duck duck)
         {
             return duck.points;
         }
-        public bool GetIsHit(Duck duck)
+        public static bool GetIsHit(Duck duck)
         {
             return duck.isHit;
         }
-        public void ChangeIsHit(Duck duck)
+        public static void ChangeIsHit(Duck duck)
         {
             duck.isHit = !duck.isHit;
         }
-        public bool GetIsVisable(Duck duck)
+        public static bool GetIsVisable(Duck duck)
         {
             return duck.isVisable;
         }
-        public void ChangeIsVisable(Duck duck)
+        public static void ChangeIsVisable(Duck duck)
         {
             duck.isVisable = !duck.isVisable;
         }
-        public bool GetIsFlyAway(Duck duck)
+        public static bool GetIsFlyAway(Duck duck)
         {
             return duck.isFlyAway;
         }
-        public void ChangeIsFlyAway(Duck duck)
+        public static void ChangeIsFlyAway(Duck duck)
         {
             duck.isFlyAway= !duck.isFlyAway;
         }
-        public void ChangeFlyDirVertical(Duck duck)
+        public static void ChangeFlyDirVertical(Duck duck)
         {
             duck.flyDirVertical = !duck.flyDirVertical;
         }
-        public void ChangeFlyDirHorizontal(Duck duck)
+        public static void ChangeFlyDirHorizontal(Duck duck)
         {
             duck.flyDirHorizontal = !duck.flyDirHorizontal;
         }
-        public void ChangeAnimState(Duck duck, EnumDuckState targetState)
+        public static void ChangeAnimState(Duck duck, EnumDuckState targetState)
         {
             duck.enumDuckAnimState = targetState;
         }
-        public EnumDuckState GetAnimState(Duck duck)
+        public static EnumDuckState GetAnimState(Duck duck)
         {
             return duck.enumDuckAnimState;
         }
-        public float GetAnimDuration(Duck duck)
+        public static float GetAnimDuration(Duck duck)
         {
             return duck.animDuration;
         }
-        public void RestoreAnimDuration(Duck duck)
+        public static void RestoreAnimDuration(Duck duck)
         {
             duck.animDuration = 0;
         }

@@ -41,6 +41,16 @@
             </Setter>
         </Style>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Agency FB"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+
+
+
+        </Style>
+
     </Window.Resources>
 
     <Canvas Name="MainCanvas" Focusable="True">
@@ -53,29 +63,29 @@
         </Grid>
 
         <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
-            <TextBlock Text="Points: " Margin="94,-74,-94,74"></TextBlock>
-            <TextBlock Text="Bullets: " Margin="94,-58,-94,58"></TextBlock>
-            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-74,-135,74"></TextBlock>
-            <TextBlock x:Name="Round" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-90,-135,90"></TextBlock>
-            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="135,-58,-135,58"></TextBlock>
-            <TextBlock Text="Round: " Margin="94,-90,-94,90"/>
+            <TextBlock Text="SCORE " Margin="363,360,-363,-362"></TextBlock>
+            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="363,344,-363,-345"></TextBlock>
+            <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="59,312,-59,-313"></TextBlock>
+            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,344,-31,-344"></TextBlock>
         </Grid>
 
         <Grid x:Name="Crosshair" Canvas.Left="255" Canvas.Top="260" Panel.ZIndex="97" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Rectangle Height="24" RadiusX="12" RadiusY="12" VerticalAlignment="Center" StrokeThickness="2" Stroke="Black"/>
             <Rectangle  Width="24" Height="1" Fill="Black" ></Rectangle>
             <Rectangle  Width="1" Height="24" Fill="Black" ></Rectangle>
-
         </Grid>
 
 
         <Grid Panel.ZIndex="99">
-            <TextBlock Text="Radio" Margin="321,7,-322,-7"></TextBlock>
-            <Button Content = "Play" Margin = "360,4,-350,-4" Padding = "5" Click = "mediaPlay" />
-            <Button Content = "Pause" Margin = "422,4,-413,-4" Padding = "5" Click = "mediaPause" />
+            <TextBlock Text="Radio" Margin="338,7,-340,-7"></TextBlock>
+            <Button Content = "Play" Margin = "377,4,-368,-4" Padding = "5" Click = "mediaPlay" />
+            <Button Content = "Pause" Margin = "439,4,-431,-4" Padding = "5" Click = "mediaPause" />
 
         </Grid>
 
+        <Grid>
+            <TextBlock Background="Black" Text="{Binding timer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="209,64,0,-64" HorizontalAlignment="Left"></TextBlock>
+        </Grid>
     </Canvas>
 
 

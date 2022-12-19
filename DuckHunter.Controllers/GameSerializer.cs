@@ -38,7 +38,7 @@ namespace DuckHunter.Controllers
         
         public Game LoadGame()
         {
-            Game game = new GameController().NewGame() ;
+           Game game = GameController.NewGame() ;
             try
             {
                 string fileName = "\\DuckHunterGameSaveData.xml";

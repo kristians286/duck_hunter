@@ -11,8 +11,19 @@ namespace DuckHunter.Models
         private int _points;
         private int _round;
         private int _bullets;
+        private TimeSpan _timer;
         public int screenHeight { get; set; }
         public int screenWidth { get; set; }
+
+        public TimeSpan timer 
+        {
+            get { return _timer; }
+            set 
+            { 
+                _timer = value;
+                OnPropertyChanged("timer");
+            }
+        }
 
         public int round 
         {

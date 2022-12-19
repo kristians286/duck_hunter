@@ -3,18 +3,16 @@ using DuckHunter.Models.Enums;
 
 namespace DuckHunter.Controllers
 {
-    public class GameController
+    public static class GameController
     {
-        private DuckController duckController = new();
-        private DogController dogController = new();
-        public Game NewGame()
+        public static Game NewGame()
         {
             Game game = new();
-            setDefaultSettings(game);
+            SetDefaultSettings(game);
             return game;
         }
 
-        private void setDefaultSettings(Game game)
+        private static void SetDefaultSettings(Game game)
         {
             game.screenHeight = 8 * 64;
             game.screenWidth = 8 * 64;
@@ -23,8 +21,8 @@ namespace DuckHunter.Controllers
             game.points = 0;
             game.bullets = 3;
             game.Ducks = new List<Duck>();
-            duckController.GenerateDucks(game);
-            game.dog = dogController.NewDog();
+            DuckController.GenerateDucks(game);
+            game.dog = DogController.NewDog();
             game.ducksHitGoal = 1;
             game.ducksHitCount = 0;
             game.currentDuck = 0;
@@ -32,7 +30,7 @@ namespace DuckHunter.Controllers
             game.isIntro = true;
         }
 
-        public void Shoot(Game game, int MousePosX, int MousePosY)
+        public static void Shoot(Game game, int MousePosX, int MousePosY)
         {
             //TODO
             SubBullets(game);
@@ -41,19 +39,19 @@ namespace DuckHunter.Controllers
             if ( (MousePosX > duck.posX && MousePosX < duck.posX + 64 ) &&
                 MousePosY > duck.posY && MousePosY < duck.posY + 64) {
                 
-                duckController.ChangeIsHit(duck);
+                DuckController.ChangeIsHit(duck);
                 
                 
             
             } else if (GetBullets(game) == 0)
             {
-                duckController.ChangeIsFlyAway(duck);
+                DuckController.ChangeIsFlyAway(duck);
                 
             }
             
         }
 
-        public void DuckLeave(Game game, float delta) 
+        public static void DuckLeave(Game game, float delta) 
         {
             if (game.isIntro)
             {
@@ -63,24 +61,24 @@ namespace DuckHunter.Controllers
             Duck duck = GetCurrentDuck(game);
             Dog dog = GetDog(game);
             
-            if (duckController.GetIsHit(duck))
+            if (DuckController.GetIsHit(duck))
             {
                 
 
-                if (duckController.GetAnimDuration(duck) < 0.3)
+                if (DuckController.GetAnimDuration(duck) < 0.3)
                 {
-                    if (duckController.GetAnimState(duck) != EnumDuckState.HIT)
+                    if (DuckController.GetAnimState(duck) != EnumDuckState.HIT)
                     {
                         ChangeCanShoot(game);
-                        duckController.ChangeAnimState(duck, EnumDuckState.HIT);
+                        DuckController.ChangeAnimState(duck, EnumDuckState.HIT);
                     }
                     duck.animDuration += delta;
                 } else {
-                    if (duckController.GetAnimState(duck) != EnumDuckState.FALL) 
+                    if (DuckController.GetAnimState(duck) != EnumDuckState.FALL) 
                     {
-                        duckController.ChangeAnimState(duck, EnumDuckState.FALL);
+                        DuckController.ChangeAnimState(duck, EnumDuckState.FALL);
                         AddHitCount(game);
-                        AddPoints(game, duckController.GetPoints(duck));
+                        AddPoints(game, DuckController.GetPoints(duck));
                     }
                     
                     if (duck.posY < 64 * 6)
@@ -91,18 +89,18 @@ namespace DuckHunter.Controllers
                     else
                     {
                         ChangeCanShoot(game);
-                        dogController.ChangeIsVisable(dog);
-                        dogController.SetDogPosition(dog, duck); 
-                        dogController.ChangeDogAnimState(dog, EnumDogState.SHOW_DUCK);
+                        DogController.ChangeIsVisable(dog);
+                        DogController.SetDogPosition(dog, duck); 
+                        DogController.ChangeDogAnimState(dog, EnumDogState.SHOW_DUCK);
                     }
                 }
             }
-            else if (duckController.GetIsFlyAway(duck))
+            else if (DuckController.GetIsFlyAway(duck))
             {
-                if (duckController.GetAnimState(duck) != EnumDuckState.FLY_UP)
+                if (DuckController.GetAnimState(duck) != EnumDuckState.FLY_UP)
                 {
                     ChangeCanShoot(game);
-                    duckController.ChangeAnimState(duck, EnumDuckState.FLY_UP);
+                    DuckController.ChangeAnimState(duck, EnumDuckState.FLY_UP);
                 }
 
                 if (duck.posY > -64)
@@ -112,36 +110,36 @@ namespace DuckHunter.Controllers
                 else
                 {
                     ChangeCanShoot(game);
-                    dogController.ChangeIsVisable(dog);
-                    dogController.CenterDog(dog, game);
-                    dogController.ChangeDogAnimState(dog, EnumDogState.LAUGH);
+                    DogController.ChangeIsVisable(dog);
+                    DogController.CenterDog(dog, game);
+                    DogController.ChangeDogAnimState(dog, EnumDogState.LAUGH);
                 }
             }
 
             
 
         }
-        public void DogReaction(Game game, float delta)
+        public static void DogReaction(Game game, float delta)
         {
             Dog dog = GetDog(game);
-            if (dogController.GetAnimState(dog) == EnumDogState.SHOW_DUCK || dogController.GetAnimState(dog) == EnumDogState.LAUGH )
+            if (DogController.GetAnimState(dog) == EnumDogState.SHOW_DUCK || DogController.GetAnimState(dog) == EnumDogState.LAUGH )
             {
-                if (dogController.GetAnimDuration(dog) < 0.7)
+                if (DogController.GetAnimDuration(dog) < 0.7)
                 {
                     dog.animDuration += delta;
-                    dogController.Reveal(dog, delta);
+                    DogController.Reveal(dog, delta);
 
                 }
-                else if (0.7 < dogController.GetAnimDuration(dog) && dogController.GetAnimDuration(dog) < 1.4)
+                else if (0.7 < DogController.GetAnimDuration(dog) && DogController.GetAnimDuration(dog) < 1.4)
                 {
                     dog.animDuration += delta;
-                    dogController.Hide(dog, delta);
+                    DogController.Hide(dog, delta);
                 }
                 else
                 {
                     dog.enumDogAnimState = EnumDogState.IDLE;
-                    dogController.ChangeIsVisable(dog);
-                    dogController.ResetAnimDuration(dog);
+                    DogController.ChangeIsVisable(dog);
+                    DogController.ResetAnimDuration(dog);
                     
                     if (GetCurrentDuckNr(game) == GetTotalDucksNr(game))
                     {
@@ -162,29 +160,29 @@ namespace DuckHunter.Controllers
             }
         }
 
-        public int GetRound(Game game)
+        public static int GetRound(Game game)
         {
             return game.round;
         }
-        public void NextRound(Game game)
+        public static void NextRound(Game game)
         {
             
             game.round++;
             game.Ducks.Clear();
-            duckController.GenerateDucks(game);
-            game.dog = dogController.NewDog();
+            DuckController.GenerateDucks(game);
+            game.dog = DogController.NewDog();
             game.currentDuck = 0;
             game.ducksHitCount = 0;
             game.isIntro = true;
 
         }
-        public void RestartGame(Game game)
+        public static void RestartGame(Game game)
         {
             game.round = 1;
             game.points = 0;
             game.Ducks.Clear();
-            duckController.GenerateDucks(game);
-            game.dog = dogController.NewDog();
+            DuckController.GenerateDucks(game);
+            game.dog = DogController.NewDog();
             game.ducksHitGoal = 1;
             game.ducksHitCount = 0;
             game.currentDuck = 0;
@@ -192,75 +190,75 @@ namespace DuckHunter.Controllers
             game.isIntro = true;
         }
 
-        public int GetPoints(Game game) 
+        public static int GetPoints(Game game) 
         { 
             return game.points;
         }
-        public void AddPoints(Game game, int points)
+        public static void AddPoints(Game game, int points)
         {
             game.points += points;
         }
-        public int GetBullets(Game game)
+        public static int GetBullets(Game game)
         {
             return game.bullets;
         }
-        public void SubBullets(Game game)
+        public static void SubBullets(Game game)
         {
             game.bullets--;
         }
-        public void RestoreBullets(Game game)
+        public static void RestoreBullets(Game game)
         {
             game.bullets = 3;
         }
-        public bool GetCanShoot(Game game)
+        public static bool GetCanShoot(Game game)
         {
             return game.canShoot;
         }
-        public void ChangeCanShoot(Game game)
+        public static void ChangeCanShoot(Game game)
         {
             game.canShoot = !game.canShoot;
         }
-        public Duck GetCurrentDuck(Game game)
+        public static Duck GetCurrentDuck(Game game)
         {
             return game.Ducks[game.currentDuck];
         }
-        public int GetCurrentDuckNr(Game game)
+        public static int GetCurrentDuckNr(Game game)
         {
             return game.currentDuck;
         }
-        public int GetTotalDucksNr(Game game)
+        public static int GetTotalDucksNr(Game game)
         {
             return game.Ducks.Count() - 1;
         }
-        public void NextDuck(Game game)
+        public static void NextDuck(Game game)
         {
             game.currentDuck++;
         }
-        public void ChangeGameOver(Game game)
+        public static void ChangeGameOver(Game game)
         {
             game.isGameOver = !game.isGameOver;
         }
-        public int GetHitGoal(Game game)
+        public static int GetHitGoal(Game game)
         {
             return game.ducksHitGoal;
         }
-        public void AddHitCount(Game game)
+        public static void AddHitCount(Game game)
         {
             game.ducksHitCount++;
         }
-        public int GetDucksHitCount(Game game)
+        public static int GetDucksHitCount(Game game)
         {
             return game.ducksHitCount;
         }
-        public Dog GetDog(Game game)
+        public static Dog GetDog(Game game)
         {
             return game.dog;
         }
-        public bool GetIsIntro(Game game)
+        public static bool GetIsIntro(Game game)
         {
             return game.isIntro;
         }
-        public void DisableIntro(Game game)
+        public static void DisableIntro(Game game)
         {
             game.isIntro = false;
         }
