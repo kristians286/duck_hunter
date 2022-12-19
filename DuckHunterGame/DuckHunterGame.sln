@@ -5,11 +5,13 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunterGame", "DuckHunterGame.csproj", "{CBCCFAC0-0825-4581-A927-DC6A4B91078F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuckHunter.Models", "..\DuckHunter.Models\DuckHunter.Models.csproj", "{4F8200A4-C551-4F7B-83A7-09F4B2ADA09F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunter.Models", "..\DuckHunter.Models\DuckHunter.Models.csproj", "{4F8200A4-C551-4F7B-83A7-09F4B2ADA09F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuckHunterWPF", "..\DuckHunterWPF\DuckHunterWPF.csproj", "{DCF0B853-881D-4BB8-8A86-F1942442408A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunterWPF", "..\DuckHunterWPF\DuckHunterWPF.csproj", "{DCF0B853-881D-4BB8-8A86-F1942442408A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuckHunter.Controllers", "..\DuckHunter.Controllers\DuckHunter.Controllers.csproj", "{EC2932EC-981B-4BFC-8626-2F5571EF0B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunter.Controllers", "..\DuckHunter.Controllers\DuckHunter.Controllers.csproj", "{EC2932EC-981B-4BFC-8626-2F5571EF0B98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalControlWPF", "..\ModalControlWPF\ModalControlWPF.csproj", "{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

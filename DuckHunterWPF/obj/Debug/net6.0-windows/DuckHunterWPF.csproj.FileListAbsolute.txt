@@ -24,3 +24,8 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\refi
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.pdb
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.genruntimeconfig.cache
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\ref\DuckHunterWPF.dll
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogHighScores.g.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.g.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogHighScores.baml
