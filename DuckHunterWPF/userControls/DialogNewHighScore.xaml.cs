@@ -16,28 +16,48 @@ using System.Windows.Shapes;
 
 namespace DuckHunterWPF.userControls
 {
-    /// <summary>
-    /// Interaction logic for DialogNewHighScore.xaml
-    /// </summary>
     public partial class DialogNewHighScore : UserControl
     {
 
         public static readonly DependencyProperty IsOpenProperty =
-        DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
+        DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty UsernameProperty =
+        DependencyProperty.Register("Username", typeof(string), typeof(DialogNewHighScore), new PropertyMetadata(""));
+
+        public static readonly DependencyProperty ScoreProperty =
+        DependencyProperty.Register("Score", typeof(int), typeof(DialogNewHighScore), new PropertyMetadata(0));
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
+        public string Username
+        {
+            get { return (string)GetValue(UsernameProperty); }
+            set { SetValue(UsernameProperty, value); }
+        }
+
+        public int Score
+        {
+            get { return (int)GetValue(ScoreProperty); }
+            set { SetValue(ScoreProperty, value); }
+        }
+
+
         public DialogNewHighScore()
         {
 
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
             DataContext = this;
-            Debug.WriteLine(DataContext);
 
         }
 
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine(Score);
+            Debug.WriteLine(Username);
+        }
     }
 }

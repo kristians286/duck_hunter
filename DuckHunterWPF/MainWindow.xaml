@@ -123,10 +123,8 @@
                         />
             </StackPanel>
              -->
-            <usercontrols:DialogNewHighScore>
-                
-            </usercontrols:DialogNewHighScore>
-   
+            <usercontrols:DialogNewHighScore x:Name="GameOverScreen" Score="{Binding points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
         </Grid>
 
     </Canvas>

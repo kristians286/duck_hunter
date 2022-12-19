@@ -26,9 +26,6 @@ namespace DuckHunterWPF
 
         private Game _game;
 
-        private int _timer = 0;
-        
-
         private GameSerializer _gameSerializer = new GameSerializer();
         
         private ImageBrush _background = new ImageBrush();
@@ -45,8 +42,6 @@ namespace DuckHunterWPF
         private MouseButtonState mouseState;
         private MouseButtonState prevMouseState;
 
-        private DispatcherTimer t;
-        private DateTime _startTime = DateTime.Now;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,14 +51,12 @@ namespace DuckHunterWPF
             _mediaPlayer.MediaEnded += new EventHandler(Media_ended);
             _game = GameController.NewGame();
 
-            t = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 0), DispatcherPriority.Background,
-                GameTick, Dispatcher.CurrentDispatcher); t.IsEnabled = true;
+
 
             gameTime.Interval = TimeSpan.FromMilliseconds(16.6666666667);
             Debug.WriteLine(gameTime.Interval.ToString());
             gameTime.Tick += GameTick;
             gameTime.Start();
-
 
             _background.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/background.png"));
             //not used
@@ -74,7 +67,7 @@ namespace DuckHunterWPF
             _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
             _duckSprite.Viewbox = new Rect(0, 0, 0.33, 0.25);
             
-            this.DataContext = _game;
+            DataContext = _game;
             findMyBackground();
             findMyDog();
             findMyDuck();
@@ -90,20 +83,24 @@ namespace DuckHunterWPF
 
         private void GameTick(object? sender, EventArgs e)
         {
-            
-            if (false)
+
+            if (_game.isGameOver)
             {
-
-            } 
+                
+            }
             else {
-
+                if (_game.timer.Minutes >= 1)
+                {
+                    _game.isGameOver = true;
+                    GameOverScreen.IsOpen = true;
+                }
                 _previous = _currentTime;
                 _currentTime = DateTime.Now;
 
                 float delta = (float)(_currentTime.Millisecond - _previous.Millisecond) / 1000;
                 if (delta < 0)
                 {
-                    delta = 0.02f;
+                    delta = 0.01f;
                 }
 
                 _game.timer += (_currentTime - _previous);

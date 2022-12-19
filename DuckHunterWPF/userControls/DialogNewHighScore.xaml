@@ -16,15 +16,15 @@
                 <TextBlock FontSize="24" Margin="0,0,0,40" Foreground="Black" Text="GAME HAS ENDED"/>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your score :"/>
-                    <TextBlock Padding="80,0,0,0" Foreground="Black" Text="s{Binding points}"/>
+                    <TextBlock Padding="80,0,0,0" Foreground="Black" Text="{Binding Score}"/>
                 </Grid>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your name  :"/>
-                    <TextBox Margin="80,0,0,0"/>
+                    <TextBox MaxWidth="60" Text="{Binding Username}" Margin="80,0,0,0"/>
                 </Grid>
-                <Button x:Name="Click1" 
+                <Button x:Name="SubmitButton" 
                         Content="Submit"
-                                
+                        Click="SubmitButton_Click"
                         Margin="30,40,30,0"
                         Background="Gainsboro"
                     />
