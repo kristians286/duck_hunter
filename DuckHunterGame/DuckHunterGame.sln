@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunterWPF", "..\DuckHun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuckHunter.Controllers", "..\DuckHunter.Controllers\DuckHunter.Controllers.csproj", "{EC2932EC-981B-4BFC-8626-2F5571EF0B98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalControlWPF", "..\ModalControlWPF\ModalControlWPF.csproj", "{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2932EC-981B-4BFC-8626-2F5571EF0B98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14F6BC00-EFBB-4721-B90E-CC83A02DCDB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,9 +20,29 @@ namespace DuckHunterWPF.userControls
     /// </summary>
     public partial class DialogHighScores : UserControl
     {
+
+        public static readonly DependencyProperty IsOpenProperty =
+            DependencyProperty.Register("IsHSOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register("PositionProperty", typeof(int), typeof(DialogHighScores), new PropertyMetadata(0));
+        public bool IsOpen
+        {
+            get { return (bool)GetValue(IsOpenProperty); }
+            set { SetValue(IsOpenProperty, value); }
+        }
+        public int Position
+        {
+            get { return (int)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
+        }
         public DialogHighScores()
         {
             InitializeComponent();
+            DataContext = this;
         }
+    }
+    public class ListHighScores
+    {
     }
 }

@@ -45,6 +45,8 @@ namespace DuckHunterWPF
         public MainWindow()
         {
             InitializeComponent();
+            
+            
             Cursor = Cursors.Cross;
             var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\music\melody.mp3"));
             _mediaPlayer.Open(new Uri(musicPath));
@@ -71,8 +73,6 @@ namespace DuckHunterWPF
             findMyBackground();
             findMyDog();
             findMyDuck();
-            
-
         }
 
         private void Media_ended(object? sender, EventArgs e)
@@ -83,10 +83,19 @@ namespace DuckHunterWPF
 
         private void GameTick(object? sender, EventArgs e)
         {
-
+            _game.isGameOver = true;
             if (_game.isGameOver)
             {
-                
+                if (!GameOverScreen.IsOpen)
+                {
+                    if (!HighScoresScreen.IsOpen)
+                    {
+                        Debug.WriteLine("GameOverClosed");
+                        HighScoresScreen.IsOpen = true;
+
+                        Debug.WriteLine(HighScoresScreen.IsOpen);
+                    }
+                } 
             }
             else {
                 if (_game.timer.Minutes >= 1)
@@ -94,6 +103,7 @@ namespace DuckHunterWPF
                     _game.isGameOver = true;
                     GameOverScreen.IsOpen = true;
                 }
+
                 _previous = _currentTime;
                 _currentTime = DateTime.Now;
 

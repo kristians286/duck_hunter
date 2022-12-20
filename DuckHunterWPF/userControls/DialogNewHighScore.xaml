@@ -8,24 +8,44 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisability"/>
+
+
+        <Style x:Key="background">
+            <Setter Property="InkCanvas.Background" Value="Black"></Setter>
+            <Setter Property="InkCanvas.Opacity" Value="0.5"/>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisability}}">
+
+        <Border Style="{StaticResource background}"/>
+
         <Border Background="White" Height="255" Width="255" CornerRadius="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="24" Margin="0,0,0,40" Foreground="Black" Text="GAME HAS ENDED"/>
                 <Grid>
-                    <TextBlock Foreground="Black" Text="Your score :"/>
-                    <TextBlock Padding="80,0,0,0" Foreground="Black" Text="{Binding Score}"/>
+                    <TextBlock Foreground="Black" Text="Your score "/>
+                    <TextBlock Margin="80,0,0,0" Foreground="Black" Text="{Binding Score}"/>
                 </Grid>
                 <Grid>
-                    <TextBlock Foreground="Black" Text="Your name  :"/>
-                    <TextBox MaxWidth="60" Text="{Binding Username}" Margin="80,0,0,0"/>
+                    <TextBlock Foreground="Black" Text="Your name "/>
+                    <TextBox MaxWidth="80" Text="{Binding Username}" Margin="40,0,0,0"/>
                 </Grid>
+                <Grid>
+                    <TextBlock VerticalAlignment="Center" Foreground="Black" Text="Picture"/>
+                    <Image x:Name="UserImage" Margin="88,2,48,3" Height="64" Width="64" Stretch="UniformToFill"></Image>
+                </Grid>
+                <Button x:Name="UploadButton" 
+                        Content="Upload Picture"
+                        Click="UploadButton_Click"
+                        Margin="30,0,30,0"
+                        Background="Gainsboro"
+                    />
                 <Button x:Name="SubmitButton" 
                         Content="Submit"
                         Click="SubmitButton_Click"
-                        Margin="30,40,30,0"
+                        Margin="30,10,30,0"
                         Background="Gainsboro"
                     />
             </StackPanel>
