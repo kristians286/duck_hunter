@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 
 using DuckHunter.Models.Enums;
+using System.Collections.ObjectModel;
 
 namespace DuckHunterWPF
 {
@@ -54,7 +55,6 @@ namespace DuckHunterWPF
             _game = GameController.NewGame();
 
 
-
             gameTime.Interval = TimeSpan.FromMilliseconds(16.6666666667);
             Debug.WriteLine(gameTime.Interval.ToString());
             gameTime.Tick += GameTick;
@@ -73,29 +73,27 @@ namespace DuckHunterWPF
             findMyBackground();
             findMyDog();
             findMyDuck();
+
+
         }
 
-        private void Media_ended(object? sender, EventArgs e)
-        {
-            _mediaPlayer.Position = TimeSpan.Zero; 
-            _mediaPlayer.Play();
-        }
 
         private void GameTick(object? sender, EventArgs e)
         {
             _game.isGameOver = true;
+
             if (_game.isGameOver)
             {
                 if (!GameOverScreen.IsOpen)
                 {
-                    if (!HighScoresScreen.IsOpen)
+                    if (!HighScoresScreen.IsHSOpen)
                     {
                         Debug.WriteLine("GameOverClosed");
-                        HighScoresScreen.IsOpen = true;
+                        HighScoresScreen.IsHSOpen = true;
 
-                        Debug.WriteLine(HighScoresScreen.IsOpen);
+                        Debug.WriteLine(HighScoresScreen.IsHSOpen);
                     }
-                } 
+                }
             }
             else {
                 if (_game.timer.Minutes >= 1)
@@ -255,12 +253,15 @@ namespace DuckHunterWPF
             this.DataContext = _game;
         }
 
+        private void Media_ended(object? sender, EventArgs e)
+        {
+            _mediaPlayer.Position = TimeSpan.Zero;
+            _mediaPlayer.Play();
+        }
         private void mediaPlay(object sender, RoutedEventArgs e)
         {
             _mediaPlayer.Play();
         }
-
-        private int i = 0;
         private void mediaPause(object sender, RoutedEventArgs e)
         {
             _mediaPlayer.Pause();

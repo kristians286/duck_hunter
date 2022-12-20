@@ -68,7 +68,7 @@
             <TextBlock Text="SCORE " Margin="363,360,-363,-362"></TextBlock>
             <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="363,344,-363,-345"></TextBlock>
             <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="59,312,-59,-313"></TextBlock>
-            <TextBlock x:Name="bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,344,-31,-344"></TextBlock>
+            <TextBlock x:Name="Bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,344,-31,-344"></TextBlock>
         </Grid>
 <!--
         <Grid x:Name="Crosshair" Canvas.Left="255" Canvas.Top="260" Panel.ZIndex="97" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -84,51 +84,15 @@
         <Grid>
             <TextBlock Background="Black" Text="{Binding timer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="205,32,0,-64"></TextBlock>
         </Grid>
-
+        
         <Grid Panel.ZIndex="99" Height="548" Width="526">
-            
-            <!--
-            <modalcontrol:DialogNewHighScore Panel.ZIndex="2" x:Name="ModalNewHighScore">
-                <modalcontrol:DialogNewHighScore.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.5"/>
-                </modalcontrol:DialogNewHighScore.Background>
-                <Border Background="White" Height="255" Width="255" CornerRadius="5">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock FontSize="24" Margin="0,0,0,40" Foreground="Black" Text="GAME HAS ENDED"/>
-                        <Grid>
-                            <TextBlock Foreground="Black" Text="Your score :"/>
-                            <TextBlock Padding="80,0,0,0" Foreground="Black" Text="{Binding points}"/>
-                        </Grid>
-                        <Grid>
-                            <TextBlock Foreground="Black" Text="Your name  :"/>
-                            <TextBox Margin="80,0,0,0"/>
-                        </Grid>
-                        <Button x:Name="Click1" 
-                                Content="Submit"
-                                Click="Click1_Click"
-                                Margin="30,40,30,0"
-                                Background="Gainsboro"
-                        />
-                    </StackPanel>
-                </Border>
-
-
-                
-            </modalcontrol:DialogNewHighScore>
-            
-            <StackPanel>
-                <Button x:Name="ClickO" Content="Open"
-                        Click="ClickO_Click"
-                        Margin="200,0,200,0"
-                        />
-            </StackPanel>
-             -->
-            
             <usercontrols:DialogNewHighScore x:Name="GameOverScreen"/>
-            <usercontrols:DialogHighScores x:Name="HighScoresScreen"/>
-            
         </Grid>
-
+        <Grid Panel.ZIndex="99" Height="548" Width="526">
+            <usercontrols:DialogHighScores x:Name="HighScoresScreen"/>
+        </Grid>
+        
+        
     </Canvas>
 
 

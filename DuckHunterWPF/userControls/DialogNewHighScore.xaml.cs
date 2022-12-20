@@ -48,7 +48,7 @@ namespace DuckHunterWPF.userControls
         }
 
         private readonly string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
-        private readonly string _imagePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
+        public readonly string _imagePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
         private readonly string _fileName = "\\HighScores.xml";
         public DialogNewHighScore()
         {
@@ -116,7 +116,7 @@ namespace DuckHunterWPF.userControls
                 tw.WriteStartDocument();
 
                 tw.WriteStartElement("HighScores");
-                for (int i = 0; i < 10; i++) 
+                for (int i = 0; i < 5; i++) 
                 {
                     tw.WriteStartElement("Player");
                     tw.WriteElementString("Username", Username);
@@ -140,7 +140,7 @@ namespace DuckHunterWPF.userControls
             Debug.WriteLine(Score);
             Debug.WriteLine(Username);
 
-            IsOpen= false;
+            IsOpen = false;
         }
 
         private void UploadButton_Click(object sender, RoutedEventArgs e)

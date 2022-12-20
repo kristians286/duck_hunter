@@ -5,16 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DuckHunterWPF"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="548" d:DesignWidth="526">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisability"/>
+
+        <XmlDataProvider x:Key="HighScores" Source="C:\Users\krist\AppData\Roaming\DuckHunter\HighScores.xml" XPath="HighScores/Player" />
         
         <Style x:Key="background">
             <Setter Property="InkCanvas.Background" Value="Black"></Setter>
             <Setter Property="InkCanvas.Opacity" Value="0.5"/>
         </Style>
     </UserControl.Resources>
-    <Grid Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisability}}">
+    <Grid Visibility="{Binding IsHSOpen, Converter={StaticResource BoolToVisability}}">
 
         <Border Style="{StaticResource background}"/>
 
@@ -27,29 +29,33 @@
                 <Grid Background="LightGray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="64"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="#"></Label>
                     <Label Grid.Column="1" Content="NAME"></Label>
                     <Label Grid.Column="2" Content="SCORE"></Label>
+                    <Label Grid.Column="3" Content="PICTURE"></Label>
                 </Grid>
-                <ListView ItemsSource="{Binding HighScoreList}" SelectedItem="None">
+                <ListView ItemsSource="{Binding Source={StaticResource HighScores}}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
 
-                            <Grid Background="Aquamarine">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="25"/>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="64"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
                                     <TextBlock></TextBlock>
                                 </Grid>
-                                <Label Grid.Column="0" Content="{Binding Position}"></Label>
-                                <Label Grid.Column="1" Content="Test1"></Label>
-                                <Label Grid.Column="2" Content="Test2"></Label>
+                                <Label Grid.Column="0" Content="0"></Label>
+                                <Label Grid.Column="1" Content="{Binding XPath=Username}"></Label>
+                                <Label Grid.Column="2" Content="{Binding XPath=Score}"></Label>
+                                <Image Grid.Column="3" Height="32" Width="32" Source="{Binding XPath=Image_location}" Stretch="Fill"/>
                             </Grid>
 
                         </DataTemplate>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DuckHunter.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,28 +23,23 @@ namespace DuckHunterWPF.userControls
     public partial class DialogHighScores : UserControl
     {
 
-        public static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("IsHSOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsHSOpenProperty =
+            DependencyProperty.Register("IsHSOpen", typeof(bool), typeof(DialogHighScores), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty PositionProperty =
-            DependencyProperty.Register("PositionProperty", typeof(int), typeof(DialogHighScores), new PropertyMetadata(0));
-        public bool IsOpen
+        public Uri Path = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
+
+        //private List<String,String,String> HighScoresList = new List<>(); Model HighScores
+        public bool IsHSOpen
         {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
+            get { return (bool)GetValue(IsHSOpenProperty); }
+            set { SetValue(IsHSOpenProperty, value); }
         }
-        public int Position
-        {
-            get { return (int)GetValue(PositionProperty); }
-            set { SetValue(PositionProperty, value); }
-        }
+ 
         public DialogHighScores()
         {
             InitializeComponent();
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogHighScores), new FrameworkPropertyMetadata(typeof(DialogHighScores)));
             DataContext = this;
         }
-    }
-    public class ListHighScores
-    {
     }
 }
