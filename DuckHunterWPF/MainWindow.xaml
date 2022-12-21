@@ -85,13 +85,12 @@
             <TextBlock Background="Black" Text="{Binding timer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="205,32,0,-64"></TextBlock>
         </Grid>
         
-        <Grid Panel.ZIndex="99" Height="548" Width="526">
+        <Grid x:Name="StateGrid" Panel.ZIndex="99" Height="548" Width="526">
+            <!--
             <usercontrols:DialogNewHighScore x:Name="GameOverScreen"/>
-        </Grid>
-        <Grid Panel.ZIndex="99" Height="548" Width="526">
             <usercontrols:DialogHighScores x:Name="HighScoresScreen"/>
+            -->
         </Grid>
-        
         
     </Canvas>
 

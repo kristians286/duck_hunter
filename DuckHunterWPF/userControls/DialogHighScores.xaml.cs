@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace DuckHunterWPF.userControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogHighScores), new FrameworkPropertyMetadata(typeof(DialogHighScores)));
             DataContext = this;
             (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
-
         }
+
     }
 }

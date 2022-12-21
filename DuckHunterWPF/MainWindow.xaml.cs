@@ -45,6 +45,9 @@ namespace DuckHunterWPF
         private MouseButtonState mouseState;
         private MouseButtonState prevMouseState;
 
+        private DialogHighScores _dialogHighScores = new DialogHighScores();
+        private DialogNewHighScore _dialogNewHighScore = new DialogNewHighScore();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -75,8 +78,8 @@ namespace DuckHunterWPF
             findMyBackground();
             findMyDog();
             findMyDuck();
-
-
+            StateGrid.Children.Add(_dialogNewHighScore);
+            StateGrid.Children.Add(_dialogHighScores);
         }
 
 
@@ -84,14 +87,14 @@ namespace DuckHunterWPF
         {
             if (_game.isGameOver)
             {
-                if (!GameOverScreen.IsOpen)
+                if (!_dialogNewHighScore.IsOpen)
                 {
-                    if (!HighScoresScreen.IsHSOpen)
+                    if (!_dialogHighScores.IsHSOpen)
                     {
                         Debug.WriteLine("GameOverClosed");
-                        HighScoresScreen.IsHSOpen = true;
+                        _dialogHighScores.IsHSOpen = true;
 
-                        Debug.WriteLine(HighScoresScreen.IsHSOpen);
+                        Debug.WriteLine(_dialogHighScores.IsHSOpen);
                     }
                 }
             }
@@ -99,7 +102,7 @@ namespace DuckHunterWPF
                 if (_game.timer.Seconds >= 10)
                 {
                     _game.isGameOver = true;
-                    GameOverScreen.IsOpen = true;
+                    _dialogNewHighScore.IsOpen = true;
                 }
 
                 _previous = _currentTime;

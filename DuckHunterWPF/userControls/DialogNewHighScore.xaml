@@ -25,7 +25,7 @@
                 <TextBlock FontSize="24" Margin="0,0,0,40" Foreground="Black" Text="GAME HAS ENDED"/>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your score "/>
-                    <TextBlock Margin="80,0,0,0" Foreground="Black" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.points}"/>
+                    <TextBlock x:Name="SOP" Margin="80,0,0,0" Foreground="Black" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.points}"/>
                 </Grid>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your name "/>

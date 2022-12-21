@@ -8,13 +8,8 @@
              d:DesignHeight="548" d:DesignWidth="526">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisability"/>
-        
-        <DynamicResource x:Key="s" ResourceKey="ss">
 
-        </DynamicResource>
-        
-        <XmlDataProvider x:Key="HighScores"  XPath="HighScores/Player" />
-
+        <XmlDataProvider x:Key="HighScores" XPath="HighScores/Player" />
 
         <Style x:Key="background">
             <Setter Property="InkCanvas.Background" Value="Black"></Setter>

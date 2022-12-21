@@ -28,8 +28,6 @@ namespace DuckHunterWPF.userControls
         public static readonly DependencyProperty UsernameProperty =
         DependencyProperty.Register("Username", typeof(string), typeof(DialogNewHighScore), new PropertyMetadata(""));
 
-        public static readonly DependencyProperty ScoreProperty =
-        DependencyProperty.Register("Score", typeof(int), typeof(DialogNewHighScore), new PropertyMetadata(0));
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
@@ -39,12 +37,6 @@ namespace DuckHunterWPF.userControls
         {
             get { return (string)GetValue(UsernameProperty); }
             set { SetValue(UsernameProperty, value); }
-        }
-
-        public int Score
-        {
-            get { return (int)GetValue(ScoreProperty); }
-            set { SetValue(ScoreProperty, value); }
         }
 
         private readonly string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
@@ -122,7 +114,7 @@ namespace DuckHunterWPF.userControls
                     tw.WriteStartElement("Player");
                     tw.WriteElementString("Position", (i+1).ToString());
                     tw.WriteElementString("Username", Username);
-                    tw.WriteElementString("Score", Score.ToString());
+                    tw.WriteElementString("Score", SOP.Text);
                     tw.WriteElementString("Image_location", _imagePath + $"\\{Username}.png");
                     tw.WriteEndElement();
                 }
@@ -139,10 +131,8 @@ namespace DuckHunterWPF.userControls
                 Debug.WriteLine(ex);
             }
 
-            Debug.WriteLine(Score);
-            Debug.WriteLine(Username);
-
             IsOpen = false;
+            
         }
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
