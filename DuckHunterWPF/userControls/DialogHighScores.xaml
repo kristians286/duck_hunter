@@ -13,7 +13,7 @@
 
         </DynamicResource>
         
-        <XmlDataProvider x:Key="HighScores" Source="C:\Users\krist\AppData\Roaming\DuckHunter\HighScores.xml" XPath="HighScores/Player" />
+        <XmlDataProvider x:Key="HighScores"  XPath="HighScores/Player" />
 
 
         <Style x:Key="background">

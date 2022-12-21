@@ -40,6 +40,8 @@ namespace DuckHunterWPF.userControls
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogHighScores), new FrameworkPropertyMetadata(typeof(DialogHighScores)));
             DataContext = this;
+            (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
+
         }
     }
 }
