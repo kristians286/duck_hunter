@@ -28,3 +28,5 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\user
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.g.cs
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.baml
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogHighScores.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\resourceDictionaries\ConverterDictionary.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\resourceDictionaries\StyleDictionary.baml

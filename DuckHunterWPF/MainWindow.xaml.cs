@@ -51,8 +51,9 @@ namespace DuckHunterWPF
         public MainWindow()
         {
             InitializeComponent();
-            
-            
+
+            FileController.CreateDirectories();
+
             Cursor = Cursors.Cross;
             var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\music\melody.mp3"));
             _mediaPlayer.Open(new Uri(musicPath));

@@ -7,18 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="548" d:DesignWidth="526">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisability"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="background">
-            <Setter Property="InkCanvas.Background" Value="Black"></Setter>
-            <Setter Property="InkCanvas.Opacity" Value="0.5"/>
-        </Style>
-
+                <ResourceDictionary Source="pack://application:,,,/resourceDictionaries/ConverterDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/resourceDictionaries/StyleDictionary.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <Grid Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisability}}">
 
-        <Border Style="{StaticResource background}"/>
+        <Border Style="{StaticResource borderBackground}"/>
 
         <Border Background="White" Height="255" Width="255" CornerRadius="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
