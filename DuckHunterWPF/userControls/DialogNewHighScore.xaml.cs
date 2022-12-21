@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace DuckHunterWPF.userControls
 {
@@ -79,59 +81,83 @@ namespace DuckHunterWPF.userControls
         {
             try
             {
-                /*
-                XmlDocument doc = new XmlDocument();
 
-                XmlNode root = doc.CreateElement("HighScores");
-                doc.AppendChild(root);
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(_path + @_fileName);
 
-                XmlNode player = doc.CreateElement("player");
-                
-                XmlAttribute username = doc.CreateAttribute("username");
-                username.Value = Username;
-                player.Attributes.Append(username);
-
-                XmlAttribute score = doc.CreateAttribute("score");
-                score.Value = Score.ToString();
-                player.Attributes.Append(score);
-
-                XmlAttribute img_location = doc.CreateAttribute("img");
-                img_location.Value = _imagePath + $"\\{Username}.png";
-                player.Attributes.Append(img_location);
-
-                root.AppendChild(player);
-
-                doc.Save(_path + @_fileName);
-                */
-                
-                XmlTextWriter tw = new XmlTextWriter(_path + @_fileName, null);
-                tw.Formatting = Formatting.Indented;
-                tw.WriteStartDocument();
-
-                tw.WriteStartElement("HighScores");
-                for (int i = 0; i < 5; i++) 
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+                XmlElement root = xdoc.DocumentElement;
+                Debug.WriteLine(nodes.Count);
+                if (nodes.Count < 5)
                 {
-                    tw.WriteStartElement("Player");
-                    tw.WriteElementString("Position", (i+1).ToString());
-                    tw.WriteElementString("Username", Username);
-                    tw.WriteElementString("Score", SOP.Text);
-                    tw.WriteElementString("Image_location", _imagePath + $"\\{Username}.png");
-                    tw.WriteEndElement();
+                    //add
+                    XmlElement player = xdoc.CreateElement("Player");
+                    XmlElement position = xdoc.CreateElement("Position");
+                    position.InnerText = $"{nodes.Count+1}";
+                    XmlElement username = xdoc.CreateElement("Username");
+                    username.InnerText = $"{Username}";
+                    XmlElement score = xdoc.CreateElement("Score");
+                    score.InnerText = $"{Score.Text}";
+                    XmlElement image_location = xdoc.CreateElement("Image_location");
+                    image_location.InnerText = $"{_imagePath}\\{Username}.png";
+                    player.AppendChild(position);
+                    player.AppendChild(username);
+                    player.AppendChild(score);
+                    player.AppendChild(image_location);
+
+                    root.AppendChild(player);
+                    xdoc.Save(_path + @_fileName);
+                    //sort
                 }
+                else
+                {
+                    //find lowest
+                    foreach (XmlNode node in nodes)
+                    {
+                        XmlNode position = node.SelectSingleNode("Position");
+                        XmlNode username = node.SelectSingleNode("Username");
+                        XmlNode score = node.SelectSingleNode("Score");
+                        XmlNode image_location = node.SelectSingleNode("Image_location");
+                        Debug.WriteLine(position.InnerText);
+                        Debug.WriteLine(username.InnerText);
+                        Debug.WriteLine(score.InnerText);
+                        Debug.WriteLine(image_location.InnerText);
+                    }
+                    /*
+                        //replace
+                        //sort
+                    }
+
+                    XmlTextWriter tw = new XmlTextWriter(_path + @_fileName, null);
+                    tw.Formatting = Formatting.Indented;
+                    tw.WriteStartDocument();
+
+                    tw.WriteStartElement("HighScores");
+                    for (int i = 0; i < 5; i++) 
+                    {
+                        tw.WriteStartElement("Player");
+                        tw.WriteElementString("Position", (i+1).ToString());
+                        tw.WriteElementString("Username", Username);
+                        tw.WriteElementString("Score", Score.Text);
+                        tw.WriteElementString("Image_location", _imagePath + $"\\{Username}.png");
+                        tw.WriteEndElement();
+                    }
 
 
 
-                tw.WriteEndElement();
-                tw.WriteEndDocument();
-                tw.Flush();
-                tw.Close();
-                
-            } catch (Exception ex)
+                    tw.WriteEndElement();
+                    tw.WriteEndDocument();
+                    tw.Flush();
+                    tw.Close();
+                    */
+                }
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
-
-            IsOpen = false;
+                
+            //IsOpen = false;
             
         }
         private void UploadButton_Click(object sender, RoutedEventArgs e)
