@@ -8,9 +8,14 @@
              d:DesignHeight="548" d:DesignWidth="526">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisability"/>
-
-        <XmlDataProvider x:Key="HighScores" Source="C:\Users\krist\AppData\Roaming\DuckHunter\HighScores.xml" XPath="HighScores/Player" />
         
+        <DynamicResource x:Key="s" ResourceKey="ss">
+
+        </DynamicResource>
+        
+        <XmlDataProvider x:Key="HighScores" Source="C:\Users\krist\AppData\Roaming\DuckHunter\HighScores.xml" XPath="HighScores/Player" />
+
+
         <Style x:Key="background">
             <Setter Property="InkCanvas.Background" Value="Black"></Setter>
             <Setter Property="InkCanvas.Opacity" Value="0.5"/>

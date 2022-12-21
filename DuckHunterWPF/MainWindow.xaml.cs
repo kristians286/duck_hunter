@@ -12,6 +12,8 @@ using System.Windows.Input;
 
 using DuckHunter.Models.Enums;
 using System.Collections.ObjectModel;
+using Microsoft.Win32;
+using DuckHunterWPF.userControls;
 
 namespace DuckHunterWPF
 {
@@ -80,8 +82,6 @@ namespace DuckHunterWPF
 
         private void GameTick(object? sender, EventArgs e)
         {
-            _game.isGameOver = true;
-
             if (_game.isGameOver)
             {
                 if (!GameOverScreen.IsOpen)
@@ -96,7 +96,7 @@ namespace DuckHunterWPF
                 }
             }
             else {
-                if (_game.timer.Minutes >= 1)
+                if (_game.timer.Seconds >= 10)
                 {
                     _game.isGameOver = true;
                     GameOverScreen.IsOpen = true;
@@ -193,6 +193,7 @@ namespace DuckHunterWPF
             Canvas.SetLeft(_duckRect, _game.Ducks[_game.currentDuck].posX);
             Canvas.SetTop(_duckRect,  _game.Ducks[_game.currentDuck].posY);
         }
+
         private void findMyBackground()
         {
             Rectangle _backgroundRect = new Rectangle

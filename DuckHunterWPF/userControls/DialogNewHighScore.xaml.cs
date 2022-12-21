@@ -23,7 +23,7 @@ namespace DuckHunterWPF.userControls
     {
 
         public static readonly DependencyProperty IsOpenProperty =
-        DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(true));
+        DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
 
         public static readonly DependencyProperty UsernameProperty =
         DependencyProperty.Register("Username", typeof(string), typeof(DialogNewHighScore), new PropertyMetadata(""));
@@ -50,6 +50,7 @@ namespace DuckHunterWPF.userControls
         private readonly string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
         public readonly string _imagePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
         private readonly string _fileName = "\\HighScores.xml";
+
         public DialogNewHighScore()
         {
 
@@ -143,7 +144,6 @@ namespace DuckHunterWPF.userControls
 
             IsOpen = false;
         }
-
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
             try { 
