@@ -119,6 +119,7 @@ namespace DuckHunterWPF.userControls
                 for (int i = 0; i < 5; i++) 
                 {
                     tw.WriteStartElement("Player");
+                    tw.WriteElementString("Position", (i+1).ToString());
                     tw.WriteElementString("Username", Username);
                     tw.WriteElementString("Score", Score.ToString());
                     tw.WriteElementString("Image_location", _imagePath + $"\\{Username}.png");
@@ -145,13 +146,20 @@ namespace DuckHunterWPF.userControls
 
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
-            openFileDialog.FilterIndex = 1;
-            if (openFileDialog.ShowDialog() == true)
+            try { 
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
+                openFileDialog.FilterIndex = 1;
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    UserImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+                    File.Copy(openFileDialog.FileName, _imagePath + $"\\{Username}.png", true);
+                
+                }
+            } 
+            catch
             {
-                UserImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
-                File.Copy(openFileDialog.FileName, _imagePath + $"\\{Username}.png", true);
+
             }
         }
     }

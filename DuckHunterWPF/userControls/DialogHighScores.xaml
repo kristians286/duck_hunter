@@ -52,7 +52,7 @@
                                 <Grid Grid.Column="0">
                                     <TextBlock></TextBlock>
                                 </Grid>
-                                <Label Grid.Column="0" Content="0"></Label>
+                                <Label Grid.Column="0" Content="{Binding XPath=Position}"></Label>
                                 <Label Grid.Column="1" Content="{Binding XPath=Username}"></Label>
                                 <Label Grid.Column="2" Content="{Binding XPath=Score}"></Label>
                                 <Image Grid.Column="3" Height="32" Width="32" Source="{Binding XPath=Image_location}" Stretch="Fill"/>
