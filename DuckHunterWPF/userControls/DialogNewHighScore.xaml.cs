@@ -41,9 +41,9 @@ namespace DuckHunterWPF.userControls
             set { SetValue(UsernameProperty, value); }
         }
 
-        private readonly string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
-        public readonly string _imagePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
-        private readonly string _fileName = "\\HighScores.xml";
+        private readonly string FOLDER_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
+        public readonly string IMAGE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
+        private readonly string SAVE_FILE = "\\HighScores.xml";
 
         public DialogNewHighScore()
         {
@@ -54,19 +54,19 @@ namespace DuckHunterWPF.userControls
 
             try
             {
-                if (!Directory.Exists(_path))
+                if (!Directory.Exists(FOLDER_PATH))
                 {
-                    Directory.CreateDirectory(_path);
+                    Directory.CreateDirectory(FOLDER_PATH);
                     Debug.WriteLine("Creating `DuckHunter` dir in %appdata%");
                 }
-                if (!Directory.Exists(_imagePath))
+                if (!Directory.Exists(IMAGE_PATH))
                 {
-                    Directory.CreateDirectory(_imagePath);
+                    Directory.CreateDirectory(IMAGE_PATH);
                     Debug.WriteLine("Creating `images` dir in %appdata% DuckHunter");
                 }
-                if (!File.Exists(_path + @_fileName))
+                if (!File.Exists(FOLDER_PATH + SAVE_FILE))
                 {
-                    File.Create(_path + @_fileName);
+                    File.Create(FOLDER_PATH + SAVE_FILE);
                     Debug.WriteLine("Creating `HighScores.xml` file");
                 }
 
@@ -83,46 +83,60 @@ namespace DuckHunterWPF.userControls
             {
 
                 XmlDocument xdoc = new XmlDocument();
-                xdoc.Load(_path + @_fileName);
+                xdoc.Load(FOLDER_PATH + SAVE_FILE);
 
                 XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
                 XmlElement root = xdoc.DocumentElement;
                 Debug.WriteLine(nodes.Count);
+
+                XmlElement savedPlayer = xdoc.CreateElement("Player");
+                XmlElement savedPosition = xdoc.CreateElement("Position");
+                savedPosition.InnerText = $"{nodes.Count + 1}";
+                XmlElement savedUsername = xdoc.CreateElement("Username");
+                savedUsername.InnerText = $"{Username}";
+                XmlElement savedScore = xdoc.CreateElement("Score");
+                savedScore.InnerText = $"{Score.Text}";
+                XmlElement savedImage_location = xdoc.CreateElement("Image_location");
+                savedImage_location.InnerText = $"{IMAGE_PATH}\\{Username}.png";
+                savedPlayer.AppendChild(savedPosition);
+                savedPlayer.AppendChild(savedUsername);
+                savedPlayer.AppendChild(savedScore);
+                savedPlayer.AppendChild(savedImage_location);
+
                 if (nodes.Count < 5)
                 {
                     //add
-                    XmlElement player = xdoc.CreateElement("Player");
-                    XmlElement position = xdoc.CreateElement("Position");
-                    position.InnerText = $"{nodes.Count+1}";
-                    XmlElement username = xdoc.CreateElement("Username");
-                    username.InnerText = $"{Username}";
-                    XmlElement score = xdoc.CreateElement("Score");
-                    score.InnerText = $"{Score.Text}";
-                    XmlElement image_location = xdoc.CreateElement("Image_location");
-                    image_location.InnerText = $"{_imagePath}\\{Username}.png";
-                    player.AppendChild(position);
-                    player.AppendChild(username);
-                    player.AppendChild(score);
-                    player.AppendChild(image_location);
+                    
 
-                    root.AppendChild(player);
-                    xdoc.Save(_path + @_fileName);
+                    root.AppendChild(savedPlayer);
+                    xdoc.Save(FOLDER_PATH + SAVE_FILE);
                     //sort
                 }
                 else
                 {
                     //find lowest
+                    int savedPlayerScore = int.Parse(Score.Text);
+                    XmlNode oldPlayer = null;
                     foreach (XmlNode node in nodes)
                     {
+                        
                         XmlNode position = node.SelectSingleNode("Position");
                         XmlNode username = node.SelectSingleNode("Username");
                         XmlNode score = node.SelectSingleNode("Score");
                         XmlNode image_location = node.SelectSingleNode("Image_location");
-                        Debug.WriteLine(position.InnerText);
-                        Debug.WriteLine(username.InnerText);
-                        Debug.WriteLine(score.InnerText);
-                        Debug.WriteLine(image_location.InnerText);
+
+                        if (savedPlayerScore > int.Parse(score.InnerText)) 
+                        {
+                            savedPlayerScore = int.Parse(score.InnerText);
+
+                            oldPlayer = node;
+                        }
                     }
+                    if (oldPlayer != null) {
+                        root.ReplaceChild(savedPlayer, oldPlayer);
+                        xdoc.Save(FOLDER_PATH + SAVE_FILE);
+                    }
+                    
                     /*
                         //replace
                         //sort
@@ -169,7 +183,7 @@ namespace DuckHunterWPF.userControls
                 if (openFileDialog.ShowDialog() == true)
                 {
                     UserImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
-                    File.Copy(openFileDialog.FileName, _imagePath + $"\\{Username}.png", true);
+                    File.Copy(openFileDialog.FileName, IMAGE_PATH + $"\\{Username}.png", true);
                 
                 }
             } 
