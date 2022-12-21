@@ -81,6 +81,7 @@ namespace DuckHunterWPF
 
             StateGrid.Children.Add(_dialogNewHighScore);
             StateGrid.Children.Add(_dialogHighScores);
+            _dialogHighScores.NewGameButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(uiButtonNewGame_Click));
         }
 
 
@@ -99,85 +100,100 @@ namespace DuckHunterWPF
                         Debug.WriteLine(_dialogHighScores.IsHSOpen);
                     }
                 }
+                _currentTime = DateTime.Now;
             }
             else {
+                
+                if (_dialogHighScores.IsHSOpen)
+                {
+                    _dialogHighScores.IsHSOpen = false;
+                }
+                if (_dialogNewHighScore.IsOpen)
+                {
+                    _dialogNewHighScore.IsOpen = false;
+                }
+
                 if (_game.timer.Seconds >= 10)
                 {
                     _game.isGameOver = true;
                     _dialogNewHighScore.IsOpen = true;
                 }
 
-                _previous = _currentTime;
-                _currentTime = DateTime.Now;
-
-                float delta = (float)(_currentTime.Millisecond - _previous.Millisecond) / 1000;
-                if (delta < 0)
-                {
-                    delta = 0.01f;
-                }
-
-                _game.timer += (_currentTime - _previous);
-
-                //var mp = Mouse.GetPosition(this);
-                //Canvas.SetLeft(Crosshair, mp.X - Crosshair.ActualWidth / 2);
-                //Canvas.SetTop(Crosshair, mp.Y - Crosshair.ActualHeight / 2);
-
-
-                if (DogController.IsVisible(GameController.GetDog(_game))) // DOG
-                {
-                    if (GameController.GetIsIntro(_game))
-                    {
-                        if (DogController.GetAnimState(_game.dog) == EnumDogState.WALK)
-                        {
-                            DogController.Walk(_game.dog, _game.screenWidth / 2 - 64 - 32, delta);
-                            
-                        }
-                        else if (DogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
-                        {
-                            DogController.Sniff(_game.dog, delta);
-                        }
-                        else if (DogController.GetAnimState(_game.dog) == EnumDogState.JUMP)
-                        {   
-                            DogController.JumpInBush(_game.dog, _game.screenWidth / 2 - 64, delta);
-                        }
-                    }
-                    else
-                    {
-                        GameController.DogReaction(_game, delta);
-                    }
-
-                }
-                else // DUCK
-                {
+                MainGameLoop();
                 
-                    if (!GameController.GetCanShoot(_game))
-                    {
-                        prevMouseState = mouseState;
-                        mouseState = Mouse.LeftButton;
-                    
-                        if (mouseState == MouseButtonState.Pressed && prevMouseState == MouseButtonState.Released)
-                        {
-                            var mousePosition = Mouse.GetPosition(Application.Current.MainWindow);
-                            GameController.Shoot(_game, (int)mousePosition.X, (int)mousePosition.Y);
-                        }
-                    }
-
-
-                    if (!(GameController.GetCurrentDuck(_game).isFlyAway ^ GameController.GetCurrentDuck(_game).isHit))
-                    {
-                        DuckController.Fly(_game.Ducks[_game.currentDuck], delta);
-                    }
-                    else
-                    {
-                        GameController.DuckLeave(_game, delta);
-                    }
-
-                }
 
                 //_spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
                 //_spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
 
                 updateEntities();
+            }
+        }
+        private void MainGameLoop()
+        {
+            _previous = _currentTime;
+            _currentTime = DateTime.Now;
+
+            float delta = (float)(_currentTime.Millisecond - _previous.Millisecond) / 1000;
+            if (delta < 0)
+            {
+                delta = 0.01f;
+            }
+
+            _game.timer += (_currentTime - _previous);
+
+            //var mp = Mouse.GetPosition(this);
+            //Canvas.SetLeft(Crosshair, mp.X - Crosshair.ActualWidth / 2);
+            //Canvas.SetTop(Crosshair, mp.Y - Crosshair.ActualHeight / 2);
+
+
+            if (DogController.IsVisible(GameController.GetDog(_game))) // DOG
+            {
+                if (GameController.GetIsIntro(_game))
+                {
+                    if (DogController.GetAnimState(_game.dog) == EnumDogState.WALK)
+                    {
+                        DogController.Walk(_game.dog, _game.screenWidth / 2 - 64 - 32, delta);
+                    }
+                    else if (DogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
+                    {
+                        DogController.Sniff(_game.dog, delta);
+                    }
+                    else if (DogController.GetAnimState(_game.dog) == EnumDogState.JUMP)
+                    {
+                        DogController.JumpInBush(_game.dog, _game.screenWidth / 2 - 64, delta);
+                    }
+                }
+                else
+                {
+                    GameController.DogReaction(_game, delta);
+                }
+
+            }
+            else // DUCK
+            {
+
+                if (!GameController.GetCanShoot(_game))
+                {
+                    prevMouseState = mouseState;
+                    mouseState = Mouse.LeftButton;
+
+                    if (mouseState == MouseButtonState.Pressed && prevMouseState == MouseButtonState.Released)
+                    {
+                        var mousePosition = Mouse.GetPosition(Application.Current.MainWindow);
+                        GameController.Shoot(_game, (int)mousePosition.X, (int)mousePosition.Y);
+                    }
+                }
+
+
+                if (!GameController.GetCurrentDuck(_game).isFlyAway && !GameController.GetCurrentDuck(_game).isHit)
+                {
+                    DuckController.Fly(_game.Ducks[_game.currentDuck], delta);
+                }
+                else
+                {
+                    GameController.DuckLeave(_game, delta);
+                }
+
             }
         }
 

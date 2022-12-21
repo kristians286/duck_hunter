@@ -61,7 +61,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
+                <Button x:Name="NewGameButton" Content="New Game"></Button>
             </StackPanel>
         </Border>
     </Grid>

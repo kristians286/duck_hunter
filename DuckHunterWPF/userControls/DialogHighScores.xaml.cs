@@ -30,6 +30,7 @@ namespace DuckHunterWPF.userControls
         public Uri Path = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
 
         //private List<String,String,String> HighScoresList = new List<>(); Model HighScores
+        public EventHandler eventt ;
         public bool IsHSOpen
         {
             get { return (bool)GetValue(IsHSOpenProperty); }
