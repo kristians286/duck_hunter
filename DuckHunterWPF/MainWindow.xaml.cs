@@ -78,6 +78,7 @@ namespace DuckHunterWPF
             findMyBackground();
             findMyDog();
             findMyDuck();
+
             StateGrid.Children.Add(_dialogNewHighScore);
             StateGrid.Children.Add(_dialogHighScores);
         }
@@ -92,6 +93,7 @@ namespace DuckHunterWPF
                     if (!_dialogHighScores.IsHSOpen)
                     {
                         Debug.WriteLine("GameOverClosed");
+                        _dialogHighScores.Refresh();
                         _dialogHighScores.IsHSOpen = true;
 
                         Debug.WriteLine(_dialogHighScores.IsHSOpen);

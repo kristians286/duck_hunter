@@ -44,5 +44,10 @@ namespace DuckHunterWPF.userControls
             (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
         }
 
+        public void Refresh()
+        {
+            XmlDataProvider xmlData = FindResource("HighScores") as XmlDataProvider;
+            xmlData.Refresh();
+        }
     }
 }
