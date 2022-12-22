@@ -1,4 +1,5 @@
 ﻿using DuckHunter.Controllers;
+using DuckHunter.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -27,53 +28,75 @@ namespace DuckHunterWPF.userControls
 
         public static readonly DependencyProperty IsOpenProperty =
         DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
-
+        /*
         public static readonly DependencyProperty UsernameProperty =
         DependencyProperty.Register("Username", typeof(string), typeof(DialogNewHighScore), new PropertyMetadata(""));
-
+        */
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
+        /*
         public string Username
         {
             get { return (string)GetValue(UsernameProperty); }
             set { SetValue(UsernameProperty, value); }
         }
+        */
+        private HighScores _highScores = new HighScores();
 
         public DialogNewHighScore()
         {
 
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
-            DataContext = this;
+
+            DataContext = _highScores;
 
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
 
-            FileController.EditHighScoresXmlDocument(Username,Score.Text);
-                
-            IsOpen = false;
-            
+            //FileController.EditHighScoresXmlDocument(Username,Score.Text);
+            bool hasError = false;
+            Debug.WriteLine(_highScores.ImageSource);
+            foreach (KeyValuePair<string,string> error in _highScores.ErrorCollection)
+            {
+                Debug.WriteLine(error);
+                if (error.Value != null)
+                {
+                    hasError = true;
+                }   
+            }
+            if (!hasError)
+            {
+                Debug.WriteLine("has no Error");
+            }
+
+            Debug.WriteLine(_highScores.Error);
+            //IsOpen = false;
+
         }
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
             try { 
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
-                openFileDialog.FilterIndex = 1;
-                if (openFileDialog.ShowDialog() == true)
+                if (_highScores.Username!= null)
                 {
-                    UserImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
-                    File.Copy(openFileDialog.FileName, FileController.IMAGE_PATH + $"\\{Username}.png", true);
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
+                    openFileDialog.FilterIndex = 1;
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName)).ToString();
+                        File.Copy(openFileDialog.FileName, FileController.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                    }
                 }
             } 
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine(ex);
             }
         }
     }

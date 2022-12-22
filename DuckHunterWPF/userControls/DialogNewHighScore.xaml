@@ -31,11 +31,18 @@
                 </Grid>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your name "/>
-                    <TextBox MaxWidth="80" Text="{Binding Username}" Margin="40,0,0,0"/>
+                    <TextBox MaxWidth="80" Text="{Binding Username, ValidatesOnDataErrors=True , UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{Binding ErrorCollection[Username]}" Margin="40,0,0,0"/>
                 </Grid>
                 <Grid>
                     <TextBlock VerticalAlignment="Center" Foreground="Black" Text="Picture"/>
-                    <Image x:Name="UserImage" Margin="88,2,48,3" Height="64" Width="64" Stretch="Fill"></Image>
+                    <!-- NOTE: Using BorderBrush binding allows ValidatesOnDataError to be displayed arround border -->
+                    <Border Margin="88,2,48,3" Height="64" Width="64" BorderBrush="{Binding ImageSource, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" >
+                        <Image x:Name="UserImage" Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"
+                           ToolTip="{Binding ErrorCollection[ImageSource]}" Height="64" Width="64" Stretch="Fill"/>
+                    </Border>
+
+
                 </Grid>
                 <Button x:Name="UploadButton" 
                         Content="Upload Picture"
