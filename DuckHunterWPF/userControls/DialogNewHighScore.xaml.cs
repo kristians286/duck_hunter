@@ -73,10 +73,12 @@ namespace DuckHunterWPF.userControls
             if (!hasError)
             {
                 Debug.WriteLine("has no Error");
+                FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
+                IsOpen = false;
             }
 
             Debug.WriteLine(_highScores.Error);
-            //IsOpen = false;
+
 
         }
         private void UploadButton_Click(object sender, RoutedEventArgs e)
