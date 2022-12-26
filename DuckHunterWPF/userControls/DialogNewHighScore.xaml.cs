@@ -48,7 +48,7 @@ namespace DuckHunterWPF.userControls
 
         public DialogNewHighScore()
         {
-
+            
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
 
@@ -91,8 +91,9 @@ namespace DuckHunterWPF.userControls
                     openFileDialog.FilterIndex = 1;
                     if (openFileDialog.ShowDialog() == true)
                     {
-                        _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName)).ToString();
-                        File.Copy(openFileDialog.FileName, FileController.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                        
+                        File.Copy(openFileDialog.FileName, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                        UserImage.Source = new BitmapImage(new Uri(FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png"));
                     }
                 }
             } 

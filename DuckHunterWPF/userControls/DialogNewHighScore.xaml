@@ -37,10 +37,22 @@
                 <Grid>
                     <TextBlock VerticalAlignment="Center" Foreground="Black" Text="Picture"/>
                     <!-- NOTE: Using BorderBrush binding allows ValidatesOnDataError to be displayed arround border -->
-                    <Border Margin="88,2,48,3" Height="64" Width="64" BorderBrush="{Binding ImageSource, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" >
-                        <Image x:Name="UserImage" Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"
-                           ToolTip="{Binding ErrorCollection[ImageSource]}" Height="64" Width="64" Stretch="Fill"/>
+                    <Border Margin="88,2,48,3" Height="64" Width="64"
+                            BorderBrush="{Binding ImageSource, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="1"
+                            >
+
+                        <Image x:Name="UserImage" 
+                               Source="{Binding ImageSource,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               Height="64" Width="64" Stretch="Fill">
+                        </Image>
+
                     </Border>
+                    <!--
+                    <Border BorderBrush="Black" BorderThickness="1"> 
+                         <Image Source="C:\Users\krist\Documents\background.png" Height="64" Width="64"></Image>
+                    </Border>
+                    -->
 
 
                 </Grid>

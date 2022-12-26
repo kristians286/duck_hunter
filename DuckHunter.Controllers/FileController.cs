@@ -6,20 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
+using DuckHunter.Models;
 
 namespace DuckHunter.Controllers
 {
     public class FileController
     {
-        public static readonly string FOLDER_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
-        public static readonly string IMAGE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
-        public static readonly string SAVE_FILE = "\\HighScores.xml";
+
         public static void EditHighScoresXmlDocument(string Username, string Score)
         {
             try
             {
+                
                 XmlDocument xdoc = new XmlDocument();
-                xdoc.Load(FOLDER_PATH + SAVE_FILE);
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
 
                 XmlElement root = xdoc.DocumentElement;
 
@@ -34,7 +34,7 @@ namespace DuckHunter.Controllers
                 XmlElement savedScore = xdoc.CreateElement("Score");
                 savedScore.InnerText = $"{Score}";
                 XmlElement savedImage_location = xdoc.CreateElement("Image_location");
-                savedImage_location.InnerText = $"{IMAGE_PATH}\\{Username}.png";
+                savedImage_location.InnerText = $"{FilePaths.IMAGE_PATH}\\{Username}.png";
                 savedPlayer.AppendChild(savedPosition);
                 savedPlayer.AppendChild(savedUsername);
                 savedPlayer.AppendChild(savedScore);
@@ -68,7 +68,7 @@ namespace DuckHunter.Controllers
                     }
 
                 }
-                xdoc.Save(FOLDER_PATH + SAVE_FILE);
+                xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
             catch(Exception ex)
             {
@@ -83,23 +83,23 @@ namespace DuckHunter.Controllers
         {
             try
             {
-                if (!Directory.Exists(FOLDER_PATH))
+                if (!Directory.Exists(FilePaths.FOLDER_PATH))
                 {
-                    Directory.CreateDirectory(FOLDER_PATH);
+                    Directory.CreateDirectory(FilePaths.FOLDER_PATH);
                     Debug.WriteLine("Creating `DuckHunter` dir in %appdata%");
                 }
-                if (!Directory.Exists(IMAGE_PATH))
+                if (!Directory.Exists(FilePaths.IMAGE_PATH))
                 {
-                    Directory.CreateDirectory(IMAGE_PATH);
+                    Directory.CreateDirectory(FilePaths.IMAGE_PATH);
                     Debug.WriteLine("Creating `images` dir in %appdata% DuckHunter");
                 }
-                if (!File.Exists(FOLDER_PATH + SAVE_FILE))
+                if (!File.Exists(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
                 {
-                    using (File.Create(FOLDER_PATH + SAVE_FILE))
+                    using (File.Create(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
                     {
                         Debug.WriteLine("Creating `HighScores.xml` file");
                     }
-                    XmlTextWriter textWriter = new XmlTextWriter(FOLDER_PATH + SAVE_FILE, null);
+                    XmlTextWriter textWriter = new XmlTextWriter(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE, null);
                     textWriter.Formatting = Formatting.Indented;
                     textWriter.WriteStartDocument();
                     textWriter.WriteStartElement("HighScores");

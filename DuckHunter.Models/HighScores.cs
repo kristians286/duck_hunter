@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace DuckHunter.Models
 {
     public class HighScores : INotifyPropertyChanged, IDataErrorInfo
     {
         private string _username;
-        private string _imageSource;
+        private BitmapImage _imageSource;
 
         public string Username
         {
@@ -19,10 +23,20 @@ namespace DuckHunter.Models
             set
             {
                 _username = value;
+                Debug.WriteLine(FilePaths.IMAGE_PATH + $"\\{_username}.png");
+
+                if (File.Exists( FilePaths.IMAGE_PATH + $"\\{_username}.png")) 
+                {
+                    ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
+                } else
+                {
+                    ImageSource = null;
+                }
                 OnPropertyChanged("Username");
             }
         }
-        public string ImageSource
+
+        public BitmapImage ImageSource
         {
             get { return _imageSource; }
             set
@@ -66,19 +80,27 @@ namespace DuckHunter.Models
                         OnPropertyChanged("ErrorCollection");
                         break;
                     case "ImageSource":
-                        if (string.IsNullOrWhiteSpace(ImageSource))
+                        try
                         {
-                            result = "Please upload your passport";
+                            if (!File.Exists( FilePaths.IMAGE_PATH + $"\\{_username}.png"))
+                            {
+                                result = "Please upload your passport";
+                            }
+                            if (ErrorCollection.ContainsKey(name))
+                            {
+                                ErrorCollection[name] = result;
+                            }
+                            else if (result != null)
+                            {
+                                ErrorCollection.Add(name, result);
+                            }
+                            OnPropertyChanged("ErrorCollection");
                         }
-                        if (ErrorCollection.ContainsKey(name))
+                        catch
                         {
-                            ErrorCollection[name] = result;
+
                         }
-                        else if (result != null)
-                        {
-                            ErrorCollection.Add(name, result);
-                        }
-                        OnPropertyChanged("ErrorCollection");
+                        
                         break;
                 }
                 
