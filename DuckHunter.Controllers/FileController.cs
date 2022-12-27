@@ -40,31 +40,38 @@ namespace DuckHunter.Controllers
                 savedPlayer.AppendChild(savedScore);
                 savedPlayer.AppendChild(savedImage_location);
 
-                
-                    //find lowest
-                XmlNode oldPlayer = null;
-                foreach (XmlNode node in nodes)
-                {
-                    XmlNode username = node.SelectSingleNode("Username");
-                    XmlNode score = node.SelectSingleNode("Score");
-                    XmlNode position = node.SelectSingleNode("Position");
-                    XmlNode imageLocation = node.SelectSingleNode("Image_location");
-                    if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText) ||
-                        (username.InnerText == savedUsername.InnerText) && int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
-                    {
-                        oldPlayer = node;
-                    }
-                }
-                if ( nodes.Count < 5)
+                if (nodes.Count < 5)
                 {
                     root.AppendChild(savedPlayer);
-                } else if (oldPlayer != null)
-                {
-                    root.ReplaceChild(savedPlayer, oldPlayer);
 
-                }
+                } else
+                {
 
                 
+                    //find lowest
+                    XmlNode oldPlayer = null;
+                    foreach (XmlNode node in nodes)
+                    {
+                        XmlNode username = node.SelectSingleNode("Username");
+                        XmlNode score = node.SelectSingleNode("Score");
+                        XmlNode position = node.SelectSingleNode("Position");
+                        XmlNode imageLocation = node.SelectSingleNode("Image_location");
+                        if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText) ||
+                            (username.InnerText == savedUsername.InnerText) && int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
+                        {
+                            savedPosition.InnerText = position.InnerText;
+                            oldPlayer = node;
+                            break;
+                        }
+                    }
+                    if (oldPlayer != null)
+                    {
+                        root.ReplaceChild(savedPlayer, oldPlayer);
+
+                    }
+                }
+
+
                 xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
             catch(Exception ex)

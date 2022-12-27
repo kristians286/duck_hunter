@@ -47,7 +47,7 @@ namespace DuckHunter.Models
                     ImageSource = image;
                 } else
                 {
-                    ImageSource = new BitmapImage();
+                    ImageSource = null;
                 }
                 OnPropertyChanged("Username");
             }
@@ -99,7 +99,7 @@ namespace DuckHunter.Models
                     case "ImageSource":
                         try
                         {
-                            if (!File.Exists( FilePaths.IMAGE_PATH + $"\\{_username}.png"))
+                            if (ImageSource == null)
                             {
                                 result = "Please upload your passport";
                             }

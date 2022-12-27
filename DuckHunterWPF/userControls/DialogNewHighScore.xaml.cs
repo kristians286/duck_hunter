@@ -64,16 +64,10 @@ namespace DuckHunterWPF.userControls
             {
                 Debug.WriteLine("has no Error");
                 FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
-                try
-                {
-                    File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
-                } catch (IOException et)
-                {
-                    Debug.WriteLine(et.ToString());
-                }
+                
                 IsOpen = false;
             }
-
+            _highScores.Username = "";
             Debug.WriteLine(_highScores.Error);
 
 
@@ -89,11 +83,10 @@ namespace DuckHunterWPF.userControls
                     if ((bool)openFileDialog.ShowDialog())
                     {
                         _currentFile = openFileDialog.FileName;
-                        if (!File.Exists(FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png"))
-                        {
-                            File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
-                        }
                         _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
+                        File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                        
+                        
                     }
                 }
             } 

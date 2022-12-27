@@ -48,6 +48,7 @@ namespace DuckHunterWPF
         private DialogHighScores _dialogHighScores = new DialogHighScores();
         private DialogNewHighScore _dialogNewHighScore = new DialogNewHighScore();
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -92,7 +93,7 @@ namespace DuckHunterWPF
         {
             if (_game.gameState == EnumGameStates.GAME_RUNNING)
             {
-                if (_game.timer.Seconds >= 10)
+                if (_game.timer.Seconds >= 30)
                 {
                     _game.gameState = EnumGameStates.GAME_OVER;
                     _dialogNewHighScore.IsOpen = true;
