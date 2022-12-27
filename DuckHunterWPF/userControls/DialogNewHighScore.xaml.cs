@@ -63,10 +63,10 @@ namespace DuckHunterWPF.userControls
             {
                 Debug.WriteLine("has no Error");
                 FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
-                
+                _highScores.Username = "";
                 IsOpen = false;
             }
-            _highScores.Username = "";
+            
             Debug.WriteLine(_highScores.Error);
 
 
