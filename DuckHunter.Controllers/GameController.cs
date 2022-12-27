@@ -26,7 +26,7 @@ namespace DuckHunter.Controllers
             game.ducksHitGoal = 1;
             game.ducksHitCount = 0;
             game.currentDuck = 0;
-
+            game.gameState = EnumGameStates.GAME_RUNNING;
             game.isIntro = true;
         }
 
@@ -188,6 +188,7 @@ namespace DuckHunter.Controllers
             game.currentDuck = 0;
             game.bullets = 3;
             game.isIntro = true;
+            game.gameState = EnumGameStates.GAME_RUNNING;
         }
 
         public static int GetPoints(Game game) 
@@ -233,10 +234,6 @@ namespace DuckHunter.Controllers
         public static void NextDuck(Game game)
         {
             game.currentDuck++;
-        }
-        public static void ChangeGameOver(Game game)
-        {
-            game.isGameOver = !game.isGameOver;
         }
         public static int GetHitGoal(Game game)
         {

@@ -80,54 +80,51 @@ namespace DuckHunterWPF
             findMyDog();
             findMyDuck();
 
+
             StateGrid.Children.Add(_dialogNewHighScore);
             StateGrid.Children.Add(_dialogHighScores);
+
             _dialogHighScores.NewGameButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(uiButtonNewGame_Click));
         }
 
 
         private void GameTick(object? sender, EventArgs e)
         {
-            if (_game.isGameOver)
+            if (_game.gameState == EnumGameStates.GAME_RUNNING)
             {
-                if (!_dialogNewHighScore.IsOpen)
-                {
-                    if (!_dialogHighScores.IsHSOpen)
-                    {
-                        Debug.WriteLine("GameOverClosed");
-                        _dialogHighScores.Refresh();
-                        _dialogHighScores.IsHSOpen = true;
-
-                        Debug.WriteLine(_dialogHighScores.IsHSOpen);
-                    }
-                }
-                _currentTime = DateTime.Now;
-            }
-            else {
-                
-                if (_dialogHighScores.IsHSOpen)
-                {
-                    _dialogHighScores.IsHSOpen = false;
-                }
-                if (_dialogNewHighScore.IsOpen)
-                {
-                    _dialogNewHighScore.IsOpen = false;
-                }
-
                 if (_game.timer.Seconds >= 10)
                 {
-                    _game.isGameOver = true;
+                    _game.gameState = EnumGameStates.GAME_OVER;
                     _dialogNewHighScore.IsOpen = true;
                 }
 
                 MainGameLoop();
-                
-
-                //_spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
-                //_spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
-
                 updateEntities();
             }
+
+            if (_game.gameState == EnumGameStates.GAME_OVER)
+            {
+                _game.gameState = EnumGameStates.NEW_HIGH_SCORE;
+            }
+
+            if (_game.gameState == EnumGameStates.NEW_HIGH_SCORE)
+            {
+                if (!_dialogNewHighScore.IsOpen) 
+                {
+                    _game.gameState = EnumGameStates.HIGH_SCORES;
+                    _dialogHighScores.IsHSOpen = true;
+                    
+                }
+            }
+            if (_game.gameState == EnumGameStates.HIGH_SCORES)
+            {
+                if (!_dialogHighScores.IsHSOpen)
+                {
+                    _game.gameState = EnumGameStates.GAME_RUNNING;
+
+                }
+            }
+            
         }
         private void MainGameLoop()
         {
@@ -272,6 +269,9 @@ namespace DuckHunterWPF
 
         private void uiButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
+            _currentTime = DateTime.Now;
+            _dialogHighScores.IsHSOpen = false;
+            _dialogNewHighScore.IsOpen = false;
             _game = GameController.NewGame();
             this.DataContext = _game;
         }

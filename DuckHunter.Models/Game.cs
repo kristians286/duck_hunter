@@ -1,4 +1,5 @@
 ﻿
+using DuckHunter.Models.Enums;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -63,7 +64,8 @@ namespace DuckHunter.Models
         public Dog dog { get; set; }
 
         // TURN THIS IN to EnumGameState
-        public bool isGameOver { get; set; } // not used for now
+        public EnumGameStates gameState;
+
         public bool isIntro { get; set; }
         public bool canShoot { get; set; }
 

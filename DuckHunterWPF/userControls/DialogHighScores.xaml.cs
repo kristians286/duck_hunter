@@ -27,14 +27,16 @@ namespace DuckHunterWPF.userControls
         public static readonly DependencyProperty IsHSOpenProperty =
             DependencyProperty.Register("IsHSOpen", typeof(bool), typeof(DialogHighScores), new PropertyMetadata(false));
 
-        public Uri Path = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
+        public Uri Path = new Uri(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
 
-        //private List<String,String,String> HighScoresList = new List<>(); Model HighScores
-        public EventHandler eventt ;
         public bool IsHSOpen
         {
             get { return (bool)GetValue(IsHSOpenProperty); }
-            set { SetValue(IsHSOpenProperty, value); }
+            set 
+            { 
+                SetValue(IsHSOpenProperty, value);
+                Refresh();
+            }
         }
  
         public DialogHighScores()
@@ -42,13 +44,27 @@ namespace DuckHunterWPF.userControls
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogHighScores), new FrameworkPropertyMetadata(typeof(DialogHighScores)));
             DataContext = this;
-            (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
         }
 
         public void Refresh()
         {
-            XmlDataProvider xmlData = FindResource("HighScores") as XmlDataProvider;
-            xmlData.Refresh();
+            try
+            {
+                if (IsHSOpen)
+                {
+                    (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
+
+                }
+                else
+                {
+                    (Resources["HighScores"] as XmlDataProvider).Source = null;
+                }
+            } catch
+            {
+
+            }
+
+            
         }
     }
 }

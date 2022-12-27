@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
 using DuckHunter.Models;
+using System.Xml.Linq;
 
 namespace DuckHunter.Controllers
 {
     public class FileController
     {
-
         public static void EditHighScoresXmlDocument(string Username, string Score)
         {
             try
@@ -40,43 +40,37 @@ namespace DuckHunter.Controllers
                 savedPlayer.AppendChild(savedScore);
                 savedPlayer.AppendChild(savedImage_location);
 
-                if (nodes.Count < 5)
-                {
-                    //add
-                    root.AppendChild(savedPlayer);
-                    //sort
-                }
-                else
-                {
+                
                     //find lowest
-                    XmlNode oldPlayer = null;
-                    foreach (XmlNode node in nodes)
+                XmlNode oldPlayer = null;
+                foreach (XmlNode node in nodes)
+                {
+                    XmlNode username = node.SelectSingleNode("Username");
+                    XmlNode score = node.SelectSingleNode("Score");
+                    XmlNode position = node.SelectSingleNode("Position");
+                    XmlNode imageLocation = node.SelectSingleNode("Image_location");
+                    if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText) ||
+                        (username.InnerText == savedUsername.InnerText) && int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
                     {
-                        XmlNode score = node.SelectSingleNode("Score");
-                        XmlNode position = node.SelectSingleNode("Position");
-                        if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
-                        {
-                            savedScore.InnerText = score.InnerText;
-                            savedPosition.InnerText = position.InnerText;
-                            oldPlayer = node;
-                        }
+                        oldPlayer = node;
                     }
-                    if (oldPlayer != null)
-                    {
-                        root.ReplaceChild(savedPlayer, oldPlayer);
-
-                    }
+                }
+                if ( nodes.Count < 5)
+                {
+                    root.AppendChild(savedPlayer);
+                } else if (oldPlayer != null)
+                {
+                    root.ReplaceChild(savedPlayer, oldPlayer);
 
                 }
+
+                
                 xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
             catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
-
-
         }
 
         public static void CreateDirectories()

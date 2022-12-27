@@ -26,26 +26,16 @@ namespace DuckHunterWPF.userControls
     public partial class DialogNewHighScore : UserControl
     {
 
-        public static readonly DependencyProperty IsOpenProperty =
-        DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogNewHighScore), new PropertyMetadata(false));
-        /*
-        public static readonly DependencyProperty UsernameProperty =
-        DependencyProperty.Register("Username", typeof(string), typeof(DialogNewHighScore), new PropertyMetadata(""));
-        */
+        private HighScores _highScores = new HighScores();
+        private string _currentFile;
         public bool IsOpen
         {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
+            get { return _highScores.IsOpen; }
+            set 
+            {
+                _highScores.IsOpen = value; 
+            }
         }
-        /*
-        public string Username
-        {
-            get { return (string)GetValue(UsernameProperty); }
-            set { SetValue(UsernameProperty, value); }
-        }
-        */
-        private HighScores _highScores = new HighScores();
-
         public DialogNewHighScore()
         {
             
@@ -74,6 +64,13 @@ namespace DuckHunterWPF.userControls
             {
                 Debug.WriteLine("has no Error");
                 FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
+                try
+                {
+                    File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                } catch (IOException et)
+                {
+                    Debug.WriteLine(et.ToString());
+                }
                 IsOpen = false;
             }
 
@@ -89,11 +86,14 @@ namespace DuckHunterWPF.userControls
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
                     openFileDialog.FilterIndex = 1;
-                    if (openFileDialog.ShowDialog() == true)
+                    if ((bool)openFileDialog.ShowDialog())
                     {
-                        
-                        File.Copy(openFileDialog.FileName, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
-                        UserImage.Source = new BitmapImage(new Uri(FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png"));
+                        _currentFile = openFileDialog.FileName;
+                        if (!File.Exists(FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png"))
+                        {
+                            File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                        }
+                        _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
                     }
                 }
             } 

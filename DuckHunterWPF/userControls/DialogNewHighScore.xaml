@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
+                
                 <ResourceDictionary Source="pack://application:,,,/resourceDictionaries/ConverterDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/resourceDictionaries/StyleDictionary.xaml"/>
                 
@@ -18,7 +18,7 @@
         
     </UserControl.Resources>
 
-    <Grid Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisability}}">
+    <Grid Visibility="{Binding IsOpen, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisability}}">
 
         <Border Style="{StaticResource borderBackground}"/>
 
@@ -43,7 +43,7 @@
                             >
 
                         <Image x:Name="UserImage" 
-                               Source="{Binding ImageSource,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               Source="{Binding ImageSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                Height="64" Width="64" Stretch="Fill">
                         </Image>
 

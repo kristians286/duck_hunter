@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DuckHunter.Models
@@ -16,6 +17,17 @@ namespace DuckHunter.Models
     {
         private string _username;
         private BitmapImage _imageSource;
+        private bool _isOpen;
+
+        public bool IsOpen // Only used for DialogNewHighScore
+        { 
+            get { return _isOpen; } 
+            set 
+            {
+                _isOpen = value;
+                OnPropertyChanged("IsOpen");
+            } 
+        }
 
         public string Username
         {
@@ -23,14 +35,19 @@ namespace DuckHunter.Models
             set
             {
                 _username = value;
-                Debug.WriteLine(FilePaths.IMAGE_PATH + $"\\{_username}.png");
-
                 if (File.Exists( FilePaths.IMAGE_PATH + $"\\{_username}.png")) 
                 {
-                    ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
+                    //ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
+
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.UriSource = new Uri(FilePaths.IMAGE_PATH + $"\\{_username}.png");
+                    image.EndInit();
+                    ImageSource = image;
                 } else
                 {
-                    ImageSource = null;
+                    ImageSource = new BitmapImage();
                 }
                 OnPropertyChanged("Username");
             }
