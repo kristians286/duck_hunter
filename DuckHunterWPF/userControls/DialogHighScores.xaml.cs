@@ -35,7 +35,7 @@ namespace DuckHunterWPF.userControls
             set 
             { 
                 SetValue(IsHSOpenProperty, value);
-                Refresh();
+                LoadData();
             }
         }
  
@@ -46,7 +46,7 @@ namespace DuckHunterWPF.userControls
             DataContext = this;
         }
 
-        public void Refresh()
+        public void LoadData()
         {
             try
             {
