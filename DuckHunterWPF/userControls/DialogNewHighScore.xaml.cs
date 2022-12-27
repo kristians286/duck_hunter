@@ -27,7 +27,6 @@ namespace DuckHunterWPF.userControls
     {
 
         private HighScores _highScores = new HighScores();
-        private string _currentFile;
         public bool IsOpen
         {
             get { return _highScores.IsOpen; }
@@ -82,9 +81,8 @@ namespace DuckHunterWPF.userControls
                     openFileDialog.FilterIndex = 1;
                     if ((bool)openFileDialog.ShowDialog())
                     {
-                        _currentFile = openFileDialog.FileName;
                         _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
-                        File.Copy(_currentFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                        File.Copy(openFileDialog.FileName, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
                         
                         
                     }
