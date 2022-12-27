@@ -1,8 +1,6 @@
 ﻿using DuckHunter.Models;
-using DuckHunterGame.src.controllers;
-using DuckHunterGame.src.enums;
-using DuckHunterGame.src.models;
-using DuckHunterGame.src.serializer;
+using DuckHunter.Models.Enums;
+using DuckHunter.Controllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Game = DuckHunter.Models.Game;
 
 namespace DuckHunterGame.src.views
 {
@@ -20,12 +19,12 @@ namespace DuckHunterGame.src.views
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private models.Game _game;
+        private Game _game;
 
         // CONTROLLERS
-        private GameController _gameController = new GameController();
-        private DuckController _duckController = new DuckController();
-        private DogController _dogController = new DogController();
+        //private GameController _gameController = new GameController();
+        //private DuckController _duckController = new DuckController();
+        //private DogController _dogController = new DogController();
 
         private GameSerializer _serializer = new GameSerializer();
         
@@ -75,7 +74,7 @@ namespace DuckHunterGame.src.views
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _game = _gameController.NewGame();
+            _game = GameController.NewGame();
 
             _graphics.PreferredBackBufferWidth = _game.screenWidth;
             _graphics.PreferredBackBufferHeight = _game.screenHeight;
@@ -146,7 +145,7 @@ namespace DuckHunterGame.src.views
             };
             loadButton.ClickEvent += (object sender, System.EventArgs e) =>
             {
-                _game = _serializer.LoadGame(_game);
+                _game = _serializer.LoadGame();
                 _hudView = new HUD(_game, _hudElements, _spriteBatch);
             };
 
@@ -157,7 +156,7 @@ namespace DuckHunterGame.src.views
             };
             newGameButton.ClickEvent += (object sender, System.EventArgs e) =>
             {
-                _gameController.RestartGame(_game);
+                GameController.RestartGame(_game);
                 
             };
 
@@ -195,55 +194,55 @@ namespace DuckHunterGame.src.views
                 component.Update(gameTime);
 
 
-            if (_dogController.IsVisible(_gameController.GetDog(_game))) // DOG
+            if (DogController.IsVisible(GameController.GetDog(_game))) // DOG
             {
-                if (_gameController.GetIsIntro(_game))
+                if (GameController.GetIsIntro(_game))
                 {
-                    if (_dogController.GetAnimState(_game.dog) == EnumDogState.WALK)
+                    if (DogController.GetAnimState(_game.dog) == EnumDogState.WALK)
                     {
-                        _dogController.Walk(_game.dog, _game.screenWidth/2 - 64 -32, delta);
+                        DogController.Walk(_game.dog, _game.screenWidth/2 - 64 -32, delta);
 
                     }
-                    else if (_dogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
+                    else if (DogController.GetAnimState(_game.dog) == EnumDogState.SNIFF)
                     {
-                        _dogController.Sniff(_game.dog, delta);
+                        DogController.Sniff(_game.dog, delta);
                     }
-                    else if (_dogController.GetAnimState(_game.dog) == EnumDogState.JUMP)
+                    else if (DogController.GetAnimState(_game.dog) == EnumDogState.JUMP)
                     {
-                        _dogController.JumpInBush(_game.dog, _game.screenWidth/2 - 64, delta);
+                        DogController.JumpInBush(_game.dog, _game.screenWidth/2 - 64, delta);
                     }
                 }
                 else
                 {
-                    _gameController.DogReaction(_game, delta);
+                    GameController.DogReaction(_game, delta);
                 }
 
             }
             else // DUCK
             {
                 
-                if (!_gameController.GetCanShoot(_game))
+                if (!GameController.GetCanShoot(_game))
                 {
                     mouseState = Mouse.GetState();
                     if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                     {
-                        _gameController.Shoot(_game, mouseState.X, mouseState.Y);
+                        GameController.Shoot(_game, mouseState.X, mouseState.Y);
                     }
                 }
 
-                if (!(_gameController.GetCurrentDuck(_game).isFlyAway ^ _gameController.GetCurrentDuck(_game).isHit))
+                if (!(GameController.GetCurrentDuck(_game).isFlyAway ^ GameController.GetCurrentDuck(_game).isHit))
                 {
-                    _duckController.Fly(_game.ducks[_game.currentDuck], delta);
+                    DuckController.Fly(_game.Ducks[_game.currentDuck], delta);
                 }
                 else
                 {
-                    _gameController.DuckLeave(_game, delta);
+                    GameController.DuckLeave(_game, delta);
                 }
                 
                 prevMouseState = mouseState;
             }
 
-            _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
+            _spriteDuckStates[_game.Ducks[_game.currentDuck].enumDuckAnimState].UpdateFrame(delta);
             _spriteDogStates[_game.dog.enumDogAnimState].UpdateFrame(delta);
 
             base.Update(gameTime);
@@ -252,7 +251,7 @@ namespace DuckHunterGame.src.views
         protected override void Draw(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_game.ducks[_game.currentDuck].isFlyAway)
+            if (_game.Ducks[_game.currentDuck].isFlyAway)
             {
                 GraphicsDevice.Clear(Color.Pink);
             } else
@@ -261,28 +260,28 @@ namespace DuckHunterGame.src.views
             }
 
             // POSITIONS
-            _DuckPosition = new Rectangle((int)_game.ducks[_game.currentDuck].posX, (int)_game.ducks[_game.currentDuck].posY, 64, 64);
+            _DuckPosition = new Rectangle((int)_game.Ducks[_game.currentDuck].posX, (int)_game.Ducks[_game.currentDuck].posY, 64, 64);
             _DogPosition = new Rectangle((int)_game.dog.posX, (int)_game.dog.posY, 48 *2, 56 *2);
             // TODO: Add your drawing code here 
             _spriteBatch.Begin();
 
-            if (_game.ducks[_game.currentDuck].enumDuckAnimState == EnumDuckState.FALL)
+            if (_game.Ducks[_game.currentDuck].enumDuckAnimState == EnumDuckState.FALL)
             {
-                _spriteBatch.DrawString(_textFont, _game.ducks[_game.currentDuck].points.ToString(), new Vector2(mouseState.X - _game.ducks[_game.currentDuck].points.ToString().Length * 4, mouseState.Y), Color.White);
+                _spriteBatch.DrawString(_textFont, _game.Ducks[_game.currentDuck].points.ToString(), new Vector2(mouseState.X - _game.Ducks[_game.currentDuck].points.ToString().Length * 4, mouseState.Y), Color.White);
             }
 
-            if (_gameController.GetCurrentDuck(_game).flyDirHorizontal)
+            if (GameController.GetCurrentDuck(_game).flyDirHorizontal)
             {
-                _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(_currentDuckType[_game.Ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.Ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f); //FLIGHT TEST
             }
             else
             {
-                _spriteBatch.Draw(_currentDuckType[_game.ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
+                _spriteBatch.Draw(_currentDuckType[_game.Ducks[_game.currentDuck].enumDuckType], _DuckPosition, _spriteDuckStates[_game.Ducks[_game.currentDuck].enumDuckAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f); //FLIGHT TEST
             }
             
 
 
-            if (_dogController.GetIsInBackground(_gameController.GetDog(_game)))
+            if (DogController.GetIsInBackground(GameController.GetDog(_game)))
             {
                 _spriteBatch.Draw(_dogSprite, _DogPosition, _spriteDogStates[_game.dog.enumDogAnimState].GetFrame(), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 0.0f);
                 _spriteBatch.Draw(_background, new Rectangle(0, 32, _game.screenHeight, _game.screenHeight), Color.White);

@@ -7,8 +7,125 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "DuckHunter.Models/1.0.0": {
+        "dependencies": {
+          "PresentationCore": "6.0.2.0",
+          "PresentationFramework": "6.0.2.0",
+          "WindowsBase": "6.0.2.0"
+        },
         "runtime": {
           "DuckHunter.Models.dll": {}
+        }
+      },
+      "PresentationCore/6.0.2.0": {
+        "runtime": {
+          "PresentationCore.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "PresentationFramework/6.0.2.0": {
+        "runtime": {
+          "PresentationFramework.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "WindowsBase/6.0.2.0": {
+        "runtime": {
+          "WindowsBase.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "System.Xaml/6.0.2.0": {
+        "runtime": {
+          "System.Xaml.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "System.Windows.Input.Manipulations/6.0.2.0": {
+        "runtime": {
+          "System.Windows.Input.Manipulations.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "UIAutomationTypes/6.0.2.0": {
+        "runtime": {
+          "UIAutomationTypes.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "System.IO.Packaging/6.0.0.0": {
+        "runtime": {
+          "System.IO.Packaging.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.1122.52304"
+          }
+        }
+      },
+      "ReachFramework/6.0.2.0": {
+        "runtime": {
+          "ReachFramework.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "System.Printing/6.0.2.0": {
+        "runtime": {
+          "System.Printing.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "UIAutomationProvider/6.0.2.0": {
+        "runtime": {
+          "UIAutomationProvider.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.1122.52302"
+          }
+        }
+      },
+      "System.Security.Cryptography.Xml/6.0.0.0": {
+        "runtime": {
+          "System.Security.Cryptography.Xml.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.1122.52304"
+          }
+        }
+      },
+      "System.Security.Permissions/6.0.0.0": {
+        "runtime": {
+          "System.Security.Permissions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.1122.52304"
+          }
+        }
+      },
+      "System.Windows.Extensions/6.0.0.0": {
+        "runtime": {
+          "System.Windows.Extensions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.1122.52304"
+          }
+        }
+      },
+      "System.Drawing.Common/6.0.0.0": {
+        "runtime": {
+          "System.Drawing.Common.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.1122.52304"
+          }
         }
       }
     }
@@ -16,6 +133,76 @@
   "libraries": {
     "DuckHunter.Models/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PresentationCore/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PresentationFramework/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WindowsBase/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Xaml/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Windows.Input.Manipulations/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UIAutomationTypes/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.IO.Packaging/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ReachFramework/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Printing/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UIAutomationProvider/6.0.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Security.Cryptography.Xml/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Security.Permissions/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Windows.Extensions/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Drawing.Common/6.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

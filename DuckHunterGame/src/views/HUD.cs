@@ -1,4 +1,4 @@
-﻿using DuckHunterGame.src.models;
+﻿using DuckHunter.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game = DuckHunter.Models.Game;
 
 namespace DuckHunterGame.src.views
 {
     internal class HUD
     {
-        private models.Game game;
+        private Game game;
         private Texture2D hudElements;
         private SpriteBatch spriteBatch;
 
-        public HUD(models.Game game, Texture2D hudElements, SpriteBatch spriteBatch)
+        public HUD(Game game, Texture2D hudElements, SpriteBatch spriteBatch)
         {
             this.game = game;
             this.hudElements = hudElements;
@@ -40,9 +41,9 @@ namespace DuckHunterGame.src.views
                 spriteBatch.Draw(hudElements, new Rectangle(32 + 16 + (16*i) -2, 64 * 7, 16, 16), new Rectangle( 80, 0, 8, 8), Color.White);
             }
 
-            for (int i = 0; i < game.ducks.Count; i++)
+            for (int i = 0; i < game.Ducks.Count; i++)
             {
-                if (game.ducks[i].isHit)
+                if (game.Ducks[i].isHit)
                 {
                     spriteBatch.Draw(hudElements, new Rectangle(64 * 3 + (16 * i) - 2, 64 * 7, 16, 16), new Rectangle(80, 8, 8, 8), Color.White);
                 } else

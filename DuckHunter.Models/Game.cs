@@ -1,4 +1,5 @@
 ﻿
+using DuckHunter.Models.Enums;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -11,8 +12,19 @@ namespace DuckHunter.Models
         private int _points;
         private int _round;
         private int _bullets;
+        private TimeSpan _timer;
         public int screenHeight { get; set; }
         public int screenWidth { get; set; }
+
+        public TimeSpan timer 
+        {
+            get { return _timer; }
+            set 
+            { 
+                _timer = value;
+                OnPropertyChanged("timer");
+            }
+        }
 
         public int round 
         {
@@ -52,7 +64,8 @@ namespace DuckHunter.Models
         public Dog dog { get; set; }
 
         // TURN THIS IN to EnumGameState
-        public bool isGameOver { get; set; } // not used for now
+        public EnumGameStates gameState;
+
         public bool isIntro { get; set; }
         public bool canShoot { get; set; }
 

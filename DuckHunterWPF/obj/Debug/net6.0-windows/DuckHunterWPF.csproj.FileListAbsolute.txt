@@ -8,11 +8,17 @@ C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\bin\Debug\net6.0-windows\Duck
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\bin\Debug\net6.0-windows\DuckHunter.Controllers.pdb
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\bin\Debug\net6.0-windows\DuckHunter.Models.pdb
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.csproj.AssemblyReference.cache
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\resourceDictionaries\ConverterDictionary.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\resourceDictionaries\StyleDictionary.baml
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogHighScores.g.cs
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.g.cs
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF_MarkupCompile.cache
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF_MarkupCompile.lref
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogHighScores.baml
+C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\userControls\DialogNewHighScore.baml
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.g.resources
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\obj\Debug\net6.0-windows\DuckHunterWPF.AssemblyInfoInputs.cache
