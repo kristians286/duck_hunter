@@ -50,7 +50,19 @@ namespace DuckHunter.Controllers
                             if (!File.Exists($"{FilePaths.IMAGE_PATH}\\{uuid}.png"))
                             {
                                 savedPlayer.SetAttribute("Image_location", oldPlayer.GetAttribute("Image_location"));
-                            } 
+                            } else
+                            {
+                                try
+                                {
+                                    File.Delete(oldPlayer.GetAttribute("Image_location"));
+                                }
+                                catch (Exception e) 
+                                { 
+
+                                    LogException(e);
+                                }
+
+                            }
                             break;
                         }
                     }
@@ -147,11 +159,11 @@ namespace DuckHunter.Controllers
                 if (File.Exists(FilePaths.LOGS_PATH + logfile))
                 {
                     string text = File.ReadAllText(FilePaths.LOGS_PATH + logfile);
-                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message);
+                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message + "\n");
                 }
                 else
                 {
-                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, DateTime.Now + " \n " + exc.Message);
+                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, DateTime.Now + " \n " + exc.Message + "\n");
                 }
 
             }
