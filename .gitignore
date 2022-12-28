@@ -1,0 +1,15 @@
+DuckHunter.Controllers/bin/
+
+DuckHunter.Controllers/obj/
+
+DuckHunter.Models/bin/
+
+DuckHunter.Models/obj/
+
+DuckHunterGame/.vs/
+
+DuckHunterGame/obj/
+
+DuckHunterWPF/obj/
+
+DuckHunterWPF/bin/
