@@ -27,18 +27,10 @@ namespace DuckHunter.Controllers
                 Debug.WriteLine(nodes.Count);
 
                 XmlElement savedPlayer = xdoc.CreateElement("Player");
-                XmlElement savedPosition = xdoc.CreateElement("Position");
-                savedPosition.InnerText = $"{nodes.Count + 1}";
-                XmlElement savedUsername = xdoc.CreateElement("Username");
-                savedUsername.InnerText = $"{Username}";
-                XmlElement savedScore = xdoc.CreateElement("Score");
-                savedScore.InnerText = $"{Score}";
-                XmlElement savedImage_location = xdoc.CreateElement("Image_location");
-                savedImage_location.InnerText = $"{FilePaths.IMAGE_PATH}\\{Username}.png";
-                savedPlayer.AppendChild(savedPosition);
-                savedPlayer.AppendChild(savedUsername);
-                savedPlayer.AppendChild(savedScore);
-                savedPlayer.AppendChild(savedImage_location);
+                savedPlayer.SetAttribute("Position", $"{nodes.Count+1}");
+                savedPlayer.SetAttribute("Username", $"{Username}");
+                savedPlayer.SetAttribute("Score", $"{Score}");
+                savedPlayer.SetAttribute("Image_location", $"{FilePaths.IMAGE_PATH}\\{Username}.png");
 
                 if (nodes.Count < 5)
                 {
@@ -50,16 +42,16 @@ namespace DuckHunter.Controllers
                 
                     //find lowest
                     XmlNode oldPlayer = null;
-                    foreach (XmlNode node in nodes)
+                    foreach (XmlElement node in nodes)
                     {
-                        XmlNode username = node.SelectSingleNode("Username");
-                        XmlNode score = node.SelectSingleNode("Score");
-                        XmlNode position = node.SelectSingleNode("Position");
-                        XmlNode imageLocation = node.SelectSingleNode("Image_location");
-                        if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText) ||
-                            (username.InnerText == savedUsername.InnerText) && int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
+                        string username = node.GetAttribute("Username");
+                        string score = node.GetAttribute("Score");
+                        string position = node.GetAttribute("Position");
+                        string imageLocation = node.GetAttribute("Image_location");
+                        if (int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score) ||
+                            (username == savedPlayer.GetAttribute("Username")) && int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score))
                         {
-                            savedPosition.InnerText = position.InnerText;
+                            savedPlayer.SetAttribute("Position",$"{position}") ;
                             oldPlayer = node;
                             break;
                         }

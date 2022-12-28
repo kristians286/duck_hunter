@@ -27,6 +27,7 @@ namespace DuckHunterWPF.userControls
     {
 
         private HighScores _highScores = new HighScores();
+        private string _selectedFile;
         public bool IsOpen
         {
             get { return _highScores.IsOpen; }
@@ -63,6 +64,15 @@ namespace DuckHunterWPF.userControls
             {
                 Debug.WriteLine("has no Error");
                 FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
+                
+                try
+                {
+                    File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                } catch (IOException IOe)
+                {
+                    Debug.WriteLine($"Error {IOe.Message}");
+                }
+
                 _highScores.Username = "";
                 IsOpen = false;
             }
@@ -82,9 +92,7 @@ namespace DuckHunterWPF.userControls
                     if ((bool)openFileDialog.ShowDialog())
                     {
                         _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
-                        File.Copy(openFileDialog.FileName, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
-                        
-                        
+                        _selectedFile = openFileDialog.FileName;
                     }
                 }
             } 

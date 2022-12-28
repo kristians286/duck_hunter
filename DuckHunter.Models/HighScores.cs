@@ -41,10 +41,12 @@ namespace DuckHunter.Models
 
                     BitmapImage image = new BitmapImage();
                     image.BeginInit();
+                    image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.UriSource = new Uri(FilePaths.IMAGE_PATH + $"\\{_username}.png");
                     image.EndInit();
                     ImageSource = image;
+
                 } else
                 {
                     ImageSource = null;
