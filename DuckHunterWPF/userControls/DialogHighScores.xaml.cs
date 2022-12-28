@@ -1,4 +1,5 @@
-﻿using DuckHunter.Models;
+﻿using DuckHunter.Controllers;
+using DuckHunter.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,13 +22,26 @@ namespace DuckHunterWPF.userControls
     /// <summary>
     /// Interaction logic for DialogHighScores.xaml
     /// </summary>
-    public partial class DialogHighScores : UserControl
+    public partial class DialogHighScores : UserControl, INotifyPropertyChanged
     {
 
         public static readonly DependencyProperty IsHSOpenProperty =
             DependencyProperty.Register("IsHSOpen", typeof(bool), typeof(DialogHighScores), new PropertyMetadata(false));
 
         public Uri Path = new Uri(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+
+        private ObservableCollection<HighScores> _highScoresList;
+        public ObservableCollection<HighScores> HighScoresList
+        {
+            get { return _highScoresList; }
+            set 
+            {
+                _highScoresList = value;
+                OnPropertyChanged("HighScoresList");
+            }  
+        } 
+
 
         public bool IsHSOpen
         {
@@ -52,19 +66,21 @@ namespace DuckHunterWPF.userControls
             {
                 if (IsHSOpen)
                 {
-                    (Resources["HighScores"] as XmlDataProvider).Source = new Uri(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\HighScores.xml");
-
+                    HighScoresList = FileController.GetHighScoresListFromXml();
                 }
                 else
                 {
-                    (Resources["HighScores"] as XmlDataProvider).Source = null;
+                    HighScoresList = null;
                 }
             } catch
             {
 
             }
-
-            
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

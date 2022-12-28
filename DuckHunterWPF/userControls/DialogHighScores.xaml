@@ -39,7 +39,7 @@
                     <Label Grid.Column="2" Content="SCORE"></Label>
                     <Label Grid.Column="3" Content="PICTURE"></Label>
                 </Grid>
-                <ListView ItemsSource="{Binding Source={StaticResource HighScores}, UpdateSourceTrigger=PropertyChanged}" >
+                <ListView ItemsSource="{Binding HighScoresList, UpdateSourceTrigger=PropertyChanged}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
 
@@ -53,10 +53,10 @@
                                 <Grid Grid.Column="0">
                                     <TextBlock></TextBlock>
                                 </Grid>
-                                <Label Grid.Column="0" Content="{Binding XPath=@Position}"></Label>
-                                <Label Grid.Column="1" Content="{Binding XPath=@Username}"></Label>
-                                <Label Grid.Column="2" Content="{Binding XPath=@Score}"></Label>
-                                <Image Grid.Column="3" Height="32" Width="32" Source="{Binding XPath=@Image_location}" Stretch="Fill"/>
+                                <Label Grid.Column="0" Content="{Binding Position}"></Label>
+                                <Label Grid.Column="1" Content="{Binding Username}"></Label>
+                                <Label Grid.Column="2" Content="{Binding Score}"></Label>
+                                <Image Grid.Column="3" Height="32" Width="32" Source="{Binding ImageSource}" Stretch="Fill"/>
                             </Grid>
 
                         </DataTemplate>

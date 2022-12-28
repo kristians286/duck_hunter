@@ -8,6 +8,7 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
 using DuckHunter.Models;
 using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace DuckHunter.Controllers
 {
@@ -27,7 +28,6 @@ namespace DuckHunter.Controllers
                 Debug.WriteLine(nodes.Count);
 
                 XmlElement savedPlayer = xdoc.CreateElement("Player");
-                savedPlayer.SetAttribute("Position", $"{nodes.Count+1}");
                 savedPlayer.SetAttribute("Username", $"{Username}");
                 savedPlayer.SetAttribute("Score", $"{Score}");
                 savedPlayer.SetAttribute("Image_location", $"{FilePaths.IMAGE_PATH}\\{Username}.png");
@@ -46,12 +46,10 @@ namespace DuckHunter.Controllers
                     {
                         string username = node.GetAttribute("Username");
                         string score = node.GetAttribute("Score");
-                        string position = node.GetAttribute("Position");
                         string imageLocation = node.GetAttribute("Image_location");
                         if (int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score) ||
                             (username == savedPlayer.GetAttribute("Username")) && int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score))
                         {
-                            savedPlayer.SetAttribute("Position",$"{position}") ;
                             oldPlayer = node;
                             break;
                         }
@@ -86,6 +84,10 @@ namespace DuckHunter.Controllers
                     Directory.CreateDirectory(FilePaths.IMAGE_PATH);
                     Debug.WriteLine("Creating `images` dir in %appdata% DuckHunter");
                 }
+                if (!Directory.Exists(FilePaths.LOGS_PATH))
+                {
+                    Directory.CreateDirectory(FilePaths.LOGS_PATH);
+                }
                 if (!File.Exists(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
                 {
                     using (File.Create(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
@@ -108,6 +110,67 @@ namespace DuckHunter.Controllers
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        public static void LogException(Exception exc) 
+        {
+
+            string logfile = $"\\LOG-{DateTime.Now.Year}-{DateTime.Now.Day}-{DateTime.Now.Month}.log";
+
+            try
+            {
+                if (File.Exists(FilePaths.LOGS_PATH + logfile))
+                {
+                    string text = File.ReadAllText(FilePaths.LOGS_PATH + logfile);
+                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message);
+                }
+                else
+                {
+                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, DateTime.Now + " \n " + exc.Message);
+                }
+                
+            }
+            catch (Exception logExc)
+            {
+                LogException(logExc);
+            }
+        }
+        public static ObservableCollection<HighScores> GetHighScoresListFromXml()
+        {
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                var list = new ObservableCollection<HighScores>();
+                
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    string username = el.GetAttribute("Username");
+                    string score = el.GetAttribute("Score");
+                    string imageLocation = el.GetAttribute("Image_location");
+
+                    list.Add(new HighScores("", username, score, imageLocation));
+                }
+                list = new ObservableCollection<HighScores>(list.OrderByDescending(i => int.Parse(i.Score) ));
+
+                
+                var i = 1;
+                foreach (HighScores hs in list)
+                {
+                    hs.Position = $"{i++}";
+                }
+
+                return list;
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                LogException(ex);
+            }
+            return null;
         }
     }
 }

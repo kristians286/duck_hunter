@@ -3,6 +3,7 @@ using DuckHunter.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,79 +24,194 @@ using System.Xml.Linq;
 
 namespace DuckHunterWPF.userControls
 {
-    public partial class DialogNewHighScore : UserControl
+    public partial class DialogNewHighScore : UserControl, INotifyPropertyChanged, IDataErrorInfo
     {
 
-        private HighScores _highScores = new HighScores();
+        
         private string _selectedFile;
+
+        private string _username;
+        private BitmapImage _imageSource;
+        private bool _isOpen;
+
         public bool IsOpen
         {
-            get { return _highScores.IsOpen; }
-            set 
+            get { return _isOpen; }
+            set
             {
-                _highScores.IsOpen = value; 
+                _isOpen = value;
+                OnPropertyChanged("IsOpen");
             }
         }
+
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                if (File.Exists(FilePaths.IMAGE_PATH + $"\\{_username}.png"))
+                {
+                    //ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
+                    try
+                    {
+                        BitmapImage image = new BitmapImage();
+                        image.BeginInit();
+                        image.CacheOption = BitmapCacheOption.OnLoad;
+                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                        image.UriSource = new Uri(FilePaths.IMAGE_PATH + $"\\{_username}.png");
+                        image.EndInit();
+                        ImageSource = image;
+                    }
+                    catch
+                    {
+
+                    }
+
+
+                }
+                else
+                {
+                    ImageSource = null;
+                }
+                OnPropertyChanged("Username");
+            }
+        }
+
+        public BitmapImage ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged("ImageSource");
+            }
+        }
+
+        public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
+        public string Error
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public string this[string name]
+        {
+            get
+            {
+                string result = null;
+                switch (name)
+                {
+                    case "Username":
+                        if (string.IsNullOrWhiteSpace(Username) || Username.Contains(" "))
+                        {
+                            result = "Username cant be empty or have spacebars\n";
+                        }
+
+                        if (ErrorCollection.ContainsKey(name))
+                        {
+                            ErrorCollection[name] = result;
+                        }
+                        else if (result != null)
+                        {
+                            ErrorCollection.Add(name, result);
+                        }
+
+                        OnPropertyChanged("ErrorCollection");
+                        break;
+                    case "ImageSource":
+                        try
+                        {
+                            if (ImageSource == null)
+                            {
+                                result = "Please upload your passport";
+                            }
+                            if (ErrorCollection.ContainsKey(name))
+                            {
+                                ErrorCollection[name] = result;
+                            }
+                            else if (result != null)
+                            {
+                                ErrorCollection.Add(name, result);
+                            }
+                            OnPropertyChanged("ErrorCollection");
+                        }
+                        catch
+                        {
+
+                        }
+
+                        break;
+                }
+
+                return result;
+            }
+        }
+
+
         public DialogNewHighScore()
         {
             
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
 
-            DataContext = _highScores;
+            DataContext = this;
 
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
-            //FileController.EditHighScoresXmlDocument(Username,Score.Text);
-            bool hasError = false;
-            Debug.WriteLine(_highScores.ImageSource);
-            foreach (KeyValuePair<string,string> error in _highScores.ErrorCollection)
-            {
-                Debug.WriteLine(error);
-                if (error.Value != null)
+                bool hasError = false;
+                foreach (KeyValuePair<string,string> error in ErrorCollection)
                 {
-                    hasError = true;
-                }   
-            }
-            if (!hasError)
-            {
-                Debug.WriteLine("has no Error");
-                FileController.EditHighScoresXmlDocument(_highScores.Username, Score.Text);
-                
-                try
-                {
-                    if (_selectedFile != null)
+                    Debug.WriteLine(error);
+                    if (error.Value != null)
                     {
-                        File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
-
-                    }
-                } catch (IOException IOe)
-                {
-                    Debug.WriteLine($"Error {IOe.Message}");
+                        hasError = true;
+                    }   
                 }
-                _selectedFile = null;
-                _highScores.Username = "";
-                IsOpen = false;
-            }
-            
-            Debug.WriteLine(_highScores.Error);
+                if (!hasError)
+                {
+                    Debug.WriteLine("has no Error");
+                    FileController.EditHighScoresXmlDocument(Username, Score.Text);
+                
+               
+                        if (_selectedFile != null)
+                        {
+                            File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{Username}.png", true);
 
+                        }
+               
+                    _selectedFile = null;
+                    Username = "";
+                    IsOpen = false;
+                }
+            
+                Debug.WriteLine(Error);
+
+            }
+            catch (Exception exc)
+            {
+                FileController.LogException(exc);
+            }
 
         }
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
             try { 
-                if (_highScores.Username!= null)
+                if (Username!= null)
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Image files|*.bmp;*.jpg;*.png";
                     openFileDialog.FilterIndex = 1;
                     if ((bool)openFileDialog.ShowDialog())
                     {
-                        _highScores.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
+                        ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
                         _selectedFile = openFileDialog.FileName;
                     }
                 }
@@ -104,6 +220,13 @@ namespace DuckHunterWPF.userControls
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
