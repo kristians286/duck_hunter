@@ -34,6 +34,8 @@ namespace DuckHunterWPF.DialogControls
         private BitmapImage _imageSource;
         private bool _isOpen;
 
+        private static BitmapImage DEFAULT_IMAGE = new BitmapImage(new Uri("pack://application:,,,/Images/noimage.png"));
+
         private string _uuid;
 
         public bool IsOpen
@@ -74,7 +76,7 @@ namespace DuckHunterWPF.DialogControls
                 }
                 else
                 {
-                    ImageSource = null;
+                    ImageSource = DEFAULT_IMAGE;
                 }
                 OnPropertyChanged("Username");
             }
@@ -126,7 +128,7 @@ namespace DuckHunterWPF.DialogControls
                     case "ImageSource":
                         try
                         {
-                            if (ImageSource == null)
+                            if (ImageSource == null || ImageSource == DEFAULT_IMAGE )
                             {
                                 result = "Please upload your passport";
                             }
