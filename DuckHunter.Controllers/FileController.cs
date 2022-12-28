@@ -9,16 +9,17 @@ using System.Xml;
 using DuckHunter.Models;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 
 namespace DuckHunter.Controllers
 {
     public class FileController
     {
-        public static void EditHighScoresXmlDocument(string Username, string Score)
+        public static void EditHighScoresXmlDocument(string Username, string Score, string uuid)
         {
             try
             {
-                
+
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
 
@@ -30,18 +31,42 @@ namespace DuckHunter.Controllers
                 XmlElement savedPlayer = xdoc.CreateElement("Player");
                 savedPlayer.SetAttribute("Username", $"{Username}");
                 savedPlayer.SetAttribute("Score", $"{Score}");
-                savedPlayer.SetAttribute("Image_location", $"{FilePaths.IMAGE_PATH}\\{Username}.png");
-
-                if (nodes.Count < 5)
+                savedPlayer.SetAttribute("Image_location", $"{FilePaths.IMAGE_PATH}\\{uuid}.png");
+                if ( nodes.Count == 0 ) 
                 {
                     root.AppendChild(savedPlayer);
+                }
+                else if (nodes.Count < 5)
+                {
+                    XmlElement oldPlayer = null;
+                    foreach (XmlElement node in nodes)
+                    {
+                        string username = node.GetAttribute("Username");
+                        string score = node.GetAttribute("Score");
+                        string imageLocation = node.GetAttribute("Image_location");
+                        if ((username == savedPlayer.GetAttribute("Username")) && (int.Parse(savedPlayer.GetAttribute("Score")) >= int.Parse(score)) )
+                        {
+                            oldPlayer = node;
+                            if (!File.Exists($"{FilePaths.IMAGE_PATH}\\{uuid}.png"))
+                            {
+                                savedPlayer.SetAttribute("Image_location", oldPlayer.GetAttribute("Image_location"));
+                            } 
+                            break;
+                        }
+                    }
+                    if (oldPlayer != null)
+                    {
+                        root.ReplaceChild(savedPlayer, oldPlayer);
+                        
+                    } else
+                    {
+                        root.AppendChild(savedPlayer);
+                    }
+                    
 
                 } else
                 {
-
-                
-                    //find lowest
-                    XmlNode oldPlayer = null;
+                    XmlElement oldPlayer = null;
                     foreach (XmlElement node in nodes)
                     {
                         string username = node.GetAttribute("Username");
@@ -64,7 +89,7 @@ namespace DuckHunter.Controllers
 
                 xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
@@ -112,7 +137,7 @@ namespace DuckHunter.Controllers
             }
         }
 
-        public static void LogException(Exception exc) 
+        public static void LogException(Exception exc)
         {
 
             string logfile = $"\\LOG-{DateTime.Now.Year}-{DateTime.Now.Day}-{DateTime.Now.Month}.log";
@@ -128,13 +153,14 @@ namespace DuckHunter.Controllers
                 {
                     File.WriteAllText(FilePaths.LOGS_PATH + logfile, DateTime.Now + " \n " + exc.Message);
                 }
-                
+
             }
             catch (Exception logExc)
             {
                 LogException(logExc);
             }
         }
+
         public static ObservableCollection<HighScores> GetHighScoresListFromXml()
         {
             try
@@ -143,7 +169,7 @@ namespace DuckHunter.Controllers
                 xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
 
                 var list = new ObservableCollection<HighScores>();
-                
+
 
                 XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
 
@@ -155,9 +181,9 @@ namespace DuckHunter.Controllers
 
                     list.Add(new HighScores("", username, score, imageLocation));
                 }
-                list = new ObservableCollection<HighScores>(list.OrderByDescending(i => int.Parse(i.Score) ));
+                list = new ObservableCollection<HighScores>(list.OrderByDescending(i => int.Parse(i.Score)));
 
-                
+
                 var i = 1;
                 foreach (HighScores hs in list)
                 {
@@ -172,5 +198,54 @@ namespace DuckHunter.Controllers
             }
             return null;
         }
+
+        public static bool PlayerExistsInXml(string name)
+        {
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    if (el.GetAttribute("Username") == name)
+                    {
+                        return true;
+                    }
+                }
+            } catch (Exception ex)
+            { 
+                LogException(ex);
+            }
+            return false;
+        }
+
+        public static string GetPlayerImageFromXml(string name)
+        {
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    if (el.GetAttribute("Username") == name)
+                    {
+                        return el.GetAttribute("Image_location");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+
+            return null;
+        }
     }
+
 }

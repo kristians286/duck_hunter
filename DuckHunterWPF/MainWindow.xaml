@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DuckHunterWPF"
-        xmlns:usercontrols="clr-namespace:DuckHunterWPF.userControls"
+        xmlns:usercontrols="clr-namespace:DuckHunterWPF.DialogControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Duck Hunter" Height="548" Width="526" 

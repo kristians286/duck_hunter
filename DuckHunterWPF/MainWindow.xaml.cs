@@ -13,7 +13,7 @@ using System.Windows.Input;
 using DuckHunter.Models.Enums;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
-using DuckHunterWPF.userControls;
+using DuckHunterWPF.DialogControls;
 
 namespace DuckHunterWPF
 {
@@ -56,7 +56,7 @@ namespace DuckHunterWPF
             FileController.CreateDirectories();
 
             Cursor = Cursors.Cross;
-            var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\music\melody.mp3"));
+            var musicPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(Environment.CurrentDirectory, @"..\..\..\Music\melody.mp3"));
             _mediaPlayer.Open(new Uri(musicPath));
             _mediaPlayer.MediaEnded += new EventHandler(Media_ended);
             _game = GameController.NewGame();
@@ -67,13 +67,13 @@ namespace DuckHunterWPF
             gameTime.Tick += GameTick;
             gameTime.Start();
 
-            _background.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/background.png"));
+            _background.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/background.png"));
             //not used
-            _hudElements.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/hudElements.png"));
+            _hudElements.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/hudElements.png"));
 
-            _dogSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/dog.png"));
+            _dogSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/dog.png"));
             _dogSprite.Viewbox = new Rect(0,0,0.25,.2);
-            _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/blackBird.png"));
+            _duckSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/blackBird.png"));
             _duckSprite.Viewbox = new Rect(0, 0, 0.33, 0.25);
             
             DataContext = _game;

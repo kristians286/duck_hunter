@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\krist\Documents\duck_hunter\DuckHunterWPF\App.xaml
-5-88242179
+5-611813154
 
-71972735585
+71498617834
 196-1863368164
-MainWindow.xaml;resourceDictionaries\ConverterDictionary.xaml;resourceDictionaries\StyleDictionary.xaml;userControls\DialogHighScores.xaml;userControls\DialogNewHighScore.xaml;
+DialogControls\DialogHighScores.xaml;DialogControls\DialogNewHighScore.xaml;MainWindow.xaml;ResourceDictionaries\ConverterDictionary.xaml;ResourceDictionaries\StyleDictionary.xaml;
 
 False
 

@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DuckHunterWPF.userControls
+namespace DuckHunterWPF.DialogControls
 {
     /// <summary>
     /// Interaction logic for DialogHighScores.xaml

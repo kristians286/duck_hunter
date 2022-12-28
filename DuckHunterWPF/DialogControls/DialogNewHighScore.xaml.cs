@@ -22,7 +22,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace DuckHunterWPF.userControls
+namespace DuckHunterWPF.DialogControls
 {
     public partial class DialogNewHighScore : UserControl, INotifyPropertyChanged, IDataErrorInfo
     {
@@ -33,6 +33,8 @@ namespace DuckHunterWPF.userControls
         private string _username;
         private BitmapImage _imageSource;
         private bool _isOpen;
+
+        private string _uuid;
 
         public bool IsOpen
         {
@@ -50,7 +52,7 @@ namespace DuckHunterWPF.userControls
             set
             {
                 _username = value;
-                if (File.Exists(FilePaths.IMAGE_PATH + $"\\{_username}.png"))
+                if (FileController.PlayerExistsInXml(_username))
                 {
                     //ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
                     try
@@ -59,7 +61,7 @@ namespace DuckHunterWPF.userControls
                         image.BeginInit();
                         image.CacheOption = BitmapCacheOption.OnLoad;
                         image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        image.UriSource = new Uri(FilePaths.IMAGE_PATH + $"\\{_username}.png");
+                        image.UriSource = new Uri(FileController.GetPlayerImageFromXml(_username)) ;
                         image.EndInit();
                         ImageSource = image;
                     }
@@ -156,16 +158,17 @@ namespace DuckHunterWPF.userControls
             
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
-
+            
             DataContext = this;
 
+            
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
+                _uuid = Guid.NewGuid().ToString();
                 bool hasError = false;
                 foreach (KeyValuePair<string,string> error in ErrorCollection)
                 {
@@ -178,14 +181,14 @@ namespace DuckHunterWPF.userControls
                 if (!hasError)
                 {
                     Debug.WriteLine("has no Error");
-                    FileController.EditHighScoresXmlDocument(Username, Score.Text);
+                   
                 
                
-                        if (_selectedFile != null)
-                        {
-                            File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{Username}.png", true);
-
-                        }
+                    if (_selectedFile != null)
+                    {
+                        File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_uuid}.png", true);
+                        FileController.EditHighScoresXmlDocument(Username, Score.Text, _uuid);
+                    }
                
                     _selectedFile = null;
                     Username = "";
