@@ -36,11 +36,22 @@
             <Button Content = "Pause" Grid.Column="2" Grid.Row="2"  Click = "mediaPause" />
         </Grid>
 
-        <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
-            <TextBlock Text="SCORE " Margin="363,360,-363,-362"></TextBlock>
-            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="363,344,-363,-345"></TextBlock>
-            <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="59,312,-59,-313"></TextBlock>
-            <TextBlock x:Name="Bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,344,-31,-344"></TextBlock>
+        <Grid x:Name="Score" Canvas.Left="80" Canvas.Top="414" Panel.ZIndex="98">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="205"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="SCORE" Grid.Column="2" Grid.Row="3"></TextBlock>
+            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"></TextBlock>
+            <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="0"></TextBlock>
+            <TextBlock x:Name="Bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="2"></TextBlock>
         </Grid>
 
         <Grid Panel.ZIndex="99">
