@@ -67,12 +67,16 @@ namespace DuckHunterWPF.userControls
                 
                 try
                 {
-                    File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+                    if (_selectedFile != null)
+                    {
+                        File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_highScores.Username}.png", true);
+
+                    }
                 } catch (IOException IOe)
                 {
                     Debug.WriteLine($"Error {IOe.Message}");
                 }
-
+                _selectedFile = null;
                 _highScores.Username = "";
                 IsOpen = false;
             }
