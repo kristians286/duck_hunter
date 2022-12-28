@@ -8,6 +8,7 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
 using DuckHunter.Models;
 using System.Xml.Linq;
+using System.IO;
 
 namespace DuckHunter.Controllers
 {
