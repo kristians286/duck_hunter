@@ -1,4 +1,4 @@
 # duck_hunter
 
-# NOTE's to self
-- forget about it
+# NOTE's
+- Please delete "DuckHunter" folder in appdata/roaming
