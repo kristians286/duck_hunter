@@ -8,12 +8,12 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
 using DuckHunter.Models;
 using System.Xml.Linq;
-<<<<<<< HEAD
+
 using System.IO;
-=======
+
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
->>>>>>> new_dev
+
 
 namespace DuckHunter.Controllers
 {
