@@ -196,7 +196,7 @@ namespace DuckHunterWPF.DialogControls
                         hasError = true;
                     }   
                 }
-                if (!hasError)
+                if (!hasError && !string.IsNullOrEmpty(Username))
                 {
                     Debug.WriteLine("has no Error");
                    
