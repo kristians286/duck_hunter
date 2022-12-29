@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="DuckHunterWPF.userControls.DialogNewHighScore"
+﻿<UserControl x:Class="DuckHunterWPF.DialogControls.DialogNewHighScore"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DuckHunterWPF.userControls"
+             xmlns:local="clr-namespace:DuckHunterWPF.DialogControls"
              mc:Ignorable="d" 
              d:DesignHeight="548" d:DesignWidth="526">
     <UserControl.Resources>
@@ -31,7 +31,7 @@
                 </Grid>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your name "/>
-                    <TextBox MaxWidth="80" Text="{Binding Username, ValidatesOnDataErrors=True , UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox MaxWidth="80" Text="{Binding Username, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"
                              ToolTip="{Binding ErrorCollection[Username]}" Margin="40,0,0,0"/>
                 </Grid>
                 <Grid>
@@ -39,17 +39,11 @@
                     <!-- NOTE: Using binding on BorderBrush allows ValidatesOnDataError to be displayed arround border.
                                Without this the validation border would be too small
                     -->
-                    <Border Margin="88,2,48,3" Height="64" Width="64"
-                            BorderBrush="{Binding ImageSource, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                            BorderThickness="1"
-                            >
 
-                        <Image x:Name="UserImage" 
-                               Source="{Binding ImageSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <Image Margin="88,2,48,3" x:Name="UserImage" 
+                               Source="{Binding ImageSource, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                Height="64" Width="64" Stretch="Fill">
-                        </Image>
-
-                    </Border>
+                    </Image>
                     <!--
                     <Border BorderBrush="Black" BorderThickness="1"> 
                          <Image Source="C:\Users\krist\Documents\background.png" Height="64" Width="64"></Image>

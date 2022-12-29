@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DuckHunterWPF"
-        xmlns:usercontrols="clr-namespace:DuckHunterWPF.userControls"
+        xmlns:usercontrols="clr-namespace:DuckHunterWPF.DialogControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Duck Hunter" Height="548" Width="526" 
@@ -17,28 +17,44 @@
     <Canvas Name="MainCanvas" Focusable="True">
 
         <Grid x:Name="GameStateButtons" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="98">
-            <Button Click="uiButtonSaves_Click"  x:Name="uiButtonSaves" Margin="10,10,-10,-10">Save</Button>
-            <Button Click="uiButtonLoad_Click"  x:Name="uiButtonLoad" Margin="10,36,-10,-36">Load</Button>
-            <Button Click="uiButtonNewGame_Click"  x:Name="uiButtonNewGame" Margin="10,62,-10,-61">New Game</Button>
-            <Button Content = "Play" Margin = "418,10,-408,-10"  Click = "mediaPlay" />
-            <Button Content = "Pause" Margin = "418,36,-409,-36"  Click = "mediaPause" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Click="uiButtonSaves_Click"  x:Name="uiButtonSaves" Grid.Column="0" Grid.Row="0">Save</Button>
+            <Button Click="uiButtonLoad_Click"  x:Name="uiButtonLoad" Grid.Column="0" Grid.Row="1">Load</Button>
+            <Button Click="uiButtonNewGame_Click"  x:Name="uiButtonNewGame" Grid.Column="0" Grid.Row="2">New Game</Button>
+            <TextBlock Padding="10,10,0,0" Text="Radio"  Grid.Column="2" Grid.Row="0"></TextBlock>
+            <Button Content = "Play" Grid.Column="2" Grid.Row="1"  Click = "mediaPlay" />
+            <Button Content = "Pause" Grid.Column="2" Grid.Row="2"  Click = "mediaPause" />
         </Grid>
 
-        <Grid x:Name="Score" Canvas.Left="22" Canvas.Top="102" Panel.ZIndex="98">
-            <TextBlock Text="SCORE " Margin="363,360,-363,-362"></TextBlock>
-            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="363,344,-363,-345"></TextBlock>
-            <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="59,312,-59,-313"></TextBlock>
-            <TextBlock x:Name="Bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="32,344,-31,-344"></TextBlock>
+        <Grid x:Name="Score" Canvas.Left="88" Canvas.Top="426" Panel.ZIndex="98">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="285"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="SCORE" Grid.Column="2" Grid.Row="3"></TextBlock>
+            <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"></TextBlock>
+            <TextBlock x:Name="Round" Foreground="#8ed612" Text="{Binding round, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="0"></TextBlock>
+            <TextBlock x:Name="Bullets" Text="{Binding bullets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="2"></TextBlock>
         </Grid>
-<!--
-        <Grid x:Name="Crosshair" Canvas.Left="255" Canvas.Top="260" Panel.ZIndex="97" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Rectangle Height="24" RadiusX="12" RadiusY="12" VerticalAlignment="Center" StrokeThickness="2" Stroke="Black"/>
-            <Rectangle  Width="24" Height="1" Fill="Black" ></Rectangle>
-            <Rectangle  Width="1" Height="24" Fill="Black" ></Rectangle>
-        </Grid>
--->
+
         <Grid Panel.ZIndex="99">
-            <TextBlock Text="Radio" Margin="380,24,-382,-24"></TextBlock>
         </Grid>
 
         <Grid>
@@ -46,10 +62,7 @@
         </Grid>
         
         <Grid x:Name="StateGrid" Panel.ZIndex="99" Height="548" Width="526">
-            <!--
-            <usercontrols:DialogNewHighScore x:Name="GameOverScreen"/>
-            <usercontrols:DialogHighScores x:Name="HighScoresScreen"/>
-            -->
+
         </Grid>
         
     </Canvas>

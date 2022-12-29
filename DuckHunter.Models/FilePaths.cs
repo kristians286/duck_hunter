@@ -11,5 +11,6 @@ namespace DuckHunter.Models
         public static readonly string FOLDER_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter";
         public static readonly string IMAGE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter" + "\\images";
         public static readonly string SAVE_FILE = "\\HighScores.xml";
+        public static readonly string LOGS_PATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DuckHunter\\logs";
     }
 }

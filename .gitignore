@@ -1,4 +1,7 @@
+<<<<<<< .merge_file_kv4Ozi
 
+=======
+>>>>>>> .merge_file_vokRpr
 DuckHunter.Controllers/bin/
 
 DuckHunter.Controllers/obj/
@@ -13,4 +16,8 @@ DuckHunterGame/obj/
 
 DuckHunterWPF/obj/
 
+<<<<<<< .merge_file_kv4Ozi
 DuckHunterWPF/bin/
+=======
+DuckHunterWPF/bin/
+>>>>>>> .merge_file_vokRpr

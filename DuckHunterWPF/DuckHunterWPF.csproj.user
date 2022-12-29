@@ -7,24 +7,24 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="userControls\DialogHighScores.xaml.cs">
+    <Compile Update="DialogControls\DialogHighScores.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\DialogNewHighScore.xaml.cs">
+    <Compile Update="DialogControls\DialogNewHighScore.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="resourceDictionaries\ConverterDictionary.xaml">
+    <Page Update="ResourceDictionaries\ConverterDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="resourceDictionaries\StyleDictionary.xaml">
+    <Page Update="ResourceDictionaries\StyleDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\DialogHighScores.xaml">
+    <Page Update="DialogControls\DialogHighScores.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\DialogNewHighScore.xaml">
+    <Page Update="DialogControls\DialogNewHighScore.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

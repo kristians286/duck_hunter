@@ -8,77 +8,94 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Xml;
 using DuckHunter.Models;
 using System.Xml.Linq;
+<<<<<<< HEAD
 using System.IO;
+=======
+using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
+>>>>>>> new_dev
 
 namespace DuckHunter.Controllers
 {
     public class FileController
     {
-        public static void EditHighScoresXmlDocument(string Username, string Score)
+        public static void AddHighScore(HighScore newHighScore)
         {
             try
             {
+                ObservableCollection<HighScore> highScoresList = GetHighScoresListFromXml();
+                var existingUsername = false;
+                foreach (HighScore highScore in highScoresList)
+                {
+                    if (highScore.Username != newHighScore.Username)
+                    {
+                        continue;
+                    }
+                    highScore.ImageSource = newHighScore.ImageSource;
+                    if (int.Parse(highScore.Score) < int.Parse(newHighScore.Score))
+                    {
+                        highScore.Score = newHighScore.Score;
+                    }
+                    existingUsername = true;
+                    break;
+                }
+                if (!existingUsername)
+                {
+                    highScoresList.Add(newHighScore);
+                }
                 
+
+                highScoresList = new ObservableCollection<HighScore>(highScoresList.OrderByDescending(i => int.Parse(i.Score)).Take(5));
+
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
-
                 XmlElement root = xdoc.DocumentElement;
-
-                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
-                Debug.WriteLine(nodes.Count);
-
-                XmlElement savedPlayer = xdoc.CreateElement("Player");
-                XmlElement savedPosition = xdoc.CreateElement("Position");
-                savedPosition.InnerText = $"{nodes.Count + 1}";
-                XmlElement savedUsername = xdoc.CreateElement("Username");
-                savedUsername.InnerText = $"{Username}";
-                XmlElement savedScore = xdoc.CreateElement("Score");
-                savedScore.InnerText = $"{Score}";
-                XmlElement savedImage_location = xdoc.CreateElement("Image_location");
-                savedImage_location.InnerText = $"{FilePaths.IMAGE_PATH}\\{Username}.png";
-                savedPlayer.AppendChild(savedPosition);
-                savedPlayer.AppendChild(savedUsername);
-                savedPlayer.AppendChild(savedScore);
-                savedPlayer.AppendChild(savedImage_location);
-
-                if (nodes.Count < 5)
+                root.RemoveAll();
+                //XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+                var i = 1;
+                foreach (HighScore highScore in highScoresList)
                 {
-                    root.AppendChild(savedPlayer);
-
-                } else
-                {
-
-                
-                    //find lowest
-                    XmlNode oldPlayer = null;
-                    foreach (XmlNode node in nodes)
-                    {
-                        XmlNode username = node.SelectSingleNode("Username");
-                        XmlNode score = node.SelectSingleNode("Score");
-                        XmlNode position = node.SelectSingleNode("Position");
-                        XmlNode imageLocation = node.SelectSingleNode("Image_location");
-                        if (int.Parse(savedScore.InnerText) > int.Parse(score.InnerText) ||
-                            (username.InnerText == savedUsername.InnerText) && int.Parse(savedScore.InnerText) > int.Parse(score.InnerText))
-                        {
-                            savedPosition.InnerText = position.InnerText;
-                            oldPlayer = node;
-                            break;
-                        }
-                    }
-                    if (oldPlayer != null)
-                    {
-                        root.ReplaceChild(savedPlayer, oldPlayer);
-
-                    }
+                    Debug.WriteLine(highScore.Username);
+                    XmlElement Player = xdoc.CreateElement("Player");
+                    Player.SetAttribute("Position",$"{i++}");
+                    Player.SetAttribute("Username", $"{highScore.Username}");
+                    Player.SetAttribute("Score", $"{highScore.Score}");
+                    Player.SetAttribute("Image_location", $"{highScore.ImageSource}");
+                    root.AppendChild(Player);
                 }
-
 
                 xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                LogException(ex);
             }
+        }
+        public static ObservableCollection<HighScore> GetHighScoresListFromXml()
+        {
+            var list = new ObservableCollection<HighScore>();
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    string position = el.GetAttribute("Position");
+                    string username = el.GetAttribute("Username");
+                    string score = el.GetAttribute("Score");
+                    string imageLocation = el.GetAttribute("Image_location");
+
+                    list.Add(new HighScore(position, username, score, imageLocation));
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+            return list;
         }
 
         public static void CreateDirectories()
@@ -95,6 +112,10 @@ namespace DuckHunter.Controllers
                     Directory.CreateDirectory(FilePaths.IMAGE_PATH);
                     Debug.WriteLine("Creating `images` dir in %appdata% DuckHunter");
                 }
+                if (!Directory.Exists(FilePaths.LOGS_PATH))
+                {
+                    Directory.CreateDirectory(FilePaths.LOGS_PATH);
+                }
                 if (!File.Exists(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
                 {
                     using (File.Create(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE))
@@ -108,15 +129,84 @@ namespace DuckHunter.Controllers
                     textWriter.WriteEndElement();
                     textWriter.WriteEndDocument();
                     textWriter.Close();
-
                 }
-
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                LogException(e);
             }
         }
+
+        public static void LogException(Exception exc)
+        {
+
+            string logfile = $"\\LOG-{DateTime.Now.Year}-{DateTime.Now.Day}-{DateTime.Now.Month}.log";
+
+            try
+            {
+                string text = "";
+                if (File.Exists(FilePaths.LOGS_PATH + logfile))
+                {
+                    text = File.ReadAllText(FilePaths.LOGS_PATH + logfile);
+                }
+                File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message + "\n");
+
+            }
+            catch (Exception logExc)
+            {
+                Debug.WriteLine(logExc.Message);
+            }
+        }
+
+        
+
+        public static bool PlayerExistsInXml(string name)
+        {
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    if (el.GetAttribute("Username") == name)
+                    {
+                        return true;
+                    }
+                }
+            } catch (Exception ex)
+            { 
+                LogException(ex);
+            }
+            return false;
+        }
+
+        public static string GetPlayerImageFromXml(string name)
+        {
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    if (el.GetAttribute("Username") == name)
+                    {
+                        return el.GetAttribute("Image_location");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+
+            return null;
+        }
     }
+
 }

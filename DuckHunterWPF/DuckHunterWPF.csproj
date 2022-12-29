@@ -8,10 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\background.png" />
-    <None Remove="images\blackBird.png" />
-    <None Remove="images\dog.png" />
-    <None Remove="images\hudElements.png" />
+    <None Remove="Images\background.png" />
+    <None Remove="Images\blackBird.png" />
+    <None Remove="Images\dog.png" />
+    <None Remove="Images\hudElements.png" />
+    <None Remove="Images\noimage.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\background.png" />
-    <Resource Include="images\blackBird.png" />
-    <Resource Include="images\dog.png" />
-    <Resource Include="images\hudElements.png" />
+    <Resource Include="Images\background.png" />
+    <Resource Include="Images\blackBird.png" />
+    <Resource Include="Images\dog.png" />
+    <Resource Include="Images\hudElements.png" />
+    <Resource Include="Images\noimage.png" />
   </ItemGroup>
 
 </Project>
