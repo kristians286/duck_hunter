@@ -31,7 +31,7 @@
                 </Grid>
                 <Grid>
                     <TextBlock Foreground="Black" Text="Your name "/>
-                    <TextBox MaxWidth="80" Text="{Binding Username, ValidatesOnDataErrors=True , UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox MaxWidth="80" Text="{Binding Username, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"
                              ToolTip="{Binding ErrorCollection[Username]}" Margin="40,0,0,0"/>
                 </Grid>
                 <Grid>

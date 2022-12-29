@@ -15,96 +15,83 @@ namespace DuckHunter.Controllers
 {
     public class FileController
     {
-        public static void EditHighScoresXmlDocument(string Username, string Score, string uuid)
+        public static void AddHighScore(HighScore newHighScore)
         {
             try
             {
+                ObservableCollection<HighScore> highScoresList = GetHighScoresListFromXml();
+                var existingUsername = false;
+                foreach (HighScore highScore in highScoresList)
+                {
+                    if (highScore.Username != newHighScore.Username)
+                    {
+                        continue;
+                    }
+                    highScore.ImageSource = newHighScore.ImageSource;
+                    if (int.Parse(highScore.Score) < int.Parse(newHighScore.Score))
+                    {
+                        highScore.Score = newHighScore.Score;
+                    }
+                    existingUsername = true;
+                    break;
+                }
+                if (!existingUsername)
+                {
+                    highScoresList.Add(newHighScore);
+                }
+                
+
+                highScoresList = new ObservableCollection<HighScore>(highScoresList.OrderByDescending(i => int.Parse(i.Score)).Take(5));
 
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
-
                 XmlElement root = xdoc.DocumentElement;
-
-                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
-                Debug.WriteLine(nodes.Count);
-
-                XmlElement savedPlayer = xdoc.CreateElement("Player");
-                savedPlayer.SetAttribute("Username", $"{Username}");
-                savedPlayer.SetAttribute("Score", $"{Score}");
-                savedPlayer.SetAttribute("Image_location", $"{FilePaths.IMAGE_PATH}\\{uuid}.png");
-                if ( nodes.Count == 0 ) 
+                root.RemoveAll();
+                //XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+                var i = 1;
+                foreach (HighScore highScore in highScoresList)
                 {
-                    root.AppendChild(savedPlayer);
+                    Debug.WriteLine(highScore.Username);
+                    XmlElement Player = xdoc.CreateElement("Player");
+                    Player.SetAttribute("Position",$"{i++}");
+                    Player.SetAttribute("Username", $"{highScore.Username}");
+                    Player.SetAttribute("Score", $"{highScore.Score}");
+                    Player.SetAttribute("Image_location", $"{highScore.ImageSource}");
+                    root.AppendChild(Player);
                 }
-                else if (nodes.Count < 5)
-                {
-                    XmlElement oldPlayer = null;
-                    foreach (XmlElement node in nodes)
-                    {
-                        string username = node.GetAttribute("Username");
-                        string score = node.GetAttribute("Score");
-                        string imageLocation = node.GetAttribute("Image_location");
-                        if ((username == savedPlayer.GetAttribute("Username")) && (int.Parse(savedPlayer.GetAttribute("Score")) >= int.Parse(score)) )
-                        {
-                            oldPlayer = node;
-                            if (!File.Exists($"{FilePaths.IMAGE_PATH}\\{uuid}.png"))
-                            {
-                                savedPlayer.SetAttribute("Image_location", oldPlayer.GetAttribute("Image_location"));
-                            } else
-                            {
-                                try
-                                {
-                                    File.Delete(oldPlayer.GetAttribute("Image_location"));
-                                }
-                                catch (Exception e) 
-                                { 
-
-                                    LogException(e);
-                                }
-
-                            }
-                            break;
-                        }
-                    }
-                    if (oldPlayer != null)
-                    {
-                        root.ReplaceChild(savedPlayer, oldPlayer);
-                        
-                    } else
-                    {
-                        root.AppendChild(savedPlayer);
-                    }
-                    
-
-                } else
-                {
-                    XmlElement oldPlayer = null;
-                    foreach (XmlElement node in nodes)
-                    {
-                        string username = node.GetAttribute("Username");
-                        string score = node.GetAttribute("Score");
-                        string imageLocation = node.GetAttribute("Image_location");
-                        if (int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score) ||
-                            (username == savedPlayer.GetAttribute("Username")) && int.Parse(savedPlayer.GetAttribute("Score")) > int.Parse(score))
-                        {
-                            oldPlayer = node;
-                            break;
-                        }
-                    }
-                    if (oldPlayer != null)
-                    {
-                        root.ReplaceChild(savedPlayer, oldPlayer);
-
-                    }
-                }
-
 
                 xdoc.Save(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                LogException(ex);
             }
+        }
+        public static ObservableCollection<HighScore> GetHighScoresListFromXml()
+        {
+            var list = new ObservableCollection<HighScore>();
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
+
+                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
+
+                foreach (XmlElement el in nodes)
+                {
+                    string position = el.GetAttribute("Position");
+                    string username = el.GetAttribute("Username");
+                    string score = el.GetAttribute("Score");
+                    string imageLocation = el.GetAttribute("Image_location");
+
+                    list.Add(new HighScore(position, username, score, imageLocation));
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+            return list;
         }
 
         public static void CreateDirectories()
@@ -138,14 +125,11 @@ namespace DuckHunter.Controllers
                     textWriter.WriteEndElement();
                     textWriter.WriteEndDocument();
                     textWriter.Close();
-
                 }
-
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                LogException(e);
             }
         }
 
@@ -156,60 +140,21 @@ namespace DuckHunter.Controllers
 
             try
             {
+                string text = "";
                 if (File.Exists(FilePaths.LOGS_PATH + logfile))
                 {
-                    string text = File.ReadAllText(FilePaths.LOGS_PATH + logfile);
-                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message + "\n");
+                    text = File.ReadAllText(FilePaths.LOGS_PATH + logfile);
                 }
-                else
-                {
-                    File.WriteAllText(FilePaths.LOGS_PATH + logfile, DateTime.Now + " \n " + exc.Message + "\n");
-                }
+                File.WriteAllText(FilePaths.LOGS_PATH + logfile, text + DateTime.Now + " \n " + exc.Message + "\n");
 
             }
             catch (Exception logExc)
             {
-                LogException(logExc);
+                Debug.WriteLine(logExc.Message);
             }
         }
 
-        public static ObservableCollection<HighScores> GetHighScoresListFromXml()
-        {
-            try
-            {
-                XmlDocument xdoc = new XmlDocument();
-                xdoc.Load(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
-
-                var list = new ObservableCollection<HighScores>();
-
-
-                XmlNodeList nodes = xdoc.SelectNodes("HighScores/Player");
-
-                foreach (XmlElement el in nodes)
-                {
-                    string username = el.GetAttribute("Username");
-                    string score = el.GetAttribute("Score");
-                    string imageLocation = el.GetAttribute("Image_location");
-
-                    list.Add(new HighScores("", username, score, imageLocation));
-                }
-                list = new ObservableCollection<HighScores>(list.OrderByDescending(i => int.Parse(i.Score)));
-
-
-                var i = 1;
-                foreach (HighScores hs in list)
-                {
-                    hs.Position = $"{i++}";
-                }
-
-                return list;
-            } catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                LogException(ex);
-            }
-            return null;
-        }
+        
 
         public static bool PlayerExistsInXml(string name)
         {

@@ -31,8 +31,8 @@ namespace DuckHunterWPF.DialogControls
         public Uri Path = new Uri(FilePaths.FOLDER_PATH + FilePaths.SAVE_FILE);
 
 
-        private ObservableCollection<HighScores> _highScoresList;
-        public ObservableCollection<HighScores> HighScoresList
+        private ObservableCollection<HighScore> _highScoresList;
+        public ObservableCollection<HighScore> HighScoresList
         {
             get { return _highScoresList; }
             set 

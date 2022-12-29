@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 
 namespace DuckHunter.Models
 {
-    public class HighScores
+    public class HighScore
     {
         public string Position { get; set; }
         public string Username { get; set; }
         public string Score { get; set; }
         public string ImageSource   { get; set; }
 
-        public HighScores(string position, string username, string score, string imageSource)
+        public HighScore(string position, string username, string score, string imageSource)
         {
             Position = position;
             Username = username;

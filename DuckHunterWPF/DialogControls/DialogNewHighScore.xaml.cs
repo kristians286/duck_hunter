@@ -36,7 +36,6 @@ namespace DuckHunterWPF.DialogControls
 
         private static BitmapImage DEFAULT_IMAGE = new BitmapImage(new Uri("pack://application:,,,/Images/noimage.png"));
 
-        private string _uuid;
 
         public bool IsOpen
         {
@@ -53,32 +52,35 @@ namespace DuckHunterWPF.DialogControls
             get { return _username; }
             set
             {
-                _username = value;
-                if (FileController.PlayerExistsInXml(_username))
+                if (_username!= value)
                 {
-                    //ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
-                    try
+                    _username = value;
+                    if (FileController.PlayerExistsInXml(_username))
                     {
-                        BitmapImage image = new BitmapImage();
-                        image.BeginInit();
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        image.UriSource = new Uri(FileController.GetPlayerImageFromXml(_username)) ;
-                        image.EndInit();
-                        ImageSource = image;
+                        //ImageSource = new BitmapImage(new Uri (FilePaths.IMAGE_PATH + $"\\{_username}.png"));
+                        try
+                        {
+                            BitmapImage image = new BitmapImage();
+                            image.BeginInit();
+                            image.CacheOption = BitmapCacheOption.OnLoad;
+                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                            image.UriSource = new Uri(FileController.GetPlayerImageFromXml(_username));
+                            image.EndInit();
+                            ImageSource = image;
+                        }
+                        catch
+                        {
+
+                        }
+
+
                     }
-                    catch
+                    else
                     {
-
+                        ImageSource = DEFAULT_IMAGE;
                     }
-
-
+                    OnPropertyChanged("Username");
                 }
-                else
-                {
-                    ImageSource = DEFAULT_IMAGE;
-                }
-                OnPropertyChanged("Username");
             }
         }
 
@@ -170,7 +172,8 @@ namespace DuckHunterWPF.DialogControls
         {
             try
             {
-                _uuid = Guid.NewGuid().ToString();
+                var uuid = Guid.NewGuid().ToString();
+                var image_path = FilePaths.IMAGE_PATH + $"\\{uuid}.png";
                 bool hasError = false;
                 foreach (KeyValuePair<string,string> error in ErrorCollection)
                 {
@@ -188,11 +191,16 @@ namespace DuckHunterWPF.DialogControls
                
                     if (_selectedFile != null)
                     {
-                        File.Copy(_selectedFile, FilePaths.IMAGE_PATH + $"\\{_uuid}.png", true);
-                        FileController.EditHighScoresXmlDocument(Username, Score.Text, _uuid);
+                        File.Copy(_selectedFile, image_path, true);
+                        _selectedFile = null;
+                    } else
+                    {
+                        image_path = ImageSource.UriSource.ToString();
                     }
-               
-                    _selectedFile = null;
+                    var player = new HighScore("", Username, Score.Text, image_path);
+                    FileController.AddHighScore(player);
+
+                    
                     Username = "";
                     IsOpen = false;
                 }
