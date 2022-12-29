@@ -27,11 +27,11 @@ namespace DuckHunterWPF.DialogControls
     public partial class DialogNewHighScore : UserControl, INotifyPropertyChanged, IDataErrorInfo
     {
 
-        
+        private Dictionary<string, bool> _shouldValidate = new Dictionary<string, bool>();
         private string _selectedFile;
 
         private string _username;
-        private BitmapImage _imageSource;
+        private BitmapImage _imageSource = DEFAULT_IMAGE;
         private bool _isOpen;
 
         private static BitmapImage DEFAULT_IMAGE = new BitmapImage(new Uri("pack://application:,,,/Images/noimage.png"));
@@ -108,29 +108,42 @@ namespace DuckHunterWPF.DialogControls
             get
             {
                 string result = null;
+                
                 switch (name)
                 {
                     case "Username":
-                        if (string.IsNullOrWhiteSpace(Username) || Username.Contains(" "))
+                        if (_shouldValidate["Username"])
                         {
-                            result = "Username cant be empty or have spacebars\n";
-                        }
 
-                        if (ErrorCollection.ContainsKey(name))
-                        {
-                            ErrorCollection[name] = result;
+
+                            if (string.IsNullOrWhiteSpace(Username) || Username.Contains(" "))
+                            {
+                                result = "Username cant be empty or have spacebars\n";
+                            }
+
+                            if (ErrorCollection.ContainsKey(name))
+                            {
+                                ErrorCollection[name] = result;
+                            }
+                            else if (result != null)
+                            {
+                                ErrorCollection.Add(name, result);
+                            }
                         }
-                        else if (result != null)
+                        else
                         {
-                            ErrorCollection.Add(name, result);
+                            _shouldValidate["Username"] = true;
                         }
 
                         OnPropertyChanged("ErrorCollection");
                         break;
                     case "ImageSource":
-                        try
+                        
+                        if (_shouldValidate["ImageSource"])
                         {
-                            if (ImageSource == null || ImageSource == DEFAULT_IMAGE )
+
+
+                            if (ImageSource == null || ImageSource == DEFAULT_IMAGE)
                             {
                                 result = "Please upload your passport";
                             }
@@ -144,14 +157,13 @@ namespace DuckHunterWPF.DialogControls
                             }
                             OnPropertyChanged("ErrorCollection");
                         }
-                        catch
+                        else
                         {
-
+                            _shouldValidate["ImageSource"] = true;
                         }
-
                         break;
                 }
-
+                
                 return result;
             }
         }
@@ -162,7 +174,8 @@ namespace DuckHunterWPF.DialogControls
             
             InitializeComponent();
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogNewHighScore), new FrameworkPropertyMetadata(typeof(DialogNewHighScore)));
-            
+            _shouldValidate.Add("Username", false);
+            _shouldValidate.Add("ImageSource", false);
             DataContext = this;
 
             
@@ -200,9 +213,11 @@ namespace DuckHunterWPF.DialogControls
                     var player = new HighScore("", Username, Score.Text, image_path);
                     FileController.AddHighScore(player);
 
-                    
+                    _shouldValidate["Username"] = false;
+                    _shouldValidate["ImageSource"] = false;
                     Username = "";
                     IsOpen = false;
+                    
                 }
             
                 Debug.WriteLine(Error);

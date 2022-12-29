@@ -18,14 +18,14 @@
 
         <Grid x:Name="GameStateButtons" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="98">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="36"/>
-                <RowDefinition Height="36"/>
-                <RowDefinition Height="36"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Button Click="uiButtonSaves_Click"  x:Name="uiButtonSaves" Grid.Column="0" Grid.Row="0">Save</Button>
@@ -36,17 +36,17 @@
             <Button Content = "Pause" Grid.Column="2" Grid.Row="2"  Click = "mediaPause" />
         </Grid>
 
-        <Grid x:Name="Score" Canvas.Left="80" Canvas.Top="414" Panel.ZIndex="98">
+        <Grid x:Name="Score" Canvas.Left="88" Canvas.Top="426" Panel.ZIndex="98">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="205"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="285"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="16"/>
-                <RowDefinition Height="16"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="SCORE" Grid.Column="2" Grid.Row="3"></TextBlock>
             <TextBlock x:Name="Points" Text="{Binding points, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"></TextBlock>
